@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 150" role="img" aria-labelledby="title desc">
+  <title id="title">Scratch風のネコ</title>
+  <desc id="desc">Stretch3を開くためのネコのリンク画像</desc>
+  <rect width="180" height="150" rx="18" fill="#fff7df"/>
+  <ellipse cx="92" cy="88" rx="60" ry="38" fill="#ffab2e"/>
+  <path d="M46 65 36 28 73 49Z" fill="#ffab2e"/>
+  <path d="M132 65 145 28 108 49Z" fill="#ffab2e"/>
+  <path d="M49 59 43 39 63 51Z" fill="#fff0b8"/>
+  <path d="M128 59 136 39 116 51Z" fill="#fff0b8"/>
+  <ellipse cx="70" cy="82" rx="10" ry="13" fill="#fff"/>
+  <ellipse cx="111" cy="82" rx="10" ry="13" fill="#fff"/>
+  <circle cx="73" cy="84" r="5" fill="#172026"/>
+  <circle cx="108" cy="84" r="5" fill="#172026"/>
+  <path d="M91 92 83 100H99Z" fill="#8b3a24"/>
+  <path d="M91 100C84 110 74 110 67 103" fill="none" stroke="#8b3a24" stroke-width="4" stroke-linecap="round"/>
+  <path d="M91 100C99 110 110 110 116 103" fill="none" stroke="#8b3a24" stroke-width="4" stroke-linecap="round"/>
+  <path d="M41 88H12M42 99H15M139 88H168M138 99H165" stroke="#8b3a24" stroke-width="4" stroke-linecap="round"/>
+  <path d="M52 121C32 134 20 120 24 105" fill="none" stroke="#ffab2e" stroke-width="14" stroke-linecap="round"/>
+  <text x="90" y="139" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#172026">Stretch3へ</text>
+</svg>
