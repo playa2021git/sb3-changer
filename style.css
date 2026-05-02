@@ -1,0 +1,637 @@
+/* 中学生が迷いにくいように、余白を広めにして読みやすくしています。 */
+:root {
+  --ink: #172026;
+  --muted: #5c6872;
+  --line: #d7dde4;
+  --paper: #ffffff;
+  --soft: #f4f7f8;
+  --top: #dff3ee;
+  --accent: #0f7f72;
+  --accent-dark: #0a5d54;
+  --input-line: #ff8a00;
+  --input-glow: rgba(255, 138, 0, 0.24);
+  --download-line: #2f6fed;
+  --download-dark: #1d4fb8;
+  --download-glow: rgba(47, 111, 237, 0.22);
+  --warn-bg: #fff7df;
+  --warn-line: #e3b84e;
+  --error-bg: #fff0f0;
+  --error-line: #d65d5d;
+  --block-event: #ffbf45;
+  --block-control: #ffab3d;
+  --block-motion: #4d8df7;
+  --block-look: #8b63d9;
+  --block-extension: #138a78;
+}
+
+/* 画面全体の基本設定です。 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--soft);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+code,
+pre,
+textarea {
+  font-family: "Consolas", "Yu Gothic UI", monospace;
+}
+
+.page-width {
+  width: min(1160px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+/* 上部は、このサイトでできることと使い方をすぐ見せます。 */
+.top-band {
+  background: var(--top);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
+  gap: 24px;
+  align-items: start;
+}
+
+.eyebrow,
+.panel-kicker {
+  margin: 0 0 6px;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+h2,
+h3 {
+  margin: 0 0 12px;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.lead {
+  max-width: 660px;
+  margin: 0;
+  font-size: 1.12rem;
+}
+
+.text-link {
+  color: var(--accent-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link:hover {
+  color: var(--accent);
+}
+
+.strong-link {
+  font-size: 1.08em;
+}
+
+.stretch3-link-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.stretch3-link-box p {
+  margin: 0;
+  font-weight: 750;
+}
+
+.cat-link {
+  display: inline-flex;
+  width: 126px;
+  min-width: 126px;
+  border: 3px solid var(--block-event);
+  border-radius: 12px;
+  background: #fff7df;
+  box-shadow: 0 0 0 4px rgba(255, 191, 69, 0.22);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.cat-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 5px rgba(255, 191, 69, 0.34);
+}
+
+.cat-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.guide-panel,
+.tool-panel,
+.result-panel,
+.prompt-panel,
+.help-panel,
+.json-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.guide-panel {
+  padding: 20px;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 1.4rem;
+  font-weight: 650;
+}
+
+.steps li + li {
+  margin-top: 7px;
+}
+
+/* Chromebookの保存場所説明は目に入りやすい帯にしています。 */
+.notice-band {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #eef8ff;
+  border: 1px solid #a7cbe2;
+  border-radius: 8px;
+}
+
+.notice-band p {
+  margin: 4px 0;
+  font-weight: 650;
+}
+
+/* 入力とプレビューは横に並べ、狭い画面では縦にします。 */
+.workspace-band {
+  padding: 22px 0;
+}
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.tool-panel,
+.prompt-panel,
+.help-panel,
+.json-panel,
+.result-panel {
+  padding: 18px;
+}
+
+/* いちばん大事な入力エリアは、太い色つき枠で主役だと分かるようにします。 */
+.workspace-grid > .tool-panel:first-child {
+  border: 3px solid var(--input-line);
+  box-shadow: 0 0 0 4px var(--input-glow);
+}
+
+.workspace-grid > .tool-panel:first-child:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 5px rgba(15, 127, 114, 0.24);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.source-editor {
+  display: flex;
+  width: 100%;
+  border: 4px solid var(--input-line);
+  border-radius: 8px;
+  background: #fffdf7;
+  box-shadow: inset 0 0 0 1px rgba(255, 138, 0, 0.22);
+  overflow: hidden;
+}
+
+.source-editor:focus-within {
+  border-color: var(--accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(15, 127, 114, 0.18), inset 0 0 0 1px rgba(15, 127, 114, 0.18);
+}
+
+.source-editor.has-error {
+  border-color: var(--error-line);
+  background: #fff8f8;
+  box-shadow: 0 0 0 5px rgba(214, 93, 93, 0.2);
+}
+
+.line-numbers {
+  min-width: 46px;
+  padding: 14px 8px;
+  border-right: 2px solid rgba(255, 138, 0, 0.35);
+  background: #fff3d9;
+  color: #7a5a1f;
+  font-family: "Consolas", "Yu Gothic UI", monospace;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+}
+
+.line-numbers span {
+  display: block;
+  min-height: 1.5em;
+}
+
+.line-numbers span.error-line-number {
+  margin-inline: -4px;
+  border-radius: 5px;
+  background: var(--error-line);
+  color: #fff;
+  font-weight: 800;
+}
+
+#sourceInput {
+  width: 100%;
+  min-height: 430px;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  padding: 14px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  outline: none;
+}
+
+#sampleSelect,
+#fileNameInput {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  padding: 0 12px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+button {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0 16px;
+  cursor: pointer;
+  font-weight: 750;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: #fff;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.ghost-button {
+  background: #fff;
+  color: var(--accent-dark);
+  border-color: var(--line);
+}
+
+.ghost-button:hover {
+  border-color: var(--accent);
+}
+
+/* Scratchのブロックらしさを、人間が読める形で出しています。 */
+.preview-output {
+  min-height: 430px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f9fbfc;
+  padding: 14px;
+  overflow: auto;
+}
+
+.script-preview {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.preview-line {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  color: #fff;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.preview-event {
+  background: var(--block-event);
+  color: #3b2600;
+}
+
+.preview-control {
+  background: var(--block-control);
+  color: #3b2600;
+}
+
+.preview-motion {
+  background: var(--block-motion);
+}
+
+.preview-look {
+  background: var(--block-look);
+}
+
+.preview-extension {
+  background: var(--block-extension);
+}
+
+.preview-basic {
+  background: #5e6c7a;
+}
+
+/* 結果エリアは、成功とエラーをすぐ見分けられるようにしています。 */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.status-box,
+.warning-box,
+.error-box {
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+}
+
+.status-box {
+  background: #eef8f4;
+  border: 1px solid #9ed2c4;
+}
+
+.status-box.idle {
+  background: #f6f7f8;
+  border-color: var(--line);
+}
+
+.warning-box {
+  margin-top: 10px;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-line);
+}
+
+.error-box {
+  background: var(--error-bg);
+  border: 1px solid var(--error-line);
+}
+
+.error-title {
+  margin: 0 0 8px;
+  color: #9b1c1c;
+  font-weight: 850;
+}
+
+.error-location {
+  margin: 0 0 10px;
+  font-weight: 800;
+}
+
+.error-detail {
+  margin: 0 0 8px;
+}
+
+.error-snippet {
+  margin: 10px 0;
+  padding: 10px;
+  border: 2px solid var(--error-line);
+  border-radius: 8px;
+  background: #fffafa;
+  color: #9b1c1c;
+  font-family: "Consolas", "Yu Gothic UI", monospace;
+  font-weight: 800;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.error-code-line {
+  display: block;
+}
+
+.error-caret-line {
+  display: block;
+  color: var(--error-line);
+}
+
+.hint-text {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.download-panel {
+  display: grid;
+  gap: 10px;
+  border: 3px solid var(--download-line);
+  background: #f7fbff;
+  box-shadow: 0 0 0 4px var(--download-glow);
+}
+
+.download-panel:focus-within {
+  border-color: var(--download-dark);
+  box-shadow: 0 0 0 5px rgba(29, 79, 184, 0.24);
+}
+
+#downloadButton {
+  background: var(--download-line);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--download-dark);
+}
+
+#downloadButton:hover:not(:disabled) {
+  background: var(--download-dark);
+}
+
+#downloadButton:disabled {
+  background: #9ab4df;
+  box-shadow: none;
+}
+
+#fileNameInput:focus {
+  border-color: var(--download-line);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--download-glow);
+}
+
+.file-label {
+  font-weight: 700;
+}
+
+.prompt-panel,
+.help-panel,
+.json-panel {
+  margin-bottom: 22px;
+}
+
+#geminiPrompt {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfcfd;
+}
+
+.copy-status {
+  min-height: 1.5rem;
+  margin: 8px 0 0;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.help-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: 18px;
+}
+
+pre {
+  margin: 0;
+  overflow: auto;
+  background: #111820;
+  color: #f7fbff;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.help-panel ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.json-panel summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+#jsonOutput {
+  margin-top: 12px;
+  max-height: 420px;
+}
+
+#validationOutput {
+  margin-top: 12px;
+  margin-bottom: 16px;
+  max-height: 360px;
+}
+
+.analyzer-controls {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.analyzer-controls label {
+  font-weight: 800;
+}
+
+#sb3AnalyzeInput {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px;
+}
+
+#extensionAnalysisOutput {
+  max-height: 520px;
+}
+
+/* Chromebookの小さい画面でも押しやすく、読みやすくします。 */
+@media (max-width: 900px) {
+  .hero-grid,
+  .workspace-grid,
+  .result-grid,
+  .help-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-head {
+    flex-direction: column;
+  }
+
+  #sourceInput,
+  .source-editor,
+  .preview-output {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-width {
+    width: min(100% - 20px, 1160px);
+  }
+
+  .top-band {
+    padding: 20px 0;
+  }
+
+  .stretch3-link-box {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tool-panel,
+  .prompt-panel,
+  .help-panel,
+  .json-panel,
+  .result-panel {
+    padding: 14px;
+  }
+
+  button,
+  #sampleSelect,
+  #fileNameInput {
+    width: 100%;
+  }
+}

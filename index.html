@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StretchScriptから.sb3へ変換</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 生徒が最初に読む場所です。 -->
+  <header class="top-band">
+    <div class="page-width hero-grid">
+      <div>
+        <p class="eyebrow"><a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>で開ける.sb3を作るページ</p>
+        <h1>StretchScript 変換ツール</h1>
+        <p class="lead">
+          Gemが作ったStretchScriptを、<a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>で読み込めるScratch 3.0形式のファイルに変換します。
+        </p>
+        <div class="stretch3-link-box">
+          <a class="cat-link" href="https://stretch3.github.io/" target="_blank" rel="noopener" aria-label="Stretch3を開く">
+            <img src="assets/scratch-cat.svg" alt="Stretch3を開くネコの画像">
+          </a>
+          <p>
+            <a class="text-link strong-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">ここ</a>を押すと<a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>に飛びます。
+          </p>
+        </div>
+      </div>
+      <div class="guide-panel" aria-label="使い方">
+        <h2>使い方</h2>
+        <ol class="steps">
+          <li>Gemが出してきたStretchScriptコードをコピーします</li>
+          <li>このページの大きな入力欄に貼り付けます</li>
+          <li>「1. 変換して確認」を押します</li>
+          <li>右側にスクラッチ風のブロックが見えるか確認します</li>
+          <li>「2. .sb3をダウンロード」を押します</li>
+          <li>Chromebookの「ダウンロード」に保存された .sb3 ファイルを<a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>で開きます</li>
+        </ol>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Chromebookで迷わないように保存場所を先に伝えます。 -->
+    <section class="page-width notice-band" aria-label="Chromebook向け説明">
+      <p>Chromebookでは、ダウンロードしたファイルはふつう『ファイル』アプリの『ダウンロード』に入ります。</p>
+      <p><a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>で読み込むときは、ダウンロードした .sb3 ファイルを選んでください。</p>
+      <p>ファイル名の最後が .sb3 になっていることを確認してください。</p>
+    </section>
+
+    <!-- 変換の中心になる入力とプレビューです。 -->
+    <section class="workspace-band">
+      <div class="page-width workspace-grid">
+        <section class="tool-panel" aria-labelledby="input-title">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">入力</p>
+              <h2 id="input-title">ここにGemが出してきたコードを貼り付けます</h2>
+            </div>
+            <select id="sampleSelect" aria-label="サンプルを選ぶ">
+              <option>サンプルを読み込み中</option>
+            </select>
+          </div>
+          <div id="sourceEditor" class="source-editor">
+            <div id="lineNumbers" class="line-numbers" aria-hidden="true">1</div>
+            <textarea id="sourceInput" spellcheck="false" aria-label="StretchScript入力欄"></textarea>
+          </div>
+          <div class="button-row">
+            <button id="convertButton" class="primary-button" type="button">1. 変換して確認</button>
+            <button id="clearButton" class="ghost-button" type="button">入力を消す</button>
+          </div>
+        </section>
+
+        <section class="tool-panel" aria-labelledby="preview-title">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">プレビュー</p>
+              <h2 id="preview-title">ブロック風プレビュー</h2>
+            </div>
+          </div>
+          <div id="previewOutput" class="preview-output" aria-live="polite">
+            まだ変換していません。左のコードを確認して「1. 変換して確認」を押してください。
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- 結果、エラー、ダウンロードをまとめる場所です。 -->
+    <section class="page-width result-grid" aria-label="変換結果">
+      <section class="result-panel">
+        <h2>変換結果</h2>
+        <div id="statusOutput" class="status-box idle">準備できています。</div>
+        <div id="warningOutput" class="warning-box" hidden></div>
+      </section>
+
+      <section class="result-panel">
+        <h2>エラー表示</h2>
+        <div id="errorOutput" class="error-box" hidden></div>
+        <p class="hint-text">
+          文字は " " で囲みます。例: <code>say("こんにちは", 2);</code>
+        </p>
+      </section>
+
+      <section class="result-panel download-panel">
+        <h2>.sb3ダウンロード</h2>
+        <label class="file-label" for="fileNameInput">ファイル名</label>
+        <input id="fileNameInput" type="text" value="stretchscript_project.sb3" aria-label="ダウンロードするファイル名">
+        <button id="downloadButton" class="primary-button" type="button" disabled>2. .sb3をダウンロード</button>
+        <p>ダウンロードした .sb3 ファイルは、Chromebookの『ファイル』アプリの『ダウンロード』に保存されます。</p>
+        <p>そのあと<a class="text-link" href="https://stretch3.github.io/" target="_blank" rel="noopener">Stretch3</a>を開き、ファイルを読み込むとブロックとして表示されます。</p>
+      </section>
+    </section>
+  </main>
+
+  <!-- JSZipだけCDNから読み込みます。アプリ本体はローカルのJavaScriptです。 -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="blocks/blockRegistry.js"></script>
+  <script src="blocks/extensionBlocks.js"></script>
+  <script src="blocks/coreBlocks.js"></script>
+  <script src="blocks/ml2scratch.js"></script>
+  <script src="blocks/posenet2scratch.js"></script>
+  <script src="blocks/microbitMore.js"></script>
+  <script src="blocks/tm2scratch.js"></script>
+  <script src="blocks/tmpose2scratch.js"></script>
+  <script src="blocks/speech2scratch.js"></script>
+  <script src="blocks/imageClassifier2scratch.js"></script>
+  <script src="blocks/cameraSelector.js"></script>
+  <script src="blocks/penBlocks.js"></script>
+  <script src="blocks/musicBlocks.js"></script>
+  <script src="blocks/textToSpeechBlocks.js"></script>
+  <script src="blocks/translateBlocks.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
