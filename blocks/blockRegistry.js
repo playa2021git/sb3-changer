@@ -9,7 +9,7 @@
     extensionInfo: new Map()
   };
 
-  const VERIFIED_EXTENSION_IDS = new Set(["pen", "music", "translate", "text2speech"]);
+  const VERIFIED_EXTENSION_IDS = new Set(["pen", "music", "translate", "text2speech", "microbitMore"]);
 
   /* 画面表示とproject.json生成の両方で同じ定義を使うための登録関数です。 */
   function registerBlock(definition) {

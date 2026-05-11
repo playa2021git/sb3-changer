@@ -502,6 +502,104 @@ sprite("Aさん", () => {
   assert.match(error.message, /同じ名前のスプライト/);
   assert.match(error.cause, /重複/);
 });
+<<<<<<< codex/output-git-diff-and-changes-for-commit-c8bd693
+
+test("Microbit More: A/Bボタン + displayText を fixture保存形で変換できる", () => {
+  const result = convert(`whenMicrobitButtonPressed("A", () => {
+  microbitDisplayText("2", 120);
+});
+
+whenMicrobitButtonPressed("B", () => {
+  microbitDisplayText("3", 120);
+});`);
+
+  assert.ok(result.project.extensions.includes("microbitMore"));
+  const blocks = Object.values(spriteBlocks(result));
+  const hats = blocks.filter((block) => block.opcode === "microbitMore_whenButtonEvent");
+  const textBlocks = blocks.filter((block) => block.opcode === "microbitMore_displayText");
+
+  assert.equal(hats.length, 2);
+  assert.equal(textBlocks.length, 2);
+
+  const names = hats.map((block) => block.fields.NAME?.[0]).sort();
+  assert.deepEqual(names, ["A", "B"]);
+  hats.forEach((block) => {
+    assert.deepEqual(block.inputs, {});
+    assert.equal(block.topLevel, true);
+    assert.equal(block.parent, null);
+    assert.deepEqual(block.fields.EVENT, ["DOWN", null]);
+  });
+
+  textBlocks.forEach((block) => {
+    assert.deepEqual(block.fields, {});
+    assert.deepEqual(block.inputs.TEXT, [1, [10, block.inputs.TEXT[1][1]]]);
+    assert.deepEqual(block.inputs.DELAY, [1, [4, "120"]]);
+    assert.equal(block.topLevel, false);
+  });
+});
+
+test("Microbit More: buttonが未確認値(C)なら安全停止する", () => {
+  const error = conversionError(`whenMicrobitButtonPressed("C", () => {
+  microbitDisplayText("C", 120);
+});`);
+  assert.match(error.message, /未確認または未対応|引数|未確認のメニュー値/);
+});
+
+test("Microbit More: gestureは未対応として安全停止する", () => {
+  const error = conversionError(`whenMicrobitGesture("TILT_LEFT", () => {
+  microbitDisplayText("L", 120);
+});`);
+  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+});
+
+
+test("Microbit More: SHAKE + playTone + stopTone を fixture保存形で変換できる", () => {
+  const result = convert(`whenMicrobitShaken(() => {
+  microbitPlayTone(440, 100);
+  wait(1);
+  microbitStopTone();
+});`);
+
+  assert.ok(result.project.extensions.includes("microbitMore"));
+  const blocks = Object.values(spriteBlocks(result));
+  const shake = blocks.find((block) => block.opcode === "microbitMore_whenGesture");
+  const tone = blocks.find((block) => block.opcode === "microbitMore_playTone");
+  const stop = blocks.find((block) => block.opcode === "microbitMore_stopTone");
+
+  assert.ok(shake);
+  assert.ok(tone);
+  assert.ok(stop);
+  assert.deepEqual(shake.fields.GESTURE, ["SHAKE", null]);
+  assert.deepEqual(shake.inputs, {});
+  assert.deepEqual(tone.inputs.FREQ, [1, [4, "440"]]);
+  assert.deepEqual(tone.inputs.VOL, [1, [4, "100"]]);
+});
+
+test("Microbit More: TILT_LEFT は安全停止する", () => {
+  const error = conversionError(`whenMicrobitGesture("TILT_LEFT", () => {
+  microbitPlayTone(440, 100);
+});`);
+  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+});
+
+test("Microbit More: TILT_RIGHT は安全停止する", () => {
+  const error = conversionError(`whenMicrobitGesture("TILT_RIGHT", () => {
+  microbitPlayTone(440, 100);
+});`);
+  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+});
+
+test("Microbit More: 未確認gesture値(JUMP)は安全停止する", () => {
+  const error = conversionError(`whenMicrobitGesture("JUMP", () => {
+  microbitPlayTone(440, 100);
+});`);
+  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+});
+
+test("Microbit More: servoは未対応として安全停止する", () => {
+  const error = conversionError('microbitSetServo("P0", 90);');
+  assert.match(error.message, /未確認または未対応/);
+=======
 test("Microbit More: ifMicrobitButtonPressed は fixture未確認のため unsupported で安全停止する", () => {
   const error = conversionError(`whenGreenFlagClicked(() => {
   ifMicrobitButtonPressed("A", () => {
@@ -513,4 +611,5 @@ test("Microbit More: ifMicrobitButtonPressed は fixture未確認のため unsup
 
 test.skip("TODO(Microbit More): fixture確認後に ifMicrobitButtonPressed の成功系変換を有効化する", () => {
   // fixtureで opcode / inputs / fields / menu値 / hat構造 を確認した後に実装する。
+>>>>>>> main
 });
