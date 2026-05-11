@@ -502,6 +502,7 @@ sprite("Aさん", () => {
   assert.match(error.message, /同じ名前のスプライト/);
   assert.match(error.cause, /重複/);
 });
+<<<<<<< codex/output-git-diff-and-changes-for-commit-c8bd693
 
 test("Microbit More: A/Bボタン + displayText を fixture保存形で変換できる", () => {
   const result = convert(`whenMicrobitButtonPressed("A", () => {
@@ -598,4 +599,17 @@ test("Microbit More: 未確認gesture値(JUMP)は安全停止する", () => {
 test("Microbit More: servoは未対応として安全停止する", () => {
   const error = conversionError('microbitSetServo("P0", 90);');
   assert.match(error.message, /未確認または未対応/);
+=======
+test("Microbit More: ifMicrobitButtonPressed は fixture未確認のため unsupported で安全停止する", () => {
+  const error = conversionError(`whenGreenFlagClicked(() => {
+  ifMicrobitButtonPressed("A", () => {
+    sayNow("pressed");
+  });
+});`);
+  assert.match(error.message, /未確認または未対応/);
+});
+
+test.skip("TODO(Microbit More): fixture確認後に ifMicrobitButtonPressed の成功系変換を有効化する", () => {
+  // fixtureで opcode / inputs / fields / menu値 / hat構造 を確認した後に実装する。
+>>>>>>> main
 });
