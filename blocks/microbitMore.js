@@ -1,9 +1,18 @@
-/* Microbit Moreは実物.sb3保存形確認まで変換を止めます。 */
+/*
+ * Microbit More は fixture で project.json 保存形を確認できるまで安全停止を維持します。
+ * - verified: registerBlock 可能な確認済み定義（現時点は空）
+ * - unverified: 未確認のため registerUnsupported に固定する定義
+ */
 (function () {
   "use strict";
 
   const R = window.StretchScriptBlocks;
-  const source = "https://github.com/microbit-more/mbit-more-v2/blob/master/src/vm/extensions/block/index.js";
+  const source = "https://github.com/microbit-more/mbit-more-v2";
+
+  // 実物 .sb3 fixture で opcode / inputs / fields / menu値 / shadow型 を確認できた後にのみ追加する。
+  const verified = [];
+
+  R.registerMany(verified);
 
   [
     "microbitButtonPressed",
@@ -15,8 +24,8 @@
       functionName,
       category: "Microbit More",
       source,
-      reason: "Microbit Moreの実装ソースでは id: microbitMore を確認済みですが、対象ブロックの正確なopcode/inputs/project.json保存形が未確認です。",
-      nextStep: "Stretch3本家またはMicrobit More環境で最小 .sb3 を作り、拡張ブロック解析モードで確認してください。"
+      reason: "Microbit Moreの対象ブロックは project.json 保存形（opcode/inputs/fields/menu値/hat構造）が fixture 未確認です。",
+      nextStep: "Stretch3本家またはMicrobit More環境で最小 .sb3 fixture を作成し、保存形を確認してください。"
     });
   });
 })();
