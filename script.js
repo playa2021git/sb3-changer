@@ -2423,7 +2423,18 @@ StretchScriptの仕様に従ってください。`;
             example: "say(\"こんにちは\", 2);"
           });
         }
-        return String(arg.value);
+        const value = String(arg.value);
+        if (defArg.type === "menu" && Array.isArray(defArg.allowedValues) && !defArg.allowedValues.includes(value)) {
+          throw new StretchScriptError({
+            message: "未確認のメニュー値です。",
+            line: arg.line,
+            column: arg.column,
+            cause: `${call.name} の ${defArg.name} には ${defArg.allowedValues.join("/")} だけを使えます。`,
+            fix: `確認済みの値（${defArg.allowedValues.join(" または ")}）に変更してください。`,
+            example: `${call.name}(\"${defArg.allowedValues[0]}\", ...);`
+          });
+        }
+        return value;
       }
 
       if (defArg.type === "color") {
