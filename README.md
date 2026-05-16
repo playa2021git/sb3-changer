@@ -1,5 +1,7 @@
 # StretchScript から .sb3 へ変換するMVP
 
+日本語 | [English](README_EN.md)
+
 このツールは、Geminiなどが出力した StretchScript を Scratch 3.0 / Stretch3 が読める `.sb3` に変換する静的Webアプリです。`index.html` をChromeで開くだけで使えます。
 
 ## 最優先の安全ルール
@@ -82,6 +84,7 @@ whenGreenFlagClicked(() => {
 詳細な標準ブロック対応表は [`scratch-standard-blocks.md`](scratch-standard-blocks.md) にあります。
 Geminiカスタム指示へ渡すための関数仕様は [`stretchscript-spec.md`](stretchscript-spec.md) にあります。
 複数スプライト対応のMVP仕様と今後の設計は [`scratch-multisprite-plan.md`](scratch-multisprite-plan.md) にあります。
+Microbit More対応状況は [`docs/microbit-more-block-matrix.md`](docs/microbit-more-block-matrix.md) にあります。
 
 - 変数: `setVariable`, `changeVariable`, `getVariable`, `showVariable`, `hideVariable`
 - リスト: `deleteAllOfList`, `addToList`, `deleteOfList`, `insertAtList`, `replaceItemOfList`, `itemOfList`, `itemNumOfList`, `lengthOfList`, `listContains`, `showList`, `hideList`
@@ -112,6 +115,25 @@ goTo(getVariable("px"), getVariable("py"));
 
 `sayNow("文字"); stopAll();` のように結果表示の直後に停止する場合は、変換は成功させた上で警告を表示します。
 `showVariableSlider(...)` はmonitor保存形式を実物 `.sb3` で確認するまで未対応として停止します。
+
+## Microbit More対応状況
+
+Microbit Moreは、授業で安全に使えることを優先して、保存形と実機動作を確認できた最小範囲だけを変換対象にしています。
+
+現時点で対応している関数:
+
+- `whenMicrobitButtonPressed("A", () => { ... })`
+- `whenMicrobitButtonPressed("B", () => { ... })`
+- `ifMicrobitButtonPressed("A", () => { ... })`
+- `ifMicrobitButtonPressed("B", () => { ... })`
+- `microbitDisplayText("Hello", 120)`
+- `whenMicrobitShaken(() => { ... })`
+- `whenMicrobitGesture("SHAKE", () => { ... })`
+- `microbitPlayTone(440, 100)`
+- `microbitStopTone()`
+
+`TILT_LEFT` / `TILT_RIGHT`、サーボ、ピン入出力、センサー値取得などは、授業前に保存形と実機動作を再確認するまで未対応として安全停止します。
+詳細は [`docs/microbit-more-block-matrix.md`](docs/microbit-more-block-matrix.md)、fixture採取手順は [`docs/microbit-more-fixture-guide.md`](docs/microbit-more-fixture-guide.md) を参照してください。
 
 ## 複数スプライトMVP
 

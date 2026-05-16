@@ -24,10 +24,6 @@ Microbit More の Button Hat を推測なしで実装するため、実物 `.sb3
 
 ## 採取時の確認項目
 `project.json` から以下を必ず記録する。
-<<<<<<< codex/output-git-diff-and-changes-for-commit-c8bd693
-=======
-
->>>>>>> main
 - `opcode`
 - `inputs`（キー名・配列値）
 - `fields`（キー名・保存値）
@@ -52,10 +48,6 @@ Microbit More の Button Hat を推測なしで実装するため、実物 `.sb3
 
 ## 実装ゲート
 以下を満たすまで `registerBlock` を禁止し、`registerUnsupported` を維持する。
-<<<<<<< codex/output-git-diff-and-changes-for-commit-c8bd693
-=======
-
->>>>>>> main
 - A/B/A+B の fixture が揃っている。
 - opcode / inputs / fields / menu値 が確定している。
 - Hat の `topLevel / parent / next` 構造を確認済み。
