@@ -1,11 +1,58 @@
 # Scratch標準ブロック対応表
 
 この表は、StretchScriptコンパイラが推測せずに `.sb3` へ出力してよいScratch標準ブロックを管理するためのものです。
-対応状況が「未対応」または「調査中」のブロックは、変換器が `.sb3` に入れてはいけません。
+対応状況が「未対応」または「要確認」のブロックは、変換器が `.sb3` に入れてはいけません。
 
 参考にした一次情報:
 - Scratch VM procedures: https://github.com/scratchfoundation/scratch-vm/blob/develop/src/blocks/scratch3_procedures.js
 - Scratch VM sb3 serialization: https://github.com/scratchfoundation/scratch-vm/blob/develop/src/serialization/sb3.js
+
+## Issue 2照合サマリー
+
+2026-05-17時点の `blocks/coreBlocks.js` を `blocks/blockRegistry.js` に読み込ませ、登録済み定義と安全停止定義を `scratch-standard-blocks.md` と照合しました。今回は差分調査だけで、変換実装は変更していません。
+
+| 区分 | 件数 | 照合結果 | 備考 |
+|---|---:|---|---|
+| `coreBlocks.js` で対応済み登録されている関数 | 130 | すべて本表に記載あり | aliasを含む。例: `gt` / `greaterThan`, `lt` / `lessThan`, `ask` / `askAndWait` |
+| `coreBlocks.js` で安全停止登録されている関数 | 5 | すべて本表に記載あり | `defineProcedure`, `callProcedure`, `argumentStringNumber`, `argumentBoolean`, `showVariableSlider` |
+| 本表にあるが `coreBlocks.js` の標準ブロック定義ではないもの | 6 | 要確認として分離 | `sprite`, `setSpritePosition`, `setSpriteSize`, `setSpriteDirection`, `setSpriteText`, `setSpriteColor` は `script.js` 側の複数スプライトMVPメタ構文 |
+| `script.js` 側で互換変換しているもの | 2 | 対応済みだが実装場所に注意 | `goTo(x, y)` は `goToXY` へ変換、`addToList(listName, value)` は引数順を正規化 |
+| 状況列の記載ずれ | 7 | 修正済み | `random`, `lessThan`, `letterOf`, `lengthOf`, `contains`, `mod`, `round` の状況列を `対応済み` に統一 |
+
+### ステータス定義
+
+| 状況 | 意味 | `.sb3`生成 |
+|---|---|---|
+| 対応済み | `coreBlocks.js` に登録済みで、変換器が生成してよいブロック | 可 |
+| 未対応（安全停止） | `registerUnsupported` で明示的に停止するブロック | 不可 |
+| 要確認 | 標準ブロック表に関連情報はあるが、`coreBlocks.js` の対応済み定義としては扱えないもの | 不可 |
+
+### `coreBlocks.js` 登録数
+
+| カテゴリ | 対応済み登録数 |
+|---|---:|
+| イベント | 6 |
+| メッセージ | 3 |
+| 動き | 18 |
+| 見た目 | 17 |
+| コスチューム | 3 |
+| 背景 | 3 |
+| 音 | 9 |
+| 制御 | 11 |
+| クローン | 4 |
+| 調べる | 19 |
+| 演算 | 20 |
+| 変数 | 6 |
+| リスト | 11 |
+
+### 要確認・標準外として分離する項目
+
+| 項目 | 現在の扱い | 理由 | 次に必要な確認 |
+|---|---|---|---|
+| 複数スプライトMVPの `sprite(...)` 系 | 要確認 / 標準外 | Scratch標準ブロックではなく、`coreBlocks.js` ではなく `script.js` 側のproject.json生成メタ構文 | 標準ブロック対応表から別ドキュメントへ移すか、標準外として維持するか決める |
+| `goTo(x, y)` | 対応済み / 実装場所注意 | `coreBlocks.js` には `goToXY` があり、`script.js` の `resolveCallVariant` が `goTo` 2引数を `goToXY` へ寄せる | 仕様表では「互換構文」と明記し続ける |
+| `addToList(listName, value)` | 対応済み / 実装場所注意 | `coreBlocks.js` の定義は `addToList(value, listName)`、`script.js` がリスト名を推定して正規化する | 仕様表では「互換構文」と明記し続ける |
+| `say(text)` / `think(text)` | 対応済み / 任意引数 | `coreBlocks.js` の `customOpcodeByArgs` で秒数なしの場合に `looks_say` / `looks_think` へ切り替える | 表では `sayNow` / `thinkNow` と混同しないよう注意 |
 
 ## Shadow Block形式の凡例
 
@@ -156,19 +203,19 @@
 | 引き算 | `subtract(a, b)` | `operator_subtract` | `NUM1`, `NUM2` | なし | reporter | 対応済み | 構造検証 |
 | 掛け算 | `multiply(a, b)` | `operator_multiply` | `NUM1`, `NUM2` | なし | reporter | 対応済み | 構造検証 |
 | 割り算 | `divide(a, b)` | `operator_divide` | `NUM1`, `NUM2` | なし | reporter | 対応済み | 構造検証 |
-| 乱数 | `random(from, to)` | `operator_random` | `FROM`, `TO` | なし | reporter | リスト回帰 |
+| 乱数 | `random(from, to)` | `operator_random` | `FROM`, `TO` | なし | reporter | 対応済み | リスト回帰 |
 | より大きい | `greaterThan(a, b)` / `gt(a, b)` | `operator_gt` | `OPERAND1`, `OPERAND2` | なし | boolean | 対応済み | 構造検証 |
-| より小さい | `lessThan(a, b)` / `lt(a, b)` | `operator_lt` | `OPERAND1`, `OPERAND2` | なし | boolean | 宝くじD |
+| より小さい | `lessThan(a, b)` / `lt(a, b)` | `operator_lt` | `OPERAND1`, `OPERAND2` | なし | boolean | 対応済み | 宝くじD |
 | 等しい | `equals(a, b)` | `operator_equals` | `OPERAND1`, `OPERAND2` | なし | boolean | 対応済み | 優先A |
 | かつ | `and(a, b)` | `operator_and` | `OPERAND1`, `OPERAND2` | なし | boolean | 対応済み | 構造検証 |
 | または | `or(a, b)` | `operator_or` | `OPERAND1`, `OPERAND2` | なし | boolean | 対応済み | 構造検証 |
 | ではない | `not(a)` | `operator_not` | `OPERAND` | なし | boolean | 対応済み | 構造検証 |
 | つなげる | `join(a, b)` | `operator_join` | `STRING1`, `STRING2` | なし | reporter | リスト回帰 |
-| 文字目 | `letterOf(index, text)` | `operator_letter_of` | `LETTER`, `STRING` | なし | reporter | 構造検証 |
-| 長さ | `lengthOf(text)` | `operator_length` | `STRING` | なし | reporter | 構造検証 |
-| 含む | `contains(text, keyword)` | `operator_contains` | `STRING1`, `STRING2` | なし | boolean | 構造検証 |
-| 余り | `mod(a, b)` | `operator_mod` | `NUM1`, `NUM2` | なし | reporter | 構造検証 |
-| 四捨五入 | `round(value)` | `operator_round` | `NUM` | なし | reporter | 構造検証 |
+| 文字目 | `letterOf(index, text)` | `operator_letter_of` | `LETTER`, `STRING` | なし | reporter | 対応済み | 構造検証 |
+| 長さ | `lengthOf(text)` | `operator_length` | `STRING` | なし | reporter | 対応済み | 構造検証 |
+| 含む | `contains(text, keyword)` | `operator_contains` | `STRING1`, `STRING2` | なし | boolean | 対応済み | 構造検証 |
+| 余り | `mod(a, b)` | `operator_mod` | `NUM1`, `NUM2` | なし | reporter | 対応済み | 構造検証 |
+| 四捨五入 | `round(value)` | `operator_round` | `NUM` | なし | reporter | 対応済み | 構造検証 |
 | 数学関数 | `mathOp(operator, value)` | `operator_mathop` | `NUM` | `OPERATOR` | reporter | 対応済み | 構造検証 |
 
 ## 変数
@@ -180,7 +227,7 @@
 | 変数を表示 | `showVariable(name)` | `data_showvariable` | なし | `VARIABLE` | command | 対応済み | 構造検証 |
 | 変数を隠す | `hideVariable(name)` | `data_hidevariable` | なし | `VARIABLE` | command | 対応済み | 構造検証 |
 | 変数の値 | `getVariable(name)` / `variable(name)` | `data_variable` | なし | `VARIABLE` | reporter | 対応済み | 宝くじB/C/D |
-| 変数スライダー表示 | `showVariableSlider(name, min, max, value)` | monitors保存形式 | 調査中 | 調査中 | monitor | 調査中 | 安全停止 |
+| 変数スライダー表示 | `showVariableSlider(name, min, max, value)` | monitors保存形式 | 要確認 | 要確認 | monitor | 未対応（安全停止） | 安全停止 |
 
 保存形式: 変数はSprite targetの `variables` に `{ "var_id": ["変数名", 0] }` として登録する。
 
@@ -206,10 +253,10 @@
 
 | Scratch表示名 | StretchScript関数名 | opcode | inputs | fields | blockType | 状況 | テスト |
 |---|---|---|---|---|---|---|---|
-| ブロック定義 | `defineProcedure(...)` | `procedures_definition` | `custom_block` | なし | hat相当 | 調査中 | 安全停止 |
-| 独自ブロック呼び出し | `callProcedure(...)` | `procedures_call` | 引数に依存 | なし | command/reporterなし | 調査中 | 安全停止 |
-| 文字列/数値引数 | `argumentStringNumber(...)` | `argument_reporter_string_number` | なし | `VALUE` | reporter | 調査中 | 安全停止 |
-| 真偽引数 | `argumentBoolean(...)` | `argument_reporter_boolean` | なし | `VALUE` | boolean | 調査中 | 安全停止 |
+| ブロック定義 | `defineProcedure(...)` | `procedures_definition` | `custom_block` | なし | hat相当 | 未対応（安全停止） | 安全停止 |
+| 独自ブロック呼び出し | `callProcedure(...)` | `procedures_call` | 引数に依存 | なし | command/reporterなし | 未対応（安全停止） | 安全停止 |
+| 文字列/数値引数 | `argumentStringNumber(...)` | `argument_reporter_string_number` | なし | `VALUE` | reporter | 未対応（安全停止） | 安全停止 |
+| 真偽引数 | `argumentBoolean(...)` | `argument_reporter_boolean` | なし | `VALUE` | boolean | 未対応（安全停止） | 安全停止 |
 
 独自ブロックは `procedures_definition`、`procedures_prototype`、`procedures_call`、mutation内の `proccode` / `argumentids` / `argumentnames` / `argumentdefaults` を実物 `.sb3` で確認してから実装する。
 
@@ -217,12 +264,12 @@
 
 | 役割 | StretchScript関数名 | project.jsonへの反映 | blockType | 状況 | テスト |
 |---|---|---|---|---|---|
-| Sprite target作成 | `sprite(name, () => {})` | `targets` にSprite targetを追加 | meta | 対応済み | 複数スプライト最小 |
-| 初期座標 | `setSpritePosition(x, y)` | target直下の `x` / `y` | meta | 対応済み | 複数スプライト最小 |
-| 初期サイズ | `setSpriteSize(size)` | target直下の `size` | meta | 対応済み | 構造検証 |
-| 初期向き | `setSpriteDirection(direction)` | target直下の `direction` | meta | 対応済み | 構造検証 |
-| 簡易SVG文字 | `setSpriteText(text)` | 自動生成SVG costume | meta | 対応済み | MD5整合性検証 |
-| 簡易SVG色 | `setSpriteColor(color)` | 自動生成SVG costume | meta | 対応済み | 色形式検証 |
+| Sprite target作成 | `sprite(name, () => {})` | `targets` にSprite targetを追加 | meta | 要確認 / 標準外 | 複数スプライト最小 |
+| 初期座標 | `setSpritePosition(x, y)` | target直下の `x` / `y` | meta | 要確認 / 標準外 | 複数スプライト最小 |
+| 初期サイズ | `setSpriteSize(size)` | target直下の `size` | meta | 要確認 / 標準外 | 構造検証 |
+| 初期向き | `setSpriteDirection(direction)` | target直下の `direction` | meta | 要確認 / 標準外 | 構造検証 |
+| 簡易SVG文字 | `setSpriteText(text)` | 自動生成SVG costume | meta | 要確認 / 標準外 | MD5整合性検証 |
+| 簡易SVG色 | `setSpriteColor(color)` | 自動生成SVG costume | meta | 要確認 / 標準外 | 色形式検証 |
 
 MVPでは変数・リスト・ブロードキャストは共有扱いにする。スプライトローカル変数、外部画像costume、高度な同期はまだ実装しない。
 
