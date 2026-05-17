@@ -125,6 +125,7 @@ Use [stretchscript-spec.md](stretchscript-spec.md) as the compact prompt-oriente
 ## Microbit More Status
 
 Microbit More support is intentionally limited to the subset with confirmed saved shapes and practical classroom behavior.
+Other blocks from the official `getInfo()` have been inventoried, but they fail safely by individual function name until both saved shapes and hardware behavior are verified.
 
 Supported:
 
@@ -145,6 +146,7 @@ Unsupported until further fixture and hardware verification:
 - Pin I/O blocks
 - Sensor reporter blocks
 - Connection-dependent blocks
+- Data, touch, and pin event blocks that depend on communication or runtime configuration
 
 See the [Microbit More block matrix](docs/microbit-more-block-matrix.md), [fixture guide](docs/microbit-more-fixture-guide.md), and [implementation plan](docs/microbit-more-implementation-plan.md).
 

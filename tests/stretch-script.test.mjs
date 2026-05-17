@@ -607,6 +607,52 @@ test("Microbit More: 未確認gesture値(JUMP)は安全停止する", () => {
   assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
 });
 
+test("Microbit More: 公式getInfo上の未検証ブロックは個別に安全停止登録する", () => {
+  const unsupportedNames = [
+    "whenMicrobitConnectionChanged",
+    "whenMicrobitButtonEvent",
+    "microbitButtonPressed",
+    "whenMicrobitTouchEvent",
+    "microbitPinTouched",
+    "microbitDisplayMatrix",
+    "microbitClearDisplay",
+    "microbitLightLevel",
+    "microbitTemperature",
+    "microbitCompassHeading",
+    "microbitPitch",
+    "microbitRoll",
+    "microbitSoundLevel",
+    "microbitMagneticForce",
+    "microbitAcceleration",
+    "microbitAnalogValue",
+    "microbitSetPullMode",
+    "microbitPinHigh",
+    "microbitSetDigitalOut",
+    "microbitSetAnalogOut",
+    "microbitSetServo",
+    "microbitListenPinEventType",
+    "whenMicrobitPinEvent",
+    "microbitPinEventValue",
+    "whenMicrobitDataReceived",
+    "microbitDataLabeled",
+    "microbitSendData",
+    "microbitTiltAngle"
+  ];
+
+  unsupportedNames.forEach((functionName) => {
+    const unsupported = globalThis.StretchScriptBlocks.getUnsupported(functionName);
+    assert.ok(unsupported, `${functionName} should be registered as unsupported`);
+    assert.equal(unsupported.category, "Microbit More");
+  });
+});
+
+test("Microbit More: 未検証ブロック名を使うとMicrobit More理由で安全停止する", () => {
+  const error = conversionError("microbitSendData();");
+  assert.match(error.message, /未確認または未対応/);
+  assert.match(error.cause, /Microbit More/);
+  assert.match(error.cause, /project.json保存形/);
+});
+
 test("Microbit More: servoは未対応として安全停止する", () => {
   const error = conversionError('microbitSetServo("P0", 90);');
   assert.match(error.message, /未確認または未対応/);
