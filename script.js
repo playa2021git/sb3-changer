@@ -905,7 +905,7 @@ StretchScriptの仕様に従ってください。`;
   /* block ID、next、parent、SUBSTACK、topLevelを検査します。 */
   function validateBlocks(targets, report) {
     const globalBlockIds = new Set();
-    const corePrefixes = new Set(["argument", "colour", "control", "data", "event", "looks", "math", "motion", "operator", "procedures", "sensing", "sound"]);
+    const corePrefixes = new Set(["argument", "colour", "control", "data", "event", "looks", "math", "matrix", "motion", "operator", "procedures", "sensing", "sound"]);
     const categories = new Set(report.categories);
 
     targets.forEach((target) => {
@@ -1084,7 +1084,7 @@ StretchScriptの仕様に従ってください。`;
 
   /* ブロックで使った拡張がextensionsに入っているか検査します。 */
   function validateUsedExtensions(targets, report) {
-    const corePrefixes = new Set(["argument", "colour", "control", "data", "event", "looks", "math", "motion", "operator", "procedures", "sensing", "sound"]);
+    const corePrefixes = new Set(["argument", "colour", "control", "data", "event", "looks", "math", "matrix", "motion", "operator", "procedures", "sensing", "sound"]);
     const used = new Set();
     targets.forEach((target) => {
       Object.values(target.blocks || {}).forEach((block) => {
@@ -1236,7 +1236,7 @@ StretchScriptの仕様に従ってください。`;
   /* opcodeから拡張IDらしきものを推定します。 */
   function inferExtensionId(opcode, projectExtensions) {
     const prefix = String(opcode || "").split("_")[0];
-    const corePrefixes = new Set(["event", "motion", "looks", "sound", "control", "sensing", "operator", "data", "procedures", "argument"]);
+    const corePrefixes = new Set(["event", "motion", "looks", "sound", "control", "sensing", "operator", "data", "procedures", "argument", "matrix"]);
     if (!prefix || corePrefixes.has(prefix)) return "Scratch基本";
     const matched = projectExtensions.find((extensionId) => opcode === extensionId || opcode.startsWith(`${extensionId}_`));
     return matched || prefix;
@@ -2337,6 +2337,21 @@ StretchScriptの仕様に従ってください。`;
 
     /* Scratchのinput値を作ります。 */
     makeInputValue(defArg, arg, parentBlockId, call) {
+      if (defArg.type === "matrix") {
+        const value = this.primitiveValue(defArg, arg, call);
+        const matrixId = this.nextId("matrix");
+        this.blocks[matrixId] = {
+          opcode: defArg.shadowOpcode || "matrix",
+          next: null,
+          parent: parentBlockId,
+          inputs: {},
+          fields: { [defArg.shadowField || defArg.scratchName]: [value, null] },
+          shadow: true,
+          topLevel: false
+        };
+        return [1, matrixId];
+      }
+
       if (defArg.type === "menuInput") {
         const value = this.primitiveValue({ ...defArg, type: "menu" }, arg, call);
         const menuId = this.nextId("menu");
@@ -2394,6 +2409,31 @@ StretchScriptの仕様に従ってください。`;
     /* 引数の型をチェックしながら通常値を取り出します。 */
     primitiveValue(defArg, arg, call) {
       if (!arg) return defArg.defaultValue;
+
+      if (defArg.type === "matrix") {
+        if (arg.type !== "StringLiteral") {
+          throw new StretchScriptError({
+            message: "LEDパターンは文字列で指定してください。",
+            line: arg.line,
+            column: arg.column,
+            cause: `${call.name} には、0と1を25個並べた文字列が必要です。`,
+            fix: "点灯を1、消灯を0として、5行分を上から順につなげてください。",
+            example: 'microbitDisplayMatrix("0101011111111110111000100");'
+          });
+        }
+        const value = String(arg.value);
+        if (!/^[01]{25}$/.test(value)) {
+          throw new StretchScriptError({
+            message: "LEDパターンの形が違います。",
+            line: arg.line,
+            column: arg.column,
+            cause: "5×5 LEDには、0または1だけを合計25個指定します。",
+            fix: "5文字を1行として5行分、空白を入れずにつなげてください。",
+            example: 'microbitDisplayMatrix("0101011111111110111000100");'
+          });
+        }
+        return value;
+      }
 
       if (["number", "integer", "positiveNumber", "positiveInteger", "angle"].includes(defArg.type)) {
         if (arg.type !== "NumberLiteral") {

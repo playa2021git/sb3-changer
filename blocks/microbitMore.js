@@ -34,6 +34,16 @@
     ...extra
   });
 
+  const MATRIX = (name, scratchName, defaultValue) => ({
+    name,
+    scratchName,
+    type: "matrix",
+    defaultValue,
+    role: "input",
+    shadowOpcode: "matrix",
+    shadowField: "MATRIX"
+  });
+
   const SUB = (scratchName = "SUBSTACK") => ({
     name: "body",
     scratchName,
@@ -42,6 +52,20 @@
   });
 
   R.registerMany([
+    {
+      functionName: "whenMicrobitConnectionChanged",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_whenConnectionChanged",
+      category: "Microbit More",
+      blockType: "hat",
+      arguments: [
+        F("state", "STATE", "connected", { allowedValues: ["connected", "disconnected"] }),
+        SUB()
+      ],
+      sample: 'whenMicrobitConnectionChanged("connected", () => { sayNow("接続"); });',
+      description: "micro:bitの接続状態が変化したときに実行。公式fixture確認済み、実機再確認待ち。",
+      source
+    },
     {
       functionName: "whenMicrobitButtonPressed",
       extensionId: "microbitMore",
@@ -73,6 +97,19 @@
       source
     },
     {
+      functionName: "microbitDisplayMatrix",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_displayMatrix",
+      category: "Microbit More",
+      blockType: "stack",
+      arguments: [
+        MATRIX("pattern", "MATRIX", "0101010101100010101000100")
+      ],
+      sample: 'microbitDisplayMatrix("0101011111111110111000100");',
+      description: "0と1を25個並べた5×5パターンをLEDへ表示する。専用matrix shadowを生成。",
+      source
+    },
+    {
       functionName: "microbitDisplayText",
       extensionId: "microbitMore",
       opcode: "microbitMore_displayText",
@@ -84,6 +121,28 @@
       ],
       sample: "microbitDisplayText(\"Hello!\", 120);",
       description: "micro:bitに文字を表示する。delay省略時の既定値は120。",
+      source
+    },
+    {
+      functionName: "microbitLightLevel",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_getLightLevel",
+      category: "Microbit More",
+      blockType: "reporter",
+      arguments: [],
+      sample: "sayNow(microbitLightLevel());",
+      description: "micro:bitが測定した明るさを返す。公式fixture確認済み、実機値範囲の確認待ち。",
+      source
+    },
+    {
+      functionName: "microbitRoll",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_getRoll",
+      category: "Microbit More",
+      blockType: "reporter",
+      arguments: [],
+      sample: "sayNow(microbitRoll());",
+      description: "micro:bitの左右方向の傾きを返す。公式fixture確認済み、実機値の確認待ち。",
       source
     },
     {
@@ -141,11 +200,6 @@
 
   const unsupportedBlocks = [
     {
-      functionName: "whenMicrobitConnectionChanged",
-      opcode: "microbitMore_whenConnectionChanged",
-      reason: "公式fixtureで保存形は確認済みですが、生成処理と授業環境での発火条件が未確認です。"
-    },
-    {
       functionName: "whenMicrobitButtonEvent",
       opcode: "microbitMore_whenButtonEvent",
       reason: "DOWN以外のbutton event（UP/CLICK）の保存形と実機発火条件が未確認です。"
@@ -166,19 +220,9 @@
       reason: "touch reporterの保存形とpin touch設定の再現性が未確認です。"
     },
     {
-      functionName: "microbitDisplayMatrix",
-      opcode: "microbitMore_displayMatrix",
-      reason: "公式fixtureでmatrix shadowの保存形は確認済みですが、生成処理が未実装です。"
-    },
-    {
       functionName: "microbitClearDisplay",
       opcode: "microbitMore_displayClear",
       reason: "clear display単体のproject.json保存形が未確認です。"
-    },
-    {
-      functionName: "microbitLightLevel",
-      opcode: "microbitMore_getLightLevel",
-      reason: "公式fixtureで保存形は確認済みですが、生成処理と実機の値範囲が未確認です。"
     },
     {
       functionName: "microbitTemperature",
@@ -194,11 +238,6 @@
       functionName: "microbitPitch",
       opcode: "microbitMore_getPitch",
       reason: "pitch reporterの保存形と実機値が未確認です。"
-    },
-    {
-      functionName: "microbitRoll",
-      opcode: "microbitMore_getRoll",
-      reason: "公式fixtureで保存形は確認済みですが、生成処理と実機値が未確認です。"
     },
     {
       functionName: "microbitSoundLevel",
