@@ -124,6 +124,12 @@
         "producer": {
           "type": "string"
         },
+        "extensionURLStatus": {
+          "enum": [
+            "verified",
+            "legacy-missing"
+          ]
+        },
         "knownLegacyOpcodes": {
           "type": "array",
           "items": {

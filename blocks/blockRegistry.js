@@ -15,6 +15,7 @@
     "translate",
     "text2speech",
     "microbitMore",
+    "ml2scratch",
     "cameraselector",
     "speech2scratch"
   ]);

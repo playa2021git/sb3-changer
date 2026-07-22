@@ -274,6 +274,18 @@ extensions:
 
 ```yaml
 custom_extensions:
+  ml2scratch:
+    status: experimental
+    functions:
+      - { name: mlAddExample1, args: [], returns: void, blockType: command, example: "mlAddExample1();" }
+      - { name: mlAddExample2, args: [], returns: void, blockType: command, example: "mlAddExample2();" }
+      - { name: mlAddExample3, args: [], returns: void, blockType: command, example: "mlAddExample3();" }
+      - { name: whenMlLabelReceived, args: [string label, closure body], allowedLabels: ["1", "2"], returns: void, blockType: hat, example: "whenMlLabelReceived(\"1\", () => { sayNow(\"1\"); });" }
+      - { name: mlSetVideo, args: [string state], allowedStates: ["off"], returns: void, blockType: command, example: "mlSetVideo(\"off\");" }
+      - { name: mlSetInput, args: [string input], allowedInputs: ["stage"], returns: void, blockType: command, example: "mlSetInput(\"stage\");" }
+    notes:
+      - 公式1or2 fixtureで確認できた値だけを出力する
+      - 他の23ブロックは台帳化済みだが未対応
   cameraselector:
     status: experimental
     functions:
@@ -322,7 +334,6 @@ unsupported:
     - argumentBoolean
     - showVariableSlider
   unconfirmed_external_extensions:
-    - ML2scratch
     - Posenet2scratch
     - TM2Scratch
     - TMPose2scratch
@@ -332,6 +343,7 @@ unsupported:
     - cameraName
     - speechContains
   partially_supported_extensions:
+    - ML2Scratchは公式1or2 fixtureで確認した6ブロックだけ
     - Microbit Moreの対応表にない関数
     - CameraSelectorはselectCamera以外
     - Speech2ScratchはstartSpeechRecognitionとspeechText以外
