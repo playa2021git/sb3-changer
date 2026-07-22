@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "slug": "camera-selector",
+  "extensionName": "CameraSelector",
+  "extensionId": "cameraselector",
+  "officialSource": {
+    "repository": "tfabworks/xcx-cameraselector",
+    "commit": "8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088",
+    "sourcePath": "src/vm/extensions/block/index.js"
+  },
+  "fixtures": [
+    {
+      "id": "official-example",
+      "sb3Path": "fixtures/camera-selector/official-example.sb3",
+      "graphPath": "fixtures/camera-selector/graph.json",
+      "sha256": "0f98cfd1ed198131d4cf79d5721738cf6110416c03cc68d57021b03f28cc05e4",
+      "source": {
+        "repository": "tfabworks/xcx-cameraselector",
+        "commit": "8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088",
+        "path": "projects/example.sb3",
+        "blobSha": "1a72e88db357338a78dc3363c5804bbda8b211dc"
+      },
+      "producer": "Official Xcratch sample bundled by the extension repository"
+    }
+  ],
+  "blocks": [
+    {
+      "functionName": "selectCamera",
+      "extensionId": "cameraselector",
+      "opcode": "cameraselector_selectCamera",
+      "blockType": "command",
+      "inputs": {
+        "LIST": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "cameraselector_menu_videoDevicesMenu",
+          "shadowField": "videoDevicesMenu"
+        }
+      },
+      "fields": {},
+      "menuValues": {
+        "LIST": {
+          "menuId": "videoDevicesMenu",
+          "kind": "dynamic",
+          "acceptReporters": true,
+          "fixtureValues": [
+            "\u200b標準カメラ\u200b"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-example",
+        "selector": {
+          "opcode": "cameraselector_selectCamera",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "tfabworks/xcx-cameraselector",
+        "commit": "8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    }
+  ]
+}
