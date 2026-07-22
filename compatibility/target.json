@@ -1,0 +1,112 @@
+{
+  "formatVersion": 1,
+  "auditedAt": "2026-07-22",
+  "targetApplication": {
+    "name": "Stretch3",
+    "repository": "stretch3/stretch3.github.io",
+    "commit": "b3c4d1f7d54093c95f0613722991e49a16671b8c",
+    "scratchGui": {
+      "repository": "LLK/scratch-gui",
+      "ref": "v3.6.18"
+    }
+  },
+  "scope": {
+    "policy": "Scratch core blocks plus the explicitly named standard and custom extensions.",
+    "standardExtensions": [
+      {
+        "id": "pen",
+        "name": "Pen"
+      },
+      {
+        "id": "music",
+        "name": "Music"
+      },
+      {
+        "id": "text2speech",
+        "name": "Text to Speech"
+      },
+      {
+        "id": "translate",
+        "name": "Translate"
+      }
+    ],
+    "customExtensions": [
+      {
+        "id": "ml2scratch",
+        "name": "ML2Scratch",
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js",
+        "declaredBlockCount": 29
+      },
+      {
+        "id": "posenet2scratch",
+        "name": "Posenet2Scratch",
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js",
+        "declaredBlockCount": 39
+      },
+      {
+        "id": "microbitMore",
+        "name": "Microbit More",
+        "repository": "microbit-more/mbit-more-v2",
+        "sourceBranch": "stretch3",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js",
+        "declaredBlockCount": 31
+      },
+      {
+        "id": "tm2scratch",
+        "name": "TM2Scratch",
+        "repository": "champierre/tm2scratch",
+        "commit": "d018790a8afbb2bfc793ea6b8b5ef4b4e5abbd1e",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_tm2scratch/index.js",
+        "declaredBlockCount": 17
+      },
+      {
+        "id": "g2s",
+        "name": "AkaDako (Grove2Scratch)",
+        "repository": "tfabworks/xcx-g2s",
+        "sourceBranch": "stretch3",
+        "commit": "3132a66f5d6f21ebbba7766ef939c84c569f089b",
+        "sourcePath": "src/vm/extensions/block/index.js",
+        "declaredBlockCount": 72
+      },
+      {
+        "id": "speech2scratch",
+        "name": "Speech2Scratch",
+        "repository": "champierre/speech2scratch",
+        "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_speech2scratch/index.js",
+        "declaredBlockCount": 2
+      },
+      {
+        "id": "ic2scratch",
+        "name": "ImageClassifier2Scratch",
+        "repository": "champierre/ic2scratch",
+        "commit": "9384b52ad8161f8697c9219f6b49f5d6c783ee4e",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ic2scratch/index.js",
+        "declaredBlockCount": 11
+      },
+      {
+        "id": "cameraselector",
+        "name": "CameraSelector",
+        "repository": "tfabworks/xcx-cameraselector",
+        "commit": "8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088",
+        "sourcePath": "src/vm/extensions/block/index.js",
+        "declaredBlockCount": 1
+      }
+    ]
+  },
+  "statusDefinitions": {
+    "stable": "Saved .sb3 shape and runtime behavior have both been verified.",
+    "experimental": "Saved .sb3 shape is verified, but runtime or hardware verification is incomplete.",
+    "unsupported": "The block must fail safely until its saved shape is verified."
+  },
+  "notes": [
+    "Block counts are an inventory baseline from each pinned getInfo() implementation, not a claim of sb3-changer support.",
+    "The Stretch3 build currently follows external repository branches; sb3-changer pins audited commits to keep compatibility work reproducible.",
+    "Other custom extensions listed by Stretch3 are outside this compatibility target unless explicitly added later."
+  ]
+}
