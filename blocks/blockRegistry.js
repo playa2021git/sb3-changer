@@ -9,7 +9,15 @@
     extensionInfo: new Map()
   };
 
-  const VERIFIED_EXTENSION_IDS = new Set(["pen", "music", "translate", "text2speech", "microbitMore"]);
+  const VERIFIED_EXTENSION_IDS = new Set([
+    "pen",
+    "music",
+    "translate",
+    "text2speech",
+    "microbitMore",
+    "cameraselector",
+    "speech2scratch"
+  ]);
 
   /* 画面表示とproject.json生成の両方で同じ定義を使うための登録関数です。 */
   function registerBlock(definition) {
@@ -40,6 +48,7 @@
       registry.extensionInfo.set(normalized.extensionId, {
         extensionId: normalized.extensionId,
         category: normalized.category,
+        extensionURL: normalized.extensionURL || null,
         note: normalized.extensionNote || "Stretch3側で同じ拡張機能を追加すると実行できます。"
       });
     }

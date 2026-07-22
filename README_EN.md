@@ -28,6 +28,8 @@ The current main support areas are:
 - Translate extension
 - Text to Speech extension
 - A small verified subset of Microbit More
+- CameraSelector `selectCamera`
+- Speech2Scratch recognition start and recognized-text reporter
 - A multi-sprite MVP through `sprite("name", () => { ... })`
 - Downloadable `.sb3` files containing generated `project.json` and SVG assets
 - Scratch-like preview, friendly errors, and warnings
@@ -44,7 +46,8 @@ Detailed references:
 The following areas are unsupported or intentionally blocked until their saved `.sb3` shapes are verified:
 
 - Extension blocks whose saved `project.json` shape has not been confirmed from a real `.sb3`
-- Unverified blocks from ImageClassifier2Scratch, ML2Scratch, Posenet2Scratch, TM2Scratch, TMPose2Scratch, Speech2Scratch, and Camera Selector
+- Unverified blocks from ImageClassifier2Scratch, ML2Scratch, Posenet2Scratch, TM2Scratch, TMPose2Scratch, and AkaDako
+- Compatibility helper functions that do not exist in the official CameraSelector / Speech2Scratch `getInfo()`
 - Microbit More blocks such as `TILT_LEFT` / `TILT_RIGHT`, servos, pin I/O, and sensor reporters
 - Scratch custom block definitions
 - General JavaScript APIs such as arrays, `parseInt`, `Number`, `toString`, `includes`, and `push`
@@ -121,6 +124,21 @@ Use [stretchscript-spec.md](stretchscript-spec.md) as the compact prompt-oriente
 | Translate | Registered in the converter; real `.sb3` fixture coverage is still pending | `translate`, `viewerLanguage` |
 | Text to Speech | Registered in the converter; real `.sb3` fixture coverage is still pending | `speak`, `setVoice`, `setSpeechLanguage` |
 | Microbit More | Verified minimal subset only and protected by regression tests | A/B buttons, text display, shake, tone play/stop |
+| CameraSelector | Experimental; generated saved shape matches the official fixture, device behavior not yet verified | `selectCamera` |
+| Speech2Scratch | Experimental; generated saved shape matches the official fixture, browser speech recognition not yet verified | `startSpeechRecognition`, `speechText` |
+
+CameraSelector and Speech2Scratch example:
+
+```js
+whenGreenFlagClicked(() => {
+  selectCamera("​標準カメラ​");
+  startSpeechRecognition();
+  wait(3);
+  sayNow(speechText());
+});
+```
+
+The CameraSelector argument is a dynamic device-menu value. The Japanese default-camera label above is verified by the official fixture, but classroom devices should use the camera name displayed by Stretch3.
 
 ## Microbit More Status
 
@@ -171,7 +189,7 @@ Important files:
 Run the regression suite after every change:
 
 ```sh
-node --test tests/stretch-script.test.mjs
+npm test
 ```
 
 The suite protects important routes including:
@@ -189,6 +207,7 @@ The suite protects important routes including:
 - `ifBlock` patterns used in rock-paper-scissors logic
 - Multi-sprite MVP
 - Verified Microbit More subset
+- CameraSelector / Speech2Scratch official-fixture saved-shape comparisons
 
 When adding support for a new block, also add regression coverage in `tests/stretch-script.test.mjs` and update this README or the relevant compatibility table.
 

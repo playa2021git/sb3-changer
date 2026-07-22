@@ -1,22 +1,39 @@
-/* 実物fixtureは確認済みです。変換処理を実装するまでは安全に停止します。 */
+/* Speech2Scratchは公式fixtureで確認した2ブロックだけを有効化します。 */
 (function () {
   "use strict";
 
   const R = window.StretchScriptBlocks;
   const source = "https://github.com/champierre/speech2scratch/blob/b6d0f4ed9d349d620c0ccba74acf75e90505d09b/scratch-vm/src/extensions/scratch3_speech2scratch/index.js";
+  const extensionURL = "https://champierre.github.io/speech2scratch/speech2scratch.mjs";
 
-  [
-    "speechText",
-    "startSpeechRecognition"
-  ].forEach((functionName) => {
-    R.registerUnsupported({
-      functionName,
+  R.registerMany([
+    {
+      functionName: "startSpeechRecognition",
+      extensionId: "speech2scratch",
+      extensionURL,
+      extensionNote: window.StretchScriptExtensionNotes.speech2scratch,
+      opcode: "speech2scratch_startRecognition",
       category: "Speech2Scratch",
-      source,
-      reason: "公式fixtureで保存形は確認済みですが、sb3-changerの生成処理は未実装です。",
-      nextStep: "definitions/speech2scratch.json と実物fixtureに一致する変換処理を実装してください。"
-    });
-  });
+      blockType: "stack",
+      arguments: [],
+      sample: "startSpeechRecognition();",
+      description: "音声認識を開始する。保存形は公式fixtureで確認済み。",
+      source
+    },
+    {
+      functionName: "speechText",
+      extensionId: "speech2scratch",
+      extensionURL,
+      extensionNote: window.StretchScriptExtensionNotes.speech2scratch,
+      opcode: "speech2scratch_getSpeech",
+      category: "Speech2Scratch",
+      blockType: "reporter",
+      arguments: [],
+      sample: "sayNow(speechText());",
+      description: "認識した音声を文字列として返す。保存形は公式fixtureで確認済み。",
+      source
+    }
+  ]);
 
   R.registerUnsupported({
     functionName: "speechContains",

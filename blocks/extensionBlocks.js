@@ -10,6 +10,6 @@
     tmpose2scratch: "TMPose2scratchは、Stretch3側でモデルを準備してから使います。",
     speech2scratch: "Speech2Scratchは、Stretch3側で音声認識の許可をしてから使います。",
     imageClassifier2scratch: "ImageClassifier2scratchは、Stretch3側でカメラやモデルを準備してから使います。",
-    cameraSelector: "カメラセレクターは、Stretch3側で使うカメラを選ぶための拡張です。"
+    cameraselector: "カメラセレクターは、Stretch3側で使うカメラを選ぶための拡張です。"
   };
 })();
