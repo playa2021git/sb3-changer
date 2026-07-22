@@ -1,5 +1,7 @@
 # Microbit More block matrix (stable / experimental / unsupported)
 
+> **履歴資料:** 2026-07-22以降の一次情報は`definitions/microbit-more.json`です。この表には当時の推測値が残るため、新しい実装やfixture判定には直接使用しません。
+
 この表は **project.json 保存形** と **実機確認状態** を分離して、授業利用可否を判断するための台帳です。
 
 ## 判定基準

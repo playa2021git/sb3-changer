@@ -119,6 +119,13 @@
         },
         "producer": {
           "type": "string"
+        },
+        "knownLegacyOpcodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
         }
       },
       "additionalProperties": false
@@ -143,6 +150,13 @@
       "properties": {
         "functionName": {
           "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
         },
         "extensionId": {
           "type": "string"
@@ -175,15 +189,23 @@
           "type": "boolean"
         },
         "fixture": {
-          "type": "object",
-          "required": [
-            "fixtureId",
-            "selector"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "fixtureId",
+                "selector"
+              ]
+            }
           ]
         },
         "fixtureStatus": {
           "enum": [
             "verified",
+            "external-only",
             "missing",
             "needs-refresh"
           ]
@@ -205,6 +227,9 @@
         },
         "officialSource": {
           "$ref": "#/$defs/officialSource"
+        },
+        "notes": {
+          "type": "string"
         }
       },
       "additionalProperties": false

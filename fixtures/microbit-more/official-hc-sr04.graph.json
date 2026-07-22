@@ -1,0 +1,486 @@
+{
+  "extensionURLs": [
+    [
+      "microbitMore",
+      "https://yokobond.github.io/mbit-more-v2/dist/microbitMore.mjs"
+    ]
+  ],
+  "extensions": [
+    "microbitMore"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {},
+          "inputs": {
+            "SIZE": [
+              1,
+              [
+                4,
+                "75"
+              ]
+            ]
+          },
+          "next": null,
+          "opcode": "looks_setsizeto",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": false,
+      "orphans": [
+        {
+          "fields": {
+            "EVENT": [
+              "PULSE_HIGH",
+              null
+            ],
+            "PIN": [
+              1,
+              null
+            ]
+          },
+          "inputs": {},
+          "next": null,
+          "opcode": "microbitMore_getPinEventTimestamp",
+          "shadow": false,
+          "topLevel": false
+        }
+      ],
+      "stacks": [
+        {
+          "fields": {
+            "STATE": [
+              "connected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {
+              "PIN": [
+                "0",
+                null
+              ]
+            },
+            "inputs": {
+              "LEVEL": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "digitalValueMenu": [
+                        "false",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "microbitMore_menu_digitalValueMenu",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": {
+              "fields": {
+                "MODE": [
+                  "NONE",
+                  null
+                ],
+                "PIN": [
+                  "1",
+                  null
+                ]
+              },
+              "inputs": {},
+              "next": {
+                "fields": {
+                  "EVENT_TYPE": [
+                    "ON_PULSE",
+                    null
+                  ],
+                  "PIN": [
+                    "1",
+                    null
+                  ]
+                },
+                "inputs": {},
+                "next": {
+                  "fields": {},
+                  "inputs": {
+                    "SUBSTACK": [
+                      2,
+                      {
+                        "block": {
+                          "fields": {
+                            "PIN": [
+                              "0",
+                              null
+                            ]
+                          },
+                          "inputs": {
+                            "LEVEL": [
+                              1,
+                              {
+                                "block": {
+                                  "fields": {
+                                    "digitalValueMenu": [
+                                      "false",
+                                      null
+                                    ]
+                                  },
+                                  "inputs": {},
+                                  "next": null,
+                                  "opcode": "microbitMore_menu_digitalValueMenu",
+                                  "shadow": true,
+                                  "topLevel": false
+                                }
+                              }
+                            ]
+                          },
+                          "next": {
+                            "fields": {
+                              "PIN": [
+                                "0",
+                                null
+                              ]
+                            },
+                            "inputs": {
+                              "LEVEL": [
+                                1,
+                                {
+                                  "block": {
+                                    "fields": {
+                                      "digitalValueMenu": [
+                                        "true",
+                                        null
+                                      ]
+                                    },
+                                    "inputs": {},
+                                    "next": null,
+                                    "opcode": "microbitMore_menu_digitalValueMenu",
+                                    "shadow": true,
+                                    "topLevel": false
+                                  }
+                                }
+                              ]
+                            },
+                            "next": {
+                              "fields": {
+                                "PIN": [
+                                  "0",
+                                  null
+                                ]
+                              },
+                              "inputs": {
+                                "LEVEL": [
+                                  1,
+                                  {
+                                    "block": {
+                                      "fields": {
+                                        "digitalValueMenu": [
+                                          "false",
+                                          null
+                                        ]
+                                      },
+                                      "inputs": {},
+                                      "next": null,
+                                      "opcode": "microbitMore_menu_digitalValueMenu",
+                                      "shadow": true,
+                                      "topLevel": false
+                                    }
+                                  }
+                                ]
+                              },
+                              "next": {
+                                "fields": {},
+                                "inputs": {
+                                  "DURATION": [
+                                    1,
+                                    [
+                                      5,
+                                      "0.1"
+                                    ]
+                                  ]
+                                },
+                                "next": null,
+                                "opcode": "control_wait",
+                                "shadow": false,
+                                "topLevel": false
+                              },
+                              "opcode": "microbitMore_setDigitalOut",
+                              "shadow": false,
+                              "topLevel": false
+                            },
+                            "opcode": "microbitMore_setDigitalOut",
+                            "shadow": false,
+                            "topLevel": false
+                          },
+                          "opcode": "microbitMore_setDigitalOut",
+                          "shadow": false,
+                          "topLevel": false
+                        }
+                      }
+                    ]
+                  },
+                  "next": null,
+                  "opcode": "control_forever",
+                  "shadow": false,
+                  "topLevel": false
+                },
+                "opcode": "microbitMore_listenPinEventType",
+                "shadow": false,
+                "topLevel": false
+              },
+              "opcode": "microbitMore_setPullMode",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "microbitMore_setDigitalOut",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "disconnected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {
+              "STOP_OPTION": [
+                "other scripts in sprite",
+                null
+              ]
+            },
+            "inputs": {},
+            "mutation": {
+              "children": [],
+              "hasnext": "true",
+              "tagName": "mutation"
+            },
+            "next": null,
+            "opcode": "control_stop",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "EVENT": [
+              "PULSE_HIGH",
+              null
+            ],
+            "PIN": [
+              "1",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {
+              "VARIABLE": [
+                "distance",
+                "9gmF{_uwWkp)Grjd8RxR"
+              ]
+            },
+            "inputs": {
+              "VALUE": [
+                3,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {
+                      "NUM1": [
+                        3,
+                        {
+                          "block": {
+                            "fields": {
+                              "EVENT": [
+                                "PULSE_HIGH",
+                                null
+                              ],
+                              "PIN": [
+                                "1",
+                                null
+                              ]
+                            },
+                            "inputs": {},
+                            "next": null,
+                            "opcode": "microbitMore_getPinEventValue",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        },
+                        [
+                          4,
+                          ""
+                        ]
+                      ],
+                      "NUM2": [
+                        1,
+                        [
+                          4,
+                          "58"
+                        ]
+                      ]
+                    },
+                    "next": null,
+                    "opcode": "operator_divide",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                },
+                [
+                  10,
+                  "0"
+                ]
+              ]
+            },
+            "next": {
+              "fields": {},
+              "inputs": {
+                "Y": [
+                  3,
+                  {
+                    "block": {
+                      "fields": {},
+                      "inputs": {
+                        "NUM1": [
+                          3,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "NUM1": [
+                                  1,
+                                  [
+                                    4,
+                                    "10"
+                                  ]
+                                ],
+                                "NUM2": [
+                                  3,
+                                  [
+                                    12,
+                                    "distance",
+                                    "9gmF{_uwWkp)Grjd8RxR"
+                                  ],
+                                  [
+                                    4,
+                                    ""
+                                  ]
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "operator_multiply",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          },
+                          [
+                            4,
+                            ""
+                          ]
+                        ],
+                        "NUM2": [
+                          1,
+                          [
+                            4,
+                            "180"
+                          ]
+                        ]
+                      },
+                      "next": null,
+                      "opcode": "operator_subtract",
+                      "shadow": false,
+                      "topLevel": false
+                    }
+                  },
+                  [
+                    4,
+                    "-10"
+                  ]
+                ]
+              },
+              "next": null,
+              "opcode": "motion_sety",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "data_setvariableto",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenPinEvent",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "EVENT": [
+              "PULSE_HIGH",
+              null
+            ],
+            "PIN": [
+              "1",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SOUND_MENU": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "SOUND_MENU": [
+                        "Pop",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "sound_sounds_menu",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "sound_play",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenPinEvent",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

@@ -14,3 +14,5 @@
 - `officialSource`: 参照した公式リポジトリ、コミット、ソースパス
 
 状態を混同しないことが重要です。実物fixtureがあっても生成処理が未実装なら`supportStatus`は`unsupported`、生成できても実機未確認なら`deviceVerificationStatus`は`not-run`のままにします。
+
+`fixtureStatus: external-only`は、過去の実測記録はあるものの元の`.sb3`バイナリをCIで再検証できない状態です。この場合は`fixture`を`null`にし、再取得できるまで`verified`へ上げません。

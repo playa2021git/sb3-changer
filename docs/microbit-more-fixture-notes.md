@@ -1,5 +1,7 @@
 # Microbit More fixture notes (Mirobitmoretest.sb3 / 揺さぶられたとき音を鳴らす.sb3)
 
+> **外部fixtureの履歴資料:** 元の`.sb3`バイナリはリポジトリに未収録です。再現可能な公式fixtureと現在の状態は`definitions/microbit-more.json`および`fixtures/microbit-more/`を参照してください。
+
 ## 解析対象
 - fixture名: `Mirobitmoretest.sb3`
 - fixture名: `揺さぶられたとき音を鳴らす.sb3`

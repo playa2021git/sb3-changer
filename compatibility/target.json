@@ -102,7 +102,7 @@
   "statusDefinitions": {
     "stable": "Saved .sb3 shape and runtime behavior have both been verified.",
     "experimental": "Saved .sb3 shape is verified, but runtime or hardware verification is incomplete.",
-    "unsupported": "The block must fail safely until its saved shape is verified."
+    "unsupported": "Fixture evidence, generator support, or safe runtime behavior is incomplete, so the block must fail safely."
   },
   "notes": [
     "Block counts are an inventory baseline from each pinned getInfo() implementation, not a claim of sb3-changer support.",
