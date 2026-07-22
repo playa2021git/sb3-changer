@@ -300,8 +300,24 @@ custom_extensions:
     notes:
       - 実行時にブラウザのマイク権限が必要
   microbitMore:
-    status: confirmed_minimum_only
+    status: confirmed_and_experimental
     reference: docs/microbit-more-block-matrix.md
+    functions:
+      - { name: whenMicrobitButtonPressed, args: [string button, closure body], allowedButtons: ["A", "B"], returns: void, blockType: hat, status: stable, example: "whenMicrobitButtonPressed(\"A\", () => { sayNow(\"A\"); });" }
+      - { name: ifMicrobitButtonPressed, args: [string button, closure body], allowedButtons: ["A", "B"], returns: void, blockType: hat, status: stable, note: "互換エイリアス。whenMicrobitButtonPressedを推奨" }
+      - { name: microbitDisplayMatrix, args: [string pattern], returns: void, blockType: command, status: stable, example: "microbitDisplayMatrix(\"0101011111111110111000100\");" }
+      - { name: microbitDisplayText, args: [stringOrReporter text, number delay], returns: void, blockType: command, status: stable, example: "microbitDisplayText(\"Hello\", 120);" }
+      - { name: whenMicrobitShaken, args: [closure body], returns: void, blockType: hat, status: stable, example: "whenMicrobitShaken(() => { sayNow(\"SHAKE\"); });" }
+      - { name: whenMicrobitGesture, args: [string gesture, closure body], allowedGestures: ["SHAKE"], returns: void, blockType: hat, status: stable }
+      - { name: microbitPlayTone, args: [number frequency, optional number volume], returns: void, blockType: command, status: stable, example: "microbitPlayTone(440, 100);" }
+      - { name: microbitStopTone, args: [], returns: void, blockType: command, status: stable, example: "microbitStopTone();" }
+      - { name: whenMicrobitConnectionChanged, args: [string state, closure body], allowedStates: ["connected", "disconnected"], returns: void, blockType: hat, status: experimental }
+      - { name: microbitLightLevel, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitLightLevel());" }
+      - { name: microbitRoll, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitRoll());" }
+    notes:
+      - microbitDisplayMatrixのpatternは0と1だけを25個並べる
+      - 5文字を1行として上から5行分をつなげる。1は点灯、0は消灯
+      - experimentalは公式fixtureとの構造比較済みだが実機確認待ち
 ```
 
 ## 禁止事項

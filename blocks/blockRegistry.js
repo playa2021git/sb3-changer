@@ -108,6 +108,7 @@
       color: "色",
       menu: "選択肢",
       menuInput: "選択肢",
+      matrix: "5×5 LEDパターン",
       variable: "変数名",
       list: "リスト名",
       listIndex: "リストの場所",

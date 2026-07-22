@@ -125,7 +125,7 @@ Use [stretchscript-spec.md](stretchscript-spec.md) as the compact prompt-oriente
 | Music | Registered in the converter; real `.sb3` fixture coverage is still pending | `playDrumForBeats`, `playNoteForBeats`, `setInstrument`, `setTempo`, `tempo` |
 | Translate | Registered in the converter; real `.sb3` fixture coverage is still pending | `translate`, `viewerLanguage` |
 | Text to Speech | Registered in the converter; real `.sb3` fixture coverage is still pending | `speak`, `setVoice`, `setSpeechLanguage` |
-| Microbit More | Verified minimal subset only and protected by regression tests | A/B buttons, text display, shake, tone play/stop |
+| Microbit More | Fixture-backed subset; hardware-pending functions remain experimental | A/B buttons, LED matrix/text, shake, tone, light, roll, connection changes |
 | ML2Scratch | Experimental; only six blocks found in the official 1-or-2 fixture | `mlAddExample1/2/3`, `whenMlLabelReceived`, `mlSetVideo`, `mlSetInput` |
 | CameraSelector | Experimental; generated saved shape matches the official fixture, device behavior not yet verified | `selectCamera` |
 | Speech2Scratch | Experimental; generated saved shape matches the official fixture, browser speech recognition not yet verified | `startSpeechRecognition`, `speechText` |
@@ -165,10 +165,10 @@ All 29 official blocks are inventoried. The remaining 23—including `mlLabel()`
 
 ## Microbit More Status
 
-Microbit More support is intentionally limited to the subset with confirmed saved shapes and practical classroom behavior.
-Other blocks from the official `getInfo()` have been inventoried, but they fail safely by individual function name until both saved shapes and hardware behavior are verified.
+Microbit More support is intentionally limited to blocks whose saved shapes are confirmed by real fixtures.
+Hardware-verified blocks and experimental blocks awaiting hardware checks are listed separately.
 
-Supported:
+Hardware verified:
 
 - `whenMicrobitButtonPressed("A", () => { ... })`
 - `whenMicrobitButtonPressed("B", () => { ... })`
@@ -179,17 +179,24 @@ Supported:
 - `whenMicrobitGesture("SHAKE", () => { ... })`
 - `microbitPlayTone(440, 100)`
 - `microbitStopTone()`
+- `microbitDisplayMatrix("0101011111111110111000100")`
+
+Experimental (official fixture shape matches; hardware check pending):
+
+- `whenMicrobitConnectionChanged("connected", () => { ... })`
+- `whenMicrobitConnectionChanged("disconnected", () => { ... })`
+- `microbitLightLevel()`
+- `microbitRoll()`
 
 Unsupported until further fixture and hardware verification:
 
 - `TILT_LEFT` / `TILT_RIGHT`
 - Servo blocks
 - Pin I/O blocks
-- Sensor reporter blocks
-- Connection-dependent blocks
+- Sensor reporters other than light and roll
 - Data, touch, and pin event blocks that depend on communication or runtime configuration
 
-See the [Microbit More block matrix](docs/microbit-more-block-matrix.md), [fixture guide](docs/microbit-more-fixture-guide.md), and [implementation plan](docs/microbit-more-implementation-plan.md).
+See [Microbit More V2 hardware test batch 1](docs/microbit-more-v2-device-test-batch-1.md), the [Microbit More block matrix](docs/microbit-more-block-matrix.md), [fixture guide](docs/microbit-more-fixture-guide.md), and [implementation plan](docs/microbit-more-implementation-plan.md).
 
 ## Developer Map
 
