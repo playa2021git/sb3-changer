@@ -156,12 +156,18 @@ for (const { fileName, value: definition } of definitions) {
       const project = readProjectJsonFromSb3(sb3Path);
       assert.ok(project.extensions.includes(definition.extensionId));
       if (definition.extensionURL) {
-        assert.ok(
-          (project.extensionURLs || []).some(([extensionId, extensionURL]) =>
-            extensionId === definition.extensionId && extensionURL === definition.extensionURL
-          ),
-          `${fixture.sb3Path} のextensionURLが台帳と一致しません。`
+        const matchingExtensionURL = (project.extensionURLs || []).some(([extensionId, extensionURL]) =>
+          extensionId === definition.extensionId && extensionURL === definition.extensionURL
         );
+        if (fixture.extensionURLStatus === "legacy-missing") {
+          assert.equal(
+            matchingExtensionURL,
+            false,
+            `${fixture.sb3Path} は旧形式fixtureのためextensionURLを含まない想定です。`
+          );
+        } else {
+          assert.ok(matchingExtensionURL, `${fixture.sb3Path} のextensionURLが台帳と一致しません。`);
+        }
       }
       const fixtureOpcodes = new Set(
         (project.targets || []).flatMap((target) =>

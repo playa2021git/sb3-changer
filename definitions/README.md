@@ -16,3 +16,5 @@
 状態を混同しないことが重要です。実物fixtureがあっても生成処理が未実装なら`supportStatus`は`unsupported`、生成できても実機未確認なら`deviceVerificationStatus`は`not-run`のままにします。
 
 `fixtureStatus: external-only`は、過去の実測記録はあるものの元の`.sb3`バイナリをCIで再検証できない状態です。この場合は`fixture`を`null`にし、再取得できるまで`verified`へ上げません。
+
+古いXcratchプロジェクトには`extensionURLs`が保存されていない場合があります。その事実を公式fixtureとして残す場合は`extensionURLStatus: legacy-missing`を付けます。現在の生成処理では、台帳の`extensionURL`を新しい`.sb3`へ必ず追加します。

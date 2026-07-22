@@ -1,0 +1,835 @@
+{
+  "schemaVersion": 1,
+  "slug": "ml2scratch",
+  "extensionName": "ML2Scratch",
+  "extensionId": "ml2scratch",
+  "extensionURL": "https://champierre.github.io/ml2scratch/ml2scratch.mjs",
+  "officialSource": {
+    "repository": "champierre/ml2scratch",
+    "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+    "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+  },
+  "fixtures": [
+    {
+      "id": "official-1or2",
+      "sb3Path": "fixtures/ml2scratch/official-1or2.sb3",
+      "graphPath": "fixtures/ml2scratch/official-1or2.graph.json",
+      "sha256": "016f68b5aec7f138a88cbd664719ce4c46de7ea8814311173ac81a0d1eb964ea",
+      "source": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "path": "sample_projects/1or2.sb3",
+        "blobSha": "523715a8c140b7bfec688ba7e23310d6d32df23a"
+      },
+      "producer": "Official ML2Scratch sample bundled by the extension repository",
+      "extensionURLStatus": "legacy-missing"
+    }
+  ],
+  "blocks": [
+    {
+      "functionName": "mlAddExample1",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_addExample1",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_addExample1",
+          "targetName": "Pencil"
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlAddExample2",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_addExample2",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_addExample2",
+          "targetName": "Pencil"
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlAddExample3",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_addExample3",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_addExample3",
+          "targetName": "Pencil"
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlTrain",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_train",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "LABEL": {
+          "value": "4",
+          "id": null,
+          "defaultValue": "4"
+        }
+      },
+      "menuValues": {
+        "LABEL": {
+          "menuId": "train_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlTrainLabel",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_trainAny",
+      "blockType": "command",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "defaultValue": "11",
+          "savedShapeStatus": "unverified"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlLabel",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getLabel",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "whenMlLabelReceived",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_whenReceived",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "LABEL": {
+          "value": "1",
+          "id": null,
+          "defaultValue": "any"
+        }
+      },
+      "menuValues": {
+        "LABEL": {
+          "menuId": "received_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "any",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "fixtureValues": [
+            "1",
+            "2"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_whenReceived",
+          "targetName": "Cat",
+          "fields": {
+            "LABEL": "1"
+          }
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "whenMlCustomLabelReceived",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_whenReceivedAny",
+      "blockType": "hat",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "defaultValue": "11",
+          "savedShapeStatus": "unverified"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount1",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel1",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount2",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel2",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount3",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel3",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount4",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel4",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount5",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel5",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount6",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel6",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount7",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel7",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount8",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel8",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount9",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel9",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCount10",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel10",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlExampleCountForLabel",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_getCountByLabel",
+      "blockType": "reporter",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "defaultValue": "11",
+          "savedShapeStatus": "unverified"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlReset",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_reset",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "LABEL": {
+          "value": "all",
+          "id": null,
+          "defaultValue": "all"
+        }
+      },
+      "menuValues": {
+        "LABEL": {
+          "menuId": "reset_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "all",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlResetLabel",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_resetAny",
+      "blockType": "command",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "defaultValue": "11",
+          "savedShapeStatus": "unverified"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlDownloadLearningData",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_download",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlUploadLearningData",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_upload",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlSetClassification",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_toggleClassification",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "CLASSIFICATION_STATE": {
+          "value": "off",
+          "id": null,
+          "defaultValue": "off"
+        }
+      },
+      "menuValues": {
+        "CLASSIFICATION_STATE": {
+          "menuId": "classification_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "off",
+            "on"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlSetClassificationInterval",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_setClassificationInterval",
+      "blockType": "command",
+      "inputs": {
+        "CLASSIFICATION_INTERVAL": {
+          "argumentType": "string",
+          "defaultValue": "1",
+          "savedShapeStatus": "unverified",
+          "menuId": "classification_interval_menu",
+          "menuKind": "static",
+          "acceptReporters": true,
+          "values": [
+            "1",
+            "0.5",
+            "0.2",
+            "0.1"
+          ]
+        }
+      },
+      "fields": {},
+      "menuValues": {
+        "CLASSIFICATION_INTERVAL": {
+          "menuId": "classification_interval_menu",
+          "kind": "static",
+          "acceptReporters": true,
+          "values": [
+            "1",
+            "0.5",
+            "0.2",
+            "0.1"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlSetVideo",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_videoToggle",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "VIDEO_STATE": {
+          "value": "off",
+          "id": null,
+          "defaultValue": "off"
+        }
+      },
+      "menuValues": {
+        "VIDEO_STATE": {
+          "menuId": "video_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "off",
+            "on",
+            "on-flipped"
+          ],
+          "fixtureValues": [
+            "off"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_videoToggle",
+          "targetName": "Pencil",
+          "fields": {
+            "VIDEO_STATE": "off"
+          }
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlSetVideoTransparency",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_setVideoTransparency",
+      "blockType": "command",
+      "inputs": {
+        "TRANSPARENCY": {
+          "argumentType": "number",
+          "defaultValue": 50,
+          "savedShapeStatus": "unverified"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      },
+      "notes": "公式getInfo()ではblockTypeが省略されている。Scratch VMの既定に従うcommandブロックとして棚卸し。"
+    },
+    {
+      "functionName": "mlSetInput",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_setInput",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "INPUT": {
+          "value": "stage",
+          "id": null,
+          "defaultValue": "webcam"
+        }
+      },
+      "menuValues": {
+        "INPUT": {
+          "menuId": "input_menu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "webcam",
+            "stage"
+          ],
+          "fixtureValues": [
+            "stage"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-1or2",
+        "selector": {
+          "opcode": "ml2scratch_setInput",
+          "targetName": "Pencil",
+          "fields": {
+            "INPUT": "stage"
+          }
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "experimental",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "mlSwitchCamera",
+      "extensionId": "ml2scratch",
+      "opcode": "ml2scratch_switchCamera",
+      "blockType": "command",
+      "inputs": {
+        "DEVICE": {
+          "argumentType": "string",
+          "defaultValue": "",
+          "savedShapeStatus": "unverified",
+          "menuId": "mediadevices",
+          "menuKind": "dynamic",
+          "acceptReporters": true
+        }
+      },
+      "fields": {},
+      "menuValues": {
+        "DEVICE": {
+          "menuId": "mediadevices",
+          "kind": "dynamic",
+          "acceptReporters": true,
+          "values": [],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/ml2scratch",
+        "commit": "1747c6a7930fbdf9eb3a63244c86daebce3ca83f",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_ml2scratch/index.js"
+      }
+    }
+  ]
+}
