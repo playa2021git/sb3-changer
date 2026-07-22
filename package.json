@@ -1,0 +1,12 @@
+{
+  "name": "sb3-changer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Convert verified StretchScript programs into Stretch3-compatible .sb3 projects.",
+  "scripts": {
+    "test": "node --test tests/stretch-script.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
