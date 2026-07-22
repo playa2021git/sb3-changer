@@ -268,6 +268,30 @@ extensions:
 
 詳細なopcode表は `blocks/penBlocks.js`、`blocks/musicBlocks.js`、`blocks/translateBlocks.js`、`blocks/textToSpeechBlocks.js` を見る。
 
+## 確認済みカスタム拡張
+
+次の関数は公式fixtureと生成ブロックの保存形を比較済み。`experimental`は `.sb3` 保存形を確認済みだが、ブラウザ権限や実機を使う動作確認が未完了であることを表す。
+
+```yaml
+custom_extensions:
+  cameraselector:
+    status: experimental
+    functions:
+      - { name: selectCamera, args: [string cameraName], returns: void, blockType: command, example: "selectCamera(\"​標準カメラ​\");" }
+    notes:
+      - cameraNameは実行環境の動的メニュー値
+  speech2scratch:
+    status: experimental
+    functions:
+      - { name: startSpeechRecognition, args: [], returns: void, blockType: command, example: "startSpeechRecognition();" }
+      - { name: speechText, args: [], returns: string, blockType: reporter, example: "sayNow(speechText());" }
+    notes:
+      - 実行時にブラウザのマイク権限が必要
+  microbitMore:
+    status: confirmed_minimum_only
+    reference: docs/microbit-more-block-matrix.md
+```
+
 ## 禁止事項
 
 ```yaml
@@ -300,12 +324,17 @@ unsupported:
   unconfirmed_external_extensions:
     - ML2scratch
     - Posenet2scratch
-    - Microbit More
     - TM2Scratch
     - TMPose2scratch
-    - Speech2Scratch
     - ImageClassifier2scratch
-    - Camera Selector
+    - AkaDako
+  unsupported_compatibility_helpers:
+    - cameraName
+    - speechContains
+  partially_supported_extensions:
+    - Microbit Moreの対応表にない関数
+    - CameraSelectorはselectCamera以外
+    - Speech2ScratchはstartSpeechRecognitionとspeechText以外
 ```
 
 未対応関数を含むコードは、変換器が `.sb3` を生成せずにエラーで停止する。

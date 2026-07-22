@@ -3,7 +3,13 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import {
+  findFixtureBlocks,
+  normalizeBlockShape,
+  readProjectJsonFromSb3
+} from "../tools/fixture-graph.mjs";
 
 // ブラウザ用のグローバルをNodeテストで再現します。
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -80,9 +86,23 @@ function conversionError(source) {
   assert.fail("変換が失敗するはずでした。");
 }
 
+// 公式sample内の前後ブロックを除き、対象ブロックと入力shadowの保存形を比較します。
+function assertBlockMatchesOfficialFixture(result, fixturePath, opcode) {
+  const officialProject = readProjectJsonFromSb3(path.join(rootDir, fixturePath));
+  const officialMatch = findFixtureBlocks(officialProject, { opcode })[0];
+  const generatedMatch = findFixtureBlocks(result.project, { opcode })[0];
+  assert.ok(officialMatch, `${fixturePath} に ${opcode} がありません。`);
+  assert.ok(generatedMatch, `生成projectに ${opcode} がありません。`);
+  assert.deepEqual(
+    normalizeBlockShape(generatedMatch.target, generatedMatch.blockId),
+    normalizeBlockShape(officialMatch.target, officialMatch.blockId)
+  );
+}
+
 test("回帰: Pen拡張で四角を描くサンプルを壊さない", () => {
   const result = convert(app.samples[1].code);
   assert.deepEqual(result.project.extensions, ["pen"]);
+  assert.equal(result.project.extensionURLs, undefined);
   assert.deepEqual(result.lists, []);
   assert.deepEqual(result.variables, []);
   assert.ok(opcodes(result).includes("pen_clear"));
@@ -502,6 +522,58 @@ sprite("Aさん", () => {
   assert.match(error.message, /同じ名前のスプライト/);
   assert.match(error.cause, /重複/);
 });
+test("CameraSelector: selectCameraを公式fixtureのmenu shadow保存形で変換できる", () => {
+  const definition = JSON.parse(readFileSync(path.join(rootDir, "definitions/camera-selector.json"), "utf8"));
+  const defaultCamera = "\u200b標準カメラ\u200b";
+  const result = convert(`whenGreenFlagClicked(() => {
+  selectCamera("${defaultCamera}");
+});`);
+
+  assert.deepEqual(result.project.extensions, ["cameraselector"]);
+  assert.deepEqual(result.project.extensionURLs, [
+    [definition.extensionId, definition.extensionURL]
+  ]);
+  assertBlockMatchesOfficialFixture(
+    result,
+    "fixtures/camera-selector/official-example.sb3",
+    "cameraselector_selectCamera"
+  );
+});
+
+test("Speech2Scratch: 開始commandと認識結果reporterを公式fixture保存形で変換できる", () => {
+  const definition = JSON.parse(readFileSync(path.join(rootDir, "definitions/speech2scratch.json"), "utf8"));
+  const result = convert(`whenGreenFlagClicked(() => {
+  startSpeechRecognition();
+  sayNow(speechText());
+});`);
+
+  assert.deepEqual(result.project.extensions, ["speech2scratch"]);
+  assert.deepEqual(result.project.extensionURLs, [
+    [definition.extensionId, definition.extensionURL]
+  ]);
+  assertBlockMatchesOfficialFixture(
+    result,
+    "fixtures/speech2scratch/official-sample.sb3",
+    "speech2scratch_startRecognition"
+  );
+  assertBlockMatchesOfficialFixture(
+    result,
+    "fixtures/speech2scratch/official-sample.sb3",
+    "speech2scratch_getSpeech"
+  );
+});
+
+test("CameraSelector/Speech2Scratch: 公式にない互換候補は引き続き安全停止する", () => {
+  assert.match(
+    conversionError("whenGreenFlagClicked(() => { sayNow(cameraName()); });").message,
+    /未確認または未対応/
+  );
+  assert.match(
+    conversionError("whenGreenFlagClicked(() => { sayNow(speechContains()); });").message,
+    /未確認または未対応/
+  );
+});
+
 test("Microbit More: A/Bボタン + displayText を fixture保存形で変換できる", () => {
   const result = convert(`whenMicrobitButtonPressed("A", () => {
   microbitDisplayText("2", 120);

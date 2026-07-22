@@ -3,6 +3,7 @@
   "slug": "camera-selector",
   "extensionName": "CameraSelector",
   "extensionId": "cameraselector",
+  "extensionURL": "https://tfabworks.github.io/xcx-cameraselector/dist/cameraselector.mjs",
   "officialSource": {
     "repository": "tfabworks/xcx-cameraselector",
     "commit": "8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088",
@@ -58,7 +59,7 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "unsupported",
+      "supportStatus": "experimental",
       "deviceVerificationStatus": "not-run",
       "officialSource": {
         "repository": "tfabworks/xcx-cameraselector",

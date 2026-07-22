@@ -133,6 +133,48 @@ function normalizeTarget(target) {
 }
 
 /**
+ * Normalize one block and the blocks referenced by its inputs.
+ * Surrounding parent/next connections are intentionally omitted so a generated
+ * block can be compared with the same block embedded in a larger official sample.
+ */
+export function normalizeBlockShape(target, blockId) {
+  const blocks = target.blocks || {};
+
+  const normalizeBlock = (currentId, ancestors = new Set()) => {
+    const block = blocks[currentId];
+    if (!block) throw new Error(`参照先ブロック ${currentId} がありません。`);
+    if (ancestors.has(currentId)) throw new Error(`ブロック入力に循環参照があります: ${currentId}`);
+
+    const nextAncestors = new Set(ancestors);
+    nextAncestors.add(currentId);
+    const inputs = Object.fromEntries(
+      Object.keys(block.inputs || {})
+        .sort()
+        .map((name) => [
+          name,
+          block.inputs[name].map((item, index) => {
+            if (index > 0 && typeof item === "string" && blocks[item]) {
+              return { block: normalizeBlock(item, nextAncestors) };
+            }
+            return sortObject(item);
+          })
+        ])
+    );
+
+    const normalized = {
+      opcode: block.opcode,
+      inputs,
+      fields: sortObject(block.fields || {}),
+      shadow: Boolean(block.shadow)
+    };
+    if (block.mutation) normalized.mutation = sortObject(block.mutation);
+    return normalized;
+  };
+
+  return normalizeBlock(blockId);
+}
+
+/**
  * Convert project.json into an ID- and coordinate-independent block graph.
  * Parent links are derived from next/input edges, so they are intentionally omitted.
  */

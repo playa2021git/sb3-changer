@@ -1,17 +1,37 @@
-/* 実物fixtureは確認済みです。変換処理を実装するまでは安全に停止します。 */
+/* CameraSelectorは公式fixtureで確認した1ブロックだけを有効化します。 */
 (function () {
   "use strict";
 
   const R = window.StretchScriptBlocks;
   const source = "https://github.com/tfabworks/xcx-cameraselector/blob/8ada859f8d6b2e978a3c1bd5cebc5f1af8ce2088/src/vm/extensions/block/index.js";
+  const extensionURL = "https://tfabworks.github.io/xcx-cameraselector/dist/cameraselector.mjs";
+  const defaultCamera = "\u200b標準カメラ\u200b";
 
-  R.registerUnsupported({
-    functionName: "selectCamera",
-    category: "カメラセレクター",
-    source,
-    reason: "公式fixtureで保存形は確認済みですが、sb3-changerの生成処理は未実装です。",
-    nextStep: "definitions/camera-selector.json と実物fixtureに一致する変換処理を実装してください。"
-  });
+  R.registerMany([
+    {
+      functionName: "selectCamera",
+      extensionId: "cameraselector",
+      extensionURL,
+      extensionNote: window.StretchScriptExtensionNotes.cameraselector,
+      opcode: "cameraselector_selectCamera",
+      category: "カメラセレクター",
+      blockType: "stack",
+      arguments: [
+        {
+          name: "camera",
+          scratchName: "LIST",
+          type: "menuInput",
+          role: "input",
+          defaultValue: defaultCamera,
+          menuOpcode: "cameraselector_menu_videoDevicesMenu",
+          menuField: "videoDevicesMenu"
+        }
+      ],
+      sample: `selectCamera("${defaultCamera}");`,
+      description: "カメラ名を動的メニューshadowとして保存する。保存形は公式fixtureで確認済み。",
+      source
+    }
+  ]);
 
   R.registerUnsupported({
     functionName: "cameraName",

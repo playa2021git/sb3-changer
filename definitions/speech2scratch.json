@@ -3,6 +3,7 @@
   "slug": "speech2scratch",
   "extensionName": "Speech2Scratch",
   "extensionId": "speech2scratch",
+  "extensionURL": "https://champierre.github.io/speech2scratch/speech2scratch.mjs",
   "officialSource": {
     "repository": "champierre/speech2scratch",
     "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
@@ -41,7 +42,7 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "unsupported",
+      "supportStatus": "experimental",
       "deviceVerificationStatus": "not-run",
       "officialSource": {
         "repository": "champierre/speech2scratch",
@@ -66,7 +67,7 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "unsupported",
+      "supportStatus": "experimental",
       "deviceVerificationStatus": "not-run",
       "officialSource": {
         "repository": "champierre/speech2scratch",

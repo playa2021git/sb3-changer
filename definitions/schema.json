@@ -28,6 +28,10 @@
       "type": "string",
       "minLength": 1
     },
+    "extensionURL": {
+      "type": "string",
+      "format": "uri"
+    },
     "officialSource": {
       "$ref": "#/$defs/officialSource"
     },

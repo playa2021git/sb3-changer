@@ -768,6 +768,7 @@ StretchScriptの仕様に従ってください。`;
     if (!Array.isArray(project.extensions)) {
       report.errors.push("extensionsが配列ではありません。");
     }
+    validateExtensionURLs(project, report);
     if (!project.meta || typeof project.meta !== "object") {
       report.errors.push("metaがありません。");
     } else {
@@ -791,6 +792,42 @@ StretchScriptの仕様に従ってください。`;
     validateUsedExtensions(project.targets, report);
 
     return report;
+  }
+
+  /* Xcratch系カスタム拡張の読み込みURLが拡張IDと対応しているか確認します。 */
+  function validateExtensionURLs(project, report) {
+    if (project.extensionURLs !== undefined && !Array.isArray(project.extensionURLs)) {
+      report.errors.push("extensionURLsが配列ではありません。");
+      return;
+    }
+
+    const extensions = Array.isArray(project.extensions) ? project.extensions : [];
+    const entries = Array.isArray(project.extensionURLs) ? project.extensionURLs : [];
+    const seen = new Set();
+    entries.forEach((entry) => {
+      if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== "string") {
+        report.errors.push("extensionURLsの各要素は [extensionId, URL] 形式にしてください。");
+        return;
+      }
+      const [extensionId, extensionURL] = entry;
+      if (seen.has(extensionId)) report.errors.push(`extensionURLsに${extensionId}が重複しています。`);
+      seen.add(extensionId);
+      if (!extensions.includes(extensionId)) {
+        report.errors.push(`extensionURLsの${extensionId}がextensionsにありません。`);
+      }
+      if (extensionURL !== null && typeof extensionURL !== "string") {
+        report.errors.push(`extensionURLsの${extensionId}のURLが文字列またはnullではありません。`);
+      }
+    });
+
+    R.extensionInfo().forEach((info) => {
+      if (!info.extensionURL || !extensions.includes(info.extensionId)) return;
+      if (!entries.some((entry) =>
+        Array.isArray(entry) && entry[0] === info.extensionId && entry[1] === info.extensionURL
+      )) {
+        report.errors.push(`${info.extensionId}のextensionURLがありません。`);
+      }
+    });
   }
 
   /* stage targetの必須構造を検査します。 */
@@ -1762,6 +1799,7 @@ StretchScriptの仕様に従ってください。`;
       this.lists = new Map();
       this.broadcasts = new Map();
       this.usedExtensions = new Set();
+      this.usedExtensionURLs = new Map();
       this.usedCategories = new Set();
       this.knownNames = knownNames || { variables: new Set(), lists: new Set() };
       this.scriptX = 40;
@@ -1978,6 +2016,9 @@ StretchScriptの仕様に従ってください。`;
           agent: "StretchScript to SB3 Converter"
         }
       };
+      if (this.usedExtensionURLs.size > 0) {
+        project.extensionURLs = Array.from(this.usedExtensionURLs.entries());
+      }
       Object.defineProperty(project, "__assetFiles", {
         value: Object.fromEntries(this.assetFiles.entries()),
         enumerable: false
@@ -2086,7 +2127,7 @@ StretchScriptの仕様に従ってください。`;
     /* 拡張の判定をifブロックとして使う便利命令です。 */
     createConditionalBlock(def, call, parentId) {
       const normalizedCall = normalizeCallForDefinition(def, call, this.knownNames);
-      this.addExtension(def.extensionId);
+      this.addExtension(def.extensionId, def.extensionURL);
       this.usedCategories.add("制御");
       this.usedCategories.add(def.category);
       const id = this.nextId("if");
@@ -2163,7 +2204,7 @@ StretchScriptの仕様に従ってください。`;
 
     /* ブロックの基本形を作ります。 */
     makeBlock(def, id, parentId) {
-      this.addExtension(def.extensionId);
+      this.addExtension(def.extensionId, def.extensionURL);
       this.usedCategories.add(def.category);
       const block = {
         opcode: this.resolveOpcode(def),
@@ -2514,8 +2555,10 @@ StretchScriptの仕様に従ってください。`;
     }
 
     /* 拡張機能をproject.jsonのextensionsへ入れるために記録します。 */
-    addExtension(extensionId) {
-      if (extensionId) this.usedExtensions.add(extensionId);
+    addExtension(extensionId, extensionURL = null) {
+      if (!extensionId) return;
+      this.usedExtensions.add(extensionId);
+      if (extensionURL) this.usedExtensionURLs.set(extensionId, extensionURL);
     }
 
     /* 変数、リスト、メッセージのIDを安定して作ります。 */
