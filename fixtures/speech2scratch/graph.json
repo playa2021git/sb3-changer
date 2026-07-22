@@ -1,0 +1,91 @@
+{
+  "extensionURLs": [
+    [
+      "speech2scratch",
+      "https://champierre.github.io/speech2scratch/speech2scratch.mjs"
+    ]
+  ],
+  "extensions": [
+    "speech2scratch"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {
+            "KEY_OPTION": [
+              "space",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {},
+            "next": {
+              "fields": {},
+              "inputs": {
+                "DURATION": [
+                  1,
+                  [
+                    5,
+                    "5"
+                  ]
+                ]
+              },
+              "next": {
+                "fields": {},
+                "inputs": {
+                  "MESSAGE": [
+                    3,
+                    {
+                      "block": {
+                        "fields": {},
+                        "inputs": {},
+                        "next": null,
+                        "opcode": "speech2scratch_getSpeech",
+                        "shadow": false,
+                        "topLevel": false
+                      }
+                    },
+                    [
+                      10,
+                      "こんにちは!"
+                    ]
+                  ],
+                  "SECS": [
+                    1,
+                    [
+                      4,
+                      "2"
+                    ]
+                  ]
+                },
+                "next": null,
+                "opcode": "looks_sayforsecs",
+                "shadow": false,
+                "topLevel": false
+              },
+              "opcode": "control_wait",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "speech2scratch_startRecognition",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "event_whenkeypressed",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

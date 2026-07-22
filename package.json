@@ -4,7 +4,9 @@
   "private": true,
   "description": "Convert verified StretchScript programs into Stretch3-compatible .sb3 projects.",
   "scripts": {
-    "test": "node --test tests/stretch-script.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "fixtures:check": "node --test tests/fixture-definitions.test.mjs",
+    "fixtures:update": "node scripts/update-fixture-snapshots.mjs"
   },
   "engines": {
     "node": ">=20"

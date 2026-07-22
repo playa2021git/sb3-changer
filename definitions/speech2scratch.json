@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "slug": "speech2scratch",
+  "extensionName": "Speech2Scratch",
+  "extensionId": "speech2scratch",
+  "officialSource": {
+    "repository": "champierre/speech2scratch",
+    "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
+    "sourcePath": "scratch-vm/src/extensions/scratch3_speech2scratch/index.js"
+  },
+  "fixtures": [
+    {
+      "id": "official-sample",
+      "sb3Path": "fixtures/speech2scratch/official-sample.sb3",
+      "graphPath": "fixtures/speech2scratch/graph.json",
+      "sha256": "4daa16790484bd8574da7f0ba95c02dd191eea08c2ff7f4f49afcb9a2ce0be52",
+      "source": {
+        "repository": "champierre/speech2scratch",
+        "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
+        "path": "sample_projects/xcratch/sample.sb3",
+        "blobSha": "966c3e79964c99b4cf63019cca7eb4d421286f80"
+      },
+      "producer": "Official Xcratch sample bundled by the extension repository"
+    }
+  ],
+  "blocks": [
+    {
+      "functionName": "startSpeechRecognition",
+      "extensionId": "speech2scratch",
+      "opcode": "speech2scratch_startRecognition",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-sample",
+        "selector": {
+          "opcode": "speech2scratch_startRecognition",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/speech2scratch",
+        "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_speech2scratch/index.js"
+      }
+    },
+    {
+      "functionName": "speechText",
+      "extensionId": "speech2scratch",
+      "opcode": "speech2scratch_getSpeech",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-sample",
+        "selector": {
+          "opcode": "speech2scratch_getSpeech",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/speech2scratch",
+        "commit": "b6d0f4ed9d349d620c0ccba74acf75e90505d09b",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_speech2scratch/index.js"
+      }
+    }
+  ]
+}

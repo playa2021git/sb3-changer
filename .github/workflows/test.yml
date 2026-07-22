@@ -31,5 +31,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Run regression tests
+      - name: Run regression and fixture contract tests
         run: npm test

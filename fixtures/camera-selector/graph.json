@@ -1,0 +1,89 @@
+{
+  "extensionURLs": [
+    [
+      "cameraselector",
+      "https://tfabworks.github.io/xcx-cameraselector/dist/cameraselector.mjs"
+    ],
+    [
+      "videoSensing",
+      null
+    ]
+  ],
+  "extensions": [
+    "cameraselector",
+    "videoSensing"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {},
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "VIDEO_STATE": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "VIDEO_STATE": [
+                        "on",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "videoSensing_menu_VIDEO_STATE",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": {
+              "fields": {},
+              "inputs": {
+                "LIST": [
+                  1,
+                  {
+                    "block": {
+                      "fields": {
+                        "videoDevicesMenu": [
+                          "​標準カメラ​",
+                          null
+                        ]
+                      },
+                      "inputs": {},
+                      "next": null,
+                      "opcode": "cameraselector_menu_videoDevicesMenu",
+                      "shadow": true,
+                      "topLevel": false
+                    }
+                  }
+                ]
+              },
+              "next": null,
+              "opcode": "cameraselector_selectCamera",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "videoSensing_videoToggle",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "event_whenflagclicked",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

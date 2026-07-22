@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/playa2021git/sb3-changer/definitions/schema.json",
+  "title": "sb3-changer extension block definition",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "slug",
+    "extensionName",
+    "extensionId",
+    "officialSource",
+    "fixtures",
+    "blocks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "extensionName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "extensionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "officialSource": {
+      "$ref": "#/$defs/officialSource"
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fixtureSource"
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/block"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "officialSource": {
+      "type": "object",
+      "required": [
+        "repository",
+        "commit",
+        "sourcePath"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "sourcePath": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fixtureSource": {
+      "type": "object",
+      "required": [
+        "id",
+        "sb3Path",
+        "graphPath",
+        "sha256",
+        "source",
+        "producer"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "sb3Path": {
+          "type": "string"
+        },
+        "graphPath": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source": {
+          "type": "object",
+          "required": [
+            "repository",
+            "commit",
+            "path",
+            "blobSha"
+          ],
+          "properties": {
+            "repository": {
+              "type": "string"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "path": {
+              "type": "string"
+            },
+            "blobSha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "producer": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "block": {
+      "type": "object",
+      "required": [
+        "functionName",
+        "extensionId",
+        "opcode",
+        "blockType",
+        "inputs",
+        "fields",
+        "menuValues",
+        "shadow",
+        "fixture",
+        "fixtureStatus",
+        "supportStatus",
+        "deviceVerificationStatus",
+        "officialSource"
+      ],
+      "properties": {
+        "functionName": {
+          "type": "string"
+        },
+        "extensionId": {
+          "type": "string"
+        },
+        "opcode": {
+          "type": "string"
+        },
+        "blockType": {
+          "enum": [
+            "command",
+            "reporter",
+            "boolean",
+            "hat",
+            "conditional",
+            "event",
+            "button",
+            "label"
+          ]
+        },
+        "inputs": {
+          "type": "object"
+        },
+        "fields": {
+          "type": "object"
+        },
+        "menuValues": {
+          "type": "object"
+        },
+        "shadow": {
+          "type": "boolean"
+        },
+        "fixture": {
+          "type": "object",
+          "required": [
+            "fixtureId",
+            "selector"
+          ]
+        },
+        "fixtureStatus": {
+          "enum": [
+            "verified",
+            "missing",
+            "needs-refresh"
+          ]
+        },
+        "supportStatus": {
+          "enum": [
+            "unsupported",
+            "experimental",
+            "stable"
+          ]
+        },
+        "deviceVerificationStatus": {
+          "enum": [
+            "not-run",
+            "passed",
+            "failed",
+            "not-applicable"
+          ]
+        },
+        "officialSource": {
+          "$ref": "#/$defs/officialSource"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
