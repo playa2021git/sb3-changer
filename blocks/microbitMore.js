@@ -5,7 +5,7 @@
   "use strict";
 
   const R = window.StretchScriptBlocks;
-  const source = "Mirobitmoretest.sb3 + 揺さぶられたとき音を鳴らす.sb3 (project.json実測)";
+  const source = "definitions/microbit-more.json (公式commit 28167dab + 公式fixture + 外部fixture履歴)";
 
   const F = (name, scratchName, defaultValue, extra = {}) => ({
     name,
@@ -143,7 +143,7 @@
     {
       functionName: "whenMicrobitConnectionChanged",
       opcode: "microbitMore_whenConnectionChanged",
-      reason: "接続状態hatのproject.json保存形と授業環境での発火条件が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と授業環境での発火条件が未確認です。"
     },
     {
       functionName: "whenMicrobitButtonEvent",
@@ -168,7 +168,7 @@
     {
       functionName: "microbitDisplayMatrix",
       opcode: "microbitMore_displayMatrix",
-      reason: "MATRIX入力のshadow block保存形が未固定です。"
+      reason: "公式fixtureでmatrix shadowの保存形は確認済みですが、生成処理が未実装です。"
     },
     {
       functionName: "microbitClearDisplay",
@@ -178,7 +178,7 @@
     {
       functionName: "microbitLightLevel",
       opcode: "microbitMore_getLightLevel",
-      reason: "light reporterの保存形と値範囲が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と実機の値範囲が未確認です。"
     },
     {
       functionName: "microbitTemperature",
@@ -198,7 +198,7 @@
     {
       functionName: "microbitRoll",
       opcode: "microbitMore_getRoll",
-      reason: "roll reporterの保存形と実機値が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と実機値が未確認です。"
     },
     {
       functionName: "microbitSoundLevel",
@@ -223,7 +223,7 @@
     {
       functionName: "microbitSetPullMode",
       opcode: "microbitMore_setPullMode",
-      reason: "pin pull mode commandの保存形とpin許可値が未確認です。"
+      reason: "公式fixtureでPIN 1 / NONEの保存形は確認済みですが、生成処理と他のmenu値が未確認です。"
     },
     {
       functionName: "microbitPinHigh",
@@ -233,7 +233,7 @@
     {
       functionName: "microbitSetDigitalOut",
       opcode: "microbitMore_setDigitalOut",
-      reason: "digital output commandの保存形とLEVEL menu保存形が未確認です。"
+      reason: "公式fixtureでPIN 0とLEVEL menu shadowの保存形は確認済みですが、生成処理が未実装です。"
     },
     {
       functionName: "microbitSetAnalogOut",
@@ -248,17 +248,17 @@
     {
       functionName: "microbitListenPinEventType",
       opcode: "microbitMore_listenPinEventType",
-      reason: "pin event listener commandの保存形と実機イベント条件が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と実機イベント条件が未確認です。"
     },
     {
       functionName: "whenMicrobitPinEvent",
       opcode: "microbitMore_whenPinEvent",
-      reason: "pin event hatの保存形と発火条件が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と発火条件の実機確認が未完了です。"
     },
     {
       functionName: "microbitPinEventValue",
       opcode: "microbitMore_getPinEventValue",
-      reason: "pin event value reporterの保存形と値の意味が未確認です。"
+      reason: "公式fixtureで保存形は確認済みですが、生成処理と値の意味の実機確認が未完了です。"
     },
     {
       functionName: "whenMicrobitDataReceived",
@@ -289,7 +289,7 @@
       source,
       opcode: definition.opcode,
       reason: definition.reason,
-      nextStep: "公式getInfoだけで有効化せず、実物.sb3のproject.json保存形と実機動作を確認してから1〜2ブロック単位で有効化してください。"
+      nextStep: "definitions/microbit-more.jsonのfixture・対応・実機状態を確認し、不足している段階だけを1〜2ブロック単位で進めてください。"
     });
   });
 })();

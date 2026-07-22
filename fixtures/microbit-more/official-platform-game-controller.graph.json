@@ -1,0 +1,884 @@
+{
+  "extensionURLs": [
+    [
+      "keyEvents",
+      "https://yokobond.github.io/xcx-key-events/dist/keyEvents.mjs"
+    ],
+    [
+      "microbitMore",
+      "https://yokobond.github.io/mbit-more-v2/dev/dist/microbitMore.mjs"
+    ]
+  ],
+  "extensions": [
+    "keyEvents",
+    "microbitMore"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {},
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SUBSTACK": [
+                2,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {
+                      "CONDITION": [
+                        2,
+                        {
+                          "block": {
+                            "fields": {},
+                            "inputs": {
+                              "KEY_OPTION": [
+                                1,
+                                {
+                                  "block": {
+                                    "fields": {
+                                      "KEY_OPTION": [
+                                        "right arrow"
+                                      ]
+                                    },
+                                    "inputs": {},
+                                    "next": null,
+                                    "opcode": "sensing_keyoptions",
+                                    "shadow": true,
+                                    "topLevel": false
+                                  }
+                                }
+                              ]
+                            },
+                            "next": null,
+                            "opcode": "sensing_keypressed",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        }
+                      ],
+                      "SUBSTACK": [
+                        2,
+                        {
+                          "block": {
+                            "fields": {},
+                            "inputs": {
+                              "DX": [
+                                1,
+                                [
+                                  4,
+                                  8
+                                ]
+                              ]
+                            },
+                            "next": {
+                              "fields": {},
+                              "inputs": {
+                                "CONDITION": [
+                                  2,
+                                  {
+                                    "block": {
+                                      "fields": {},
+                                      "inputs": {
+                                        "COLOR": [
+                                          1,
+                                          [
+                                            9,
+                                            "#faa51d"
+                                          ]
+                                        ],
+                                        "COLOR2": [
+                                          1,
+                                          [
+                                            9,
+                                            "#995900"
+                                          ]
+                                        ]
+                                      },
+                                      "next": null,
+                                      "opcode": "sensing_coloristouchingcolor",
+                                      "shadow": false,
+                                      "topLevel": false
+                                    }
+                                  }
+                                ],
+                                "SUBSTACK": [
+                                  2,
+                                  {
+                                    "block": {
+                                      "fields": {},
+                                      "inputs": {
+                                        "DX": [
+                                          1,
+                                          [
+                                            4,
+                                            -8
+                                          ]
+                                        ]
+                                      },
+                                      "next": null,
+                                      "opcode": "motion_changexby",
+                                      "shadow": false,
+                                      "topLevel": false
+                                    }
+                                  }
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "control_if",
+                              "shadow": false,
+                              "topLevel": false
+                            },
+                            "opcode": "motion_changexby",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        }
+                      ]
+                    },
+                    "next": {
+                      "fields": {},
+                      "inputs": {
+                        "CONDITION": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "KEY_OPTION": [
+                                  1,
+                                  {
+                                    "block": {
+                                      "fields": {
+                                        "KEY_OPTION": [
+                                          "left arrow"
+                                        ]
+                                      },
+                                      "inputs": {},
+                                      "next": null,
+                                      "opcode": "sensing_keyoptions",
+                                      "shadow": true,
+                                      "topLevel": false
+                                    }
+                                  }
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "sensing_keypressed",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ],
+                        "SUBSTACK": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "DX": [
+                                  1,
+                                  [
+                                    4,
+                                    -8
+                                  ]
+                                ]
+                              },
+                              "next": {
+                                "fields": {},
+                                "inputs": {
+                                  "CONDITION": [
+                                    2,
+                                    {
+                                      "block": {
+                                        "fields": {},
+                                        "inputs": {
+                                          "COLOR": [
+                                            1,
+                                            [
+                                              9,
+                                              "#faa51d"
+                                            ]
+                                          ],
+                                          "COLOR2": [
+                                            1,
+                                            [
+                                              9,
+                                              "#995900"
+                                            ]
+                                          ]
+                                        },
+                                        "next": null,
+                                        "opcode": "sensing_coloristouchingcolor",
+                                        "shadow": false,
+                                        "topLevel": false
+                                      }
+                                    }
+                                  ],
+                                  "SUBSTACK": [
+                                    2,
+                                    {
+                                      "block": {
+                                        "fields": {},
+                                        "inputs": {
+                                          "DX": [
+                                            1,
+                                            [
+                                              4,
+                                              8
+                                            ]
+                                          ]
+                                        },
+                                        "next": null,
+                                        "opcode": "motion_changexby",
+                                        "shadow": false,
+                                        "topLevel": false
+                                      }
+                                    }
+                                  ]
+                                },
+                                "next": null,
+                                "opcode": "control_if",
+                                "shadow": false,
+                                "topLevel": false
+                              },
+                              "opcode": "motion_changexby",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ]
+                      },
+                      "next": null,
+                      "opcode": "control_if",
+                      "shadow": false,
+                      "topLevel": false
+                    },
+                    "opcode": "control_if",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "control_forever",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "event_whenflagclicked",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {},
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SUBSTACK": [
+                2,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {
+                      "DY": [
+                        3,
+                        [
+                          12,
+                          "vy",
+                          "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                        ],
+                        [
+                          4,
+                          10
+                        ]
+                      ]
+                    },
+                    "next": {
+                      "fields": {},
+                      "inputs": {
+                        "CONDITION": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "COLOR": [
+                                  1,
+                                  [
+                                    9,
+                                    "#faa51d"
+                                  ]
+                                ],
+                                "COLOR2": [
+                                  1,
+                                  [
+                                    9,
+                                    "#00cc44"
+                                  ]
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "sensing_coloristouchingcolor",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ],
+                        "SUBSTACK": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "DY": [
+                                  3,
+                                  {
+                                    "block": {
+                                      "fields": {},
+                                      "inputs": {
+                                        "NUM1": [
+                                          1,
+                                          [
+                                            4,
+                                            -1
+                                          ]
+                                        ],
+                                        "NUM2": [
+                                          3,
+                                          [
+                                            12,
+                                            "vy",
+                                            "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                                          ],
+                                          [
+                                            4,
+                                            10
+                                          ]
+                                        ]
+                                      },
+                                      "next": null,
+                                      "opcode": "operator_multiply",
+                                      "shadow": false,
+                                      "topLevel": false
+                                    }
+                                  },
+                                  [
+                                    4,
+                                    10
+                                  ]
+                                ]
+                              },
+                              "next": {
+                                "fields": {
+                                  "VARIABLE": [
+                                    "vy",
+                                    "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                                  ]
+                                },
+                                "inputs": {
+                                  "VALUE": [
+                                    1,
+                                    [
+                                      10,
+                                      "0"
+                                    ]
+                                  ]
+                                },
+                                "next": null,
+                                "opcode": "data_setvariableto",
+                                "shadow": false,
+                                "topLevel": false
+                              },
+                              "opcode": "motion_changeyby",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ],
+                        "SUBSTACK2": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {
+                                "VARIABLE": [
+                                  "vy",
+                                  "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                                ]
+                              },
+                              "inputs": {
+                                "VALUE": [
+                                  1,
+                                  [
+                                    4,
+                                    -0.8
+                                  ]
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "data_changevariableby",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ]
+                      },
+                      "next": {
+                        "fields": {},
+                        "inputs": {
+                          "CONDITION": [
+                            2,
+                            {
+                              "block": {
+                                "fields": {},
+                                "inputs": {
+                                  "OPERAND1": [
+                                    3,
+                                    [
+                                      12,
+                                      "vy",
+                                      "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                                    ],
+                                    [
+                                      10,
+                                      ""
+                                    ]
+                                  ],
+                                  "OPERAND2": [
+                                    1,
+                                    [
+                                      10,
+                                      "0"
+                                    ]
+                                  ]
+                                },
+                                "next": null,
+                                "opcode": "operator_equals",
+                                "shadow": false,
+                                "topLevel": false
+                              }
+                            }
+                          ],
+                          "SUBSTACK": [
+                            2,
+                            {
+                              "block": {
+                                "fields": {},
+                                "inputs": {
+                                  "CONDITION": [
+                                    2,
+                                    {
+                                      "block": {
+                                        "fields": {},
+                                        "inputs": {
+                                          "KEY_OPTION": [
+                                            1,
+                                            {
+                                              "block": {
+                                                "fields": {
+                                                  "KEY_OPTION": [
+                                                    "up arrow"
+                                                  ]
+                                                },
+                                                "inputs": {},
+                                                "next": null,
+                                                "opcode": "sensing_keyoptions",
+                                                "shadow": true,
+                                                "topLevel": false
+                                              }
+                                            }
+                                          ]
+                                        },
+                                        "next": null,
+                                        "opcode": "sensing_keypressed",
+                                        "shadow": false,
+                                        "topLevel": false
+                                      }
+                                    }
+                                  ],
+                                  "SUBSTACK": [
+                                    2,
+                                    {
+                                      "block": {
+                                        "fields": {
+                                          "VARIABLE": [
+                                            "vy",
+                                            "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                                          ]
+                                        },
+                                        "inputs": {
+                                          "VALUE": [
+                                            1,
+                                            [
+                                              10,
+                                              "12"
+                                            ]
+                                          ]
+                                        },
+                                        "next": null,
+                                        "opcode": "data_setvariableto",
+                                        "shadow": false,
+                                        "topLevel": false
+                                      }
+                                    }
+                                  ]
+                                },
+                                "next": null,
+                                "opcode": "control_if",
+                                "shadow": false,
+                                "topLevel": false
+                              }
+                            }
+                          ]
+                        },
+                        "next": null,
+                        "opcode": "control_if",
+                        "shadow": false,
+                        "topLevel": false
+                      },
+                      "opcode": "control_if_else",
+                      "shadow": false,
+                      "topLevel": false
+                    },
+                    "opcode": "motion_changeyby",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "control_forever",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "event_whenflagclicked",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {},
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SIZE": [
+                1,
+                [
+                  4,
+                  50
+                ]
+              ]
+            },
+            "next": {
+              "fields": {},
+              "inputs": {
+                "X": [
+                  1,
+                  [
+                    4,
+                    -171
+                  ]
+                ],
+                "Y": [
+                  1,
+                  [
+                    4,
+                    12
+                  ]
+                ]
+              },
+              "next": {
+                "fields": {
+                  "VARIABLE": [
+                    "vy",
+                    "[e%@T0lbm8-OK%FH5Qtm-vy-"
+                  ]
+                },
+                "inputs": {
+                  "VALUE": [
+                    1,
+                    [
+                      10,
+                      0
+                    ]
+                  ]
+                },
+                "next": null,
+                "opcode": "data_setvariableto",
+                "shadow": false,
+                "topLevel": false
+              },
+              "opcode": "motion_gotoxy",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "looks_setsizeto",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "event_whenflagclicked",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "EVENT": [
+              "DOWN",
+              null
+            ],
+            "NAME": [
+              "A",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "HOLD_TIME": [
+                1,
+                [
+                  4,
+                  "100"
+                ]
+              ],
+              "KEY_VALUE": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "keyValueMenu": [
+                        "ArrowUp",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "keyEvents_menu_keyValueMenu",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "keyEvents_pressKeyWhile",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenButtonEvent",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "connected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SUBSTACK": [
+                2,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {
+                      "CONDITION": [
+                        2,
+                        {
+                          "block": {
+                            "fields": {},
+                            "inputs": {
+                              "OPERAND1": [
+                                3,
+                                {
+                                  "block": {
+                                    "fields": {},
+                                    "inputs": {},
+                                    "next": null,
+                                    "opcode": "microbitMore_getRoll",
+                                    "shadow": false,
+                                    "topLevel": false
+                                  }
+                                },
+                                [
+                                  10,
+                                  ""
+                                ]
+                              ],
+                              "OPERAND2": [
+                                1,
+                                [
+                                  10,
+                                  "30"
+                                ]
+                              ]
+                            },
+                            "next": null,
+                            "opcode": "operator_gt",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        }
+                      ],
+                      "SUBSTACK": [
+                        2,
+                        {
+                          "block": {
+                            "fields": {},
+                            "inputs": {
+                              "HOLD_TIME": [
+                                1,
+                                [
+                                  4,
+                                  "100"
+                                ]
+                              ],
+                              "KEY_VALUE": [
+                                1,
+                                {
+                                  "block": {
+                                    "fields": {
+                                      "keyValueMenu": [
+                                        "ArrowRight",
+                                        null
+                                      ]
+                                    },
+                                    "inputs": {},
+                                    "next": null,
+                                    "opcode": "keyEvents_menu_keyValueMenu",
+                                    "shadow": true,
+                                    "topLevel": false
+                                  }
+                                }
+                              ]
+                            },
+                            "next": null,
+                            "opcode": "keyEvents_pressKeyWhile",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        }
+                      ]
+                    },
+                    "next": {
+                      "fields": {},
+                      "inputs": {
+                        "CONDITION": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "OPERAND1": [
+                                  3,
+                                  {
+                                    "block": {
+                                      "fields": {},
+                                      "inputs": {},
+                                      "next": null,
+                                      "opcode": "microbitMore_getRoll",
+                                      "shadow": false,
+                                      "topLevel": false
+                                    }
+                                  },
+                                  [
+                                    10,
+                                    ""
+                                  ]
+                                ],
+                                "OPERAND2": [
+                                  1,
+                                  [
+                                    10,
+                                    "-30"
+                                  ]
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "operator_lt",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ],
+                        "SUBSTACK": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "HOLD_TIME": [
+                                  1,
+                                  [
+                                    4,
+                                    "100"
+                                  ]
+                                ],
+                                "KEY_VALUE": [
+                                  1,
+                                  {
+                                    "block": {
+                                      "fields": {
+                                        "keyValueMenu": [
+                                          "ArrowLeft",
+                                          null
+                                        ]
+                                      },
+                                      "inputs": {},
+                                      "next": null,
+                                      "opcode": "keyEvents_menu_keyValueMenu",
+                                      "shadow": true,
+                                      "topLevel": false
+                                    }
+                                  }
+                                ]
+                              },
+                              "next": null,
+                              "opcode": "keyEvents_pressKeyWhile",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ]
+                      },
+                      "next": null,
+                      "opcode": "control_if",
+                      "shadow": false,
+                      "topLevel": false
+                    },
+                    "opcode": "control_if",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "control_forever",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

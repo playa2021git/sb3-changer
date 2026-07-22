@@ -1,0 +1,171 @@
+{
+  "extensionURLs": [
+    [
+      "microbitMore",
+      "https://microbit-more.github.io/dist/microbitMore.mjs"
+    ]
+  ],
+  "extensions": [
+    "microbitMore"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {
+            "EVENT": [
+              "DOWN",
+              null
+            ],
+            "NAME": [
+              "A",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "MATRIX": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "MATRIX": [
+                        "0101010101100010101000100",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "matrix",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": {
+              "fields": {},
+              "inputs": {
+                "COSTUME": [
+                  1,
+                  {
+                    "block": {
+                      "fields": {
+                        "COSTUME": [
+                          "heart",
+                          null
+                        ]
+                      },
+                      "inputs": {},
+                      "next": null,
+                      "opcode": "looks_costume",
+                      "shadow": true,
+                      "topLevel": false
+                    }
+                  }
+                ]
+              },
+              "next": null,
+              "opcode": "looks_switchcostumeto",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "microbitMore_displayMatrix",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenButtonEvent",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "connected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "COSTUME": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "COSTUME": [
+                        "on",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "looks_costume",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "looks_switchcostumeto",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "disconnected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "COSTUME": [
+                1,
+                {
+                  "block": {
+                    "fields": {
+                      "COSTUME": [
+                        "off",
+                        null
+                      ]
+                    },
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "looks_costume",
+                    "shadow": true,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "looks_switchcostumeto",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

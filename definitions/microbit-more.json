@@ -1,0 +1,1353 @@
+{
+  "schemaVersion": 1,
+  "slug": "microbit-more",
+  "extensionName": "Microbit More",
+  "extensionId": "microbitMore",
+  "officialSource": {
+    "repository": "microbit-more/mbit-more-v2",
+    "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+    "sourcePath": "src/vm/extensions/block/index.js"
+  },
+  "fixtures": [
+    {
+      "id": "official-connection",
+      "sb3Path": "fixtures/microbit-more/official-connection.sb3",
+      "graphPath": "fixtures/microbit-more/official-connection.graph.json",
+      "sha256": "4dd2e41eb0182f8a1e92d765b85b815489b44ea50246d2cf9ce80b1da3fa5d0d",
+      "source": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "path": "examples/basic/connection.sb3",
+        "blobSha": "afdb83574cc4f52f8a297f7b4a280ac88a7b912c"
+      },
+      "producer": "Official sample bundled by the Microbit More repository"
+    },
+    {
+      "id": "official-light-level",
+      "sb3Path": "fixtures/microbit-more/official-light-level.sb3",
+      "graphPath": "fixtures/microbit-more/official-light-level.graph.json",
+      "sha256": "d644994470a32bc795da632927609b27971b44ea1b2d7c93e5082ae64758b349",
+      "source": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "path": "examples/basic/light_level.sb3",
+        "blobSha": "253d94f93faa247cd4bc0f956a4847d1eaebc214"
+      },
+      "producer": "Official sample bundled by the Microbit More repository"
+    },
+    {
+      "id": "official-platform-game-controller",
+      "sb3Path": "fixtures/microbit-more/official-platform-game-controller.sb3",
+      "graphPath": "fixtures/microbit-more/official-platform-game-controller.graph.json",
+      "sha256": "4246cb74148dac389e98897044d5a1f5d84bcd87c8e3914021327c6148896b9a",
+      "source": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "path": "examples/basic/platforme-game-controller.sb3",
+        "blobSha": "05b1ce1c4feb06d39bb6d32b53dcc9124b7f739b"
+      },
+      "producer": "Official sample bundled by the Microbit More repository"
+    },
+    {
+      "id": "official-hc-sr04",
+      "sb3Path": "fixtures/microbit-more/official-hc-sr04.sb3",
+      "graphPath": "fixtures/microbit-more/official-hc-sr04.graph.json",
+      "sha256": "a235092f330345fcafd76d339558d7821f92bfd290185ff1e8f022a8fa27af59",
+      "source": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "path": "examples/sensor/hc_sr04.sb3",
+        "blobSha": "88873c0b3da2f9c64f20a1dcb7d2ef3a381e33cc"
+      },
+      "producer": "Official sample bundled by the Microbit More repository",
+      "knownLegacyOpcodes": [
+        "microbitMore_getPinEventTimestamp"
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "functionName": "whenMicrobitConnectionChanged",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenConnectionChanged",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "STATE": {
+          "value": "connected",
+          "id": null,
+          "defaultValue": "connected"
+        }
+      },
+      "menuValues": {
+        "STATE": {
+          "menuId": "connectionStateMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "connected",
+            "disconnected"
+          ],
+          "fixtureValues": [
+            "connected"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-connection",
+        "selector": {
+          "opcode": "microbitMore_whenConnectionChanged",
+          "fields": {
+            "STATE": "connected"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "公式fixtureでconnected/disconnected両方の保存形を確認。発火条件の実機再確認は未実施。"
+    },
+    {
+      "functionName": "whenMicrobitButtonPressed",
+      "aliases": [
+        "ifMicrobitButtonPressed",
+        "whenMicrobitButtonEvent"
+      ],
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenButtonEvent",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "NAME": {
+          "value": "A",
+          "id": null,
+          "defaultValue": "A"
+        },
+        "EVENT": {
+          "value": "DOWN",
+          "id": null,
+          "defaultValue": "DOWN"
+        }
+      },
+      "menuValues": {
+        "NAME": {
+          "menuId": "buttonIDMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "A",
+            "B"
+          ],
+          "fixtureValues": [
+            "A"
+          ]
+        },
+        "EVENT": {
+          "menuId": "buttonEventMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "DOWN",
+            "UP",
+            "CLICK"
+          ],
+          "fixtureValues": [
+            "DOWN"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-connection",
+        "selector": {
+          "opcode": "microbitMore_whenButtonEvent",
+          "fields": {
+            "NAME": "A",
+            "EVENT": "DOWN"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "生成対応はA/BかつDOWNに限定。UP/CLICKを受け取る汎用関数は安全停止を維持する。"
+    },
+    {
+      "functionName": "microbitButtonPressed",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_isButtonPressed",
+      "blockType": "boolean",
+      "inputs": {},
+      "fields": {
+        "NAME": {
+          "value": "A",
+          "id": null,
+          "defaultValue": "A"
+        }
+      },
+      "menuValues": {
+        "NAME": {
+          "menuId": "buttonIDMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "A",
+            "B"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "whenMicrobitTouchEvent",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenTouchEvent",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "NAME": {
+          "value": "LOGO",
+          "id": null,
+          "defaultValue": "LOGO"
+        },
+        "EVENT": {
+          "value": "DOWN",
+          "id": null,
+          "defaultValue": "DOWN"
+        }
+      },
+      "menuValues": {
+        "NAME": {
+          "menuId": "touchIDMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "LOGO",
+            "P0",
+            "P1",
+            "P2"
+          ],
+          "fixtureValues": []
+        },
+        "EVENT": {
+          "menuId": "touchEventMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "DOWN",
+            "UP",
+            "CLICK"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitPinTouched",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_isPinTouched",
+      "blockType": "boolean",
+      "inputs": {},
+      "fields": {
+        "NAME": {
+          "value": "LOGO",
+          "id": null,
+          "defaultValue": "LOGO"
+        }
+      },
+      "menuValues": {
+        "NAME": {
+          "menuId": "touchIDMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "LOGO",
+            "P0",
+            "P1",
+            "P2"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "whenMicrobitGesture",
+      "aliases": [
+        "whenMicrobitShaken"
+      ],
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenGesture",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "GESTURE": {
+          "value": "SHAKE",
+          "id": null,
+          "defaultValue": "SHAKE"
+        }
+      },
+      "menuValues": {
+        "GESTURE": {
+          "menuId": "gestures",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "TILT_UP",
+            "TILT_DOWN",
+            "TILT_LEFT",
+            "TILT_RIGHT",
+            "FACE_UP",
+            "FACE_DOWN",
+            "FREEFALL",
+            "G3",
+            "G6",
+            "G8",
+            "SHAKE"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "external-only",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "SHAKEのみ生成・実機確認済み。根拠となるユーザー提供fixtureのバイナリはリポジトリ未収録。その他のgesture値は安全停止する。"
+    },
+    {
+      "functionName": "microbitDisplayMatrix",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_displayMatrix",
+      "blockType": "command",
+      "inputs": {
+        "MATRIX": {
+          "argumentType": "matrix",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "matrix",
+          "shadowField": "MATRIX",
+          "defaultValue": "0101010101100010101000100"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-connection",
+        "selector": {
+          "opcode": "microbitMore_displayMatrix",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "公式fixtureでmatrix shadowを確認。過去のユーザー提供fixtureでは実機表示も確認済みだが、生成処理は未実装。"
+    },
+    {
+      "functionName": "microbitDisplayText",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_displayText",
+      "blockType": "command",
+      "inputs": {
+        "TEXT": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 10,
+          "defaultValue": "Hello!"
+        },
+        "DELAY": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 4,
+          "defaultValue": 120
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "external-only",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "ユーザー提供fixtureで保存形と実機表示を確認済みだが、fixtureバイナリはリポジトリ未収録。"
+    },
+    {
+      "functionName": "microbitClearDisplay",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_displayClear",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitLightLevel",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getLightLevel",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-light-level",
+        "selector": {
+          "opcode": "microbitMore_getLightLevel",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitTemperature",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getTemperature",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitCompassHeading",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getCompassHeading",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitPitch",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getPitch",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitRoll",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getRoll",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-platform-game-controller",
+        "selector": {
+          "opcode": "microbitMore_getRoll",
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSoundLevel",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getSoundLevel",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitMagneticForce",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getMagneticForce",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {
+        "AXIS": {
+          "value": "absolute",
+          "id": null,
+          "defaultValue": "absolute"
+        }
+      },
+      "menuValues": {
+        "AXIS": {
+          "menuId": "axis",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "x",
+            "y",
+            "z",
+            "absolute"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitAcceleration",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getAcceleration",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {
+        "AXIS": {
+          "value": "x",
+          "id": null,
+          "defaultValue": "x"
+        }
+      },
+      "menuValues": {
+        "AXIS": {
+          "menuId": "axis",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "x",
+            "y",
+            "z",
+            "absolute"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitAnalogValue",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getAnalogValue",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {
+        "PIN": {
+          "value": "0",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "analogInPins",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSetPullMode",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_setPullMode",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "PIN": {
+          "value": "1",
+          "id": null,
+          "defaultValue": "0"
+        },
+        "MODE": {
+          "value": "NONE",
+          "id": null,
+          "defaultValue": "UP"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        },
+        "MODE": {
+          "menuId": "pinMode",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "NONE",
+            "UP",
+            "DOWN"
+          ],
+          "fixtureValues": [
+            "NONE"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-hc-sr04",
+        "selector": {
+          "opcode": "microbitMore_setPullMode",
+          "fields": {
+            "PIN": "1",
+            "MODE": "NONE"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitPinHigh",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_isPinHigh",
+      "blockType": "boolean",
+      "inputs": {},
+      "fields": {
+        "PIN": {
+          "value": "0",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSetDigitalOut",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_setDigitalOut",
+      "blockType": "command",
+      "inputs": {
+        "LEVEL": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "microbitMore_menu_digitalValueMenu",
+          "shadowField": "digitalValueMenu",
+          "defaultValue": "false"
+        }
+      },
+      "fields": {
+        "PIN": {
+          "value": "0",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "0"
+          ]
+        },
+        "LEVEL": {
+          "menuId": "digitalValueMenu",
+          "kind": "static",
+          "acceptReporters": true,
+          "values": [
+            "false",
+            "true"
+          ],
+          "fixtureValues": [
+            "false"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-hc-sr04",
+        "selector": {
+          "opcode": "microbitMore_setDigitalOut",
+          "fields": {
+            "PIN": "0"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSetAnalogOut",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_setAnalogOut",
+      "blockType": "command",
+      "inputs": {
+        "LEVEL": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 4,
+          "defaultValue": 0
+        }
+      },
+      "fields": {
+        "PIN": {
+          "value": "0",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSetServo",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_setServo",
+      "blockType": "command",
+      "inputs": {
+        "ANGLE": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 4,
+          "defaultValue": 0
+        }
+      },
+      "fields": {
+        "PIN": {
+          "value": "0",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "external-only",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "過去のユーザー提供fixtureでPIN 0・ANGLE 0/180の保存形と単体動作を確認。getInfoにはRANGE/CENTER引数も宣言されるが表示textから参照されず、実装でも未使用のため保存inputsには含めない。fixtureバイナリは未収録。"
+    },
+    {
+      "functionName": "microbitPlayTone",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_playTone",
+      "blockType": "command",
+      "inputs": {
+        "FREQ": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 4,
+          "defaultValue": 440
+        },
+        "VOL": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 4,
+          "defaultValue": 100
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "external-only",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "ユーザー提供fixtureで保存形と440Hz再生を確認済みだが、fixtureバイナリはリポジトリ未収録。"
+    },
+    {
+      "functionName": "microbitStopTone",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_stopTone",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "external-only",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "ユーザー提供fixtureで保存形と停止動作を確認済みだが、fixtureバイナリはリポジトリ未収録。"
+    },
+    {
+      "functionName": "microbitListenPinEventType",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_listenPinEventType",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "EVENT_TYPE": {
+          "value": "ON_PULSE",
+          "id": null,
+          "defaultValue": "NONE"
+        },
+        "PIN": {
+          "value": "1",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "EVENT_TYPE": {
+          "menuId": "pinEventTypeMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "NONE",
+            "ON_PULSE",
+            "ON_EDGE"
+          ],
+          "fixtureValues": [
+            "ON_PULSE"
+          ]
+        },
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-hc-sr04",
+        "selector": {
+          "opcode": "microbitMore_listenPinEventType",
+          "fields": {
+            "EVENT_TYPE": "ON_PULSE",
+            "PIN": "1"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "whenMicrobitPinEvent",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenPinEvent",
+      "blockType": "hat",
+      "inputs": {},
+      "fields": {
+        "EVENT": {
+          "value": "PULSE_HIGH",
+          "id": null,
+          "defaultValue": "PULSE_LOW"
+        },
+        "PIN": {
+          "value": "1",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "EVENT": {
+          "menuId": "pinEventMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "PULSE_LOW",
+            "PULSE_HIGH",
+            "FALL",
+            "RISE"
+          ],
+          "fixtureValues": [
+            "PULSE_HIGH"
+          ]
+        },
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-hc-sr04",
+        "selector": {
+          "opcode": "microbitMore_whenPinEvent",
+          "fields": {
+            "EVENT": "PULSE_HIGH",
+            "PIN": "1"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitPinEventValue",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getPinEventValue",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {
+        "EVENT": {
+          "value": "PULSE_HIGH",
+          "id": null,
+          "defaultValue": "PULSE_LOW"
+        },
+        "PIN": {
+          "value": "1",
+          "id": null,
+          "defaultValue": "0"
+        }
+      },
+      "menuValues": {
+        "EVENT": {
+          "menuId": "pinEventTimestampMenu",
+          "kind": "static",
+          "acceptReporters": false,
+          "values": [
+            "PULSE_LOW",
+            "PULSE_HIGH",
+            "FALL",
+            "RISE"
+          ],
+          "fixtureValues": [
+            "PULSE_HIGH"
+          ]
+        },
+        "PIN": {
+          "menuId": "gpio",
+          "kind": "dynamic",
+          "acceptReporters": false,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "official-hc-sr04",
+        "selector": {
+          "opcode": "microbitMore_getPinEventValue",
+          "fields": {
+            "EVENT": "PULSE_HIGH",
+            "PIN": "1"
+          },
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      },
+      "notes": "同じ公式fixtureには現行getInfoにない旧opcode microbitMore_getPinEventTimestamp も残っている。"
+    },
+    {
+      "functionName": "whenMicrobitDataReceived",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_whenDataReceived",
+      "blockType": "hat",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 10,
+          "defaultValue": "label-01"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitDataLabeled",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_getDataLabeled",
+      "blockType": "reporter",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 10,
+          "defaultValue": "label-01"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    },
+    {
+      "functionName": "microbitSendData",
+      "extensionId": "microbitMore",
+      "opcode": "microbitMore_sendData",
+      "blockType": "command",
+      "inputs": {
+        "LABEL": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 10,
+          "defaultValue": "label-01"
+        },
+        "DATA": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "literal",
+          "literalType": 10,
+          "defaultValue": "data"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "microbit-more/mbit-more-v2",
+        "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
+        "sourcePath": "src/vm/extensions/block/index.js"
+      }
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+{
+  "extensionURLs": [
+    [
+      "microbitMore",
+      "https://yokobond.github.io/scratch-microbit-more/dev/dist/microbitMore.mjs"
+    ],
+    [
+      "pen",
+      null
+    ]
+  ],
+  "extensions": [
+    "microbitMore",
+    "pen"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {},
+          "inputs": {
+            "SIZE": [
+              1,
+              [
+                4,
+                "20"
+              ]
+            ]
+          },
+          "next": null,
+          "opcode": "looks_setsizeto",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "connected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "SUBSTACK": [
+                2,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {
+                      "Y": [
+                        3,
+                        {
+                          "block": {
+                            "fields": {},
+                            "inputs": {
+                              "NUM1": [
+                                3,
+                                {
+                                  "block": {
+                                    "fields": {},
+                                    "inputs": {
+                                      "NUM1": [
+                                        3,
+                                        {
+                                          "block": {
+                                            "fields": {},
+                                            "inputs": {},
+                                            "next": null,
+                                            "opcode": "microbitMore_getLightLevel",
+                                            "shadow": false,
+                                            "topLevel": false
+                                          }
+                                        },
+                                        [
+                                          4,
+                                          ""
+                                        ]
+                                      ],
+                                      "NUM2": [
+                                        1,
+                                        [
+                                          4,
+                                          "3.8"
+                                        ]
+                                      ]
+                                    },
+                                    "next": null,
+                                    "opcode": "operator_multiply",
+                                    "shadow": false,
+                                    "topLevel": false
+                                  }
+                                },
+                                [
+                                  4,
+                                  ""
+                                ]
+                              ],
+                              "NUM2": [
+                                1,
+                                [
+                                  4,
+                                  "180"
+                                ]
+                              ]
+                            },
+                            "next": null,
+                            "opcode": "operator_subtract",
+                            "shadow": false,
+                            "topLevel": false
+                          }
+                        },
+                        [
+                          4,
+                          "0"
+                        ]
+                      ]
+                    },
+                    "next": null,
+                    "opcode": "motion_sety",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                }
+              ]
+            },
+            "next": null,
+            "opcode": "control_forever",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "connected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "MESSAGE": [
+                1,
+                [
+                  10,
+                  ""
+                ]
+              ]
+            },
+            "next": {
+              "fields": {
+                "VARIABLE": [
+                  "変数",
+                  "`jEk@4|i[#Fk?(8x)AV.-my variable"
+                ]
+              },
+              "inputs": {
+                "VALUE": [
+                  1,
+                  [
+                    10,
+                    "0"
+                  ]
+                ]
+              },
+              "next": {
+                "fields": {},
+                "inputs": {},
+                "next": {
+                  "fields": {},
+                  "inputs": {
+                    "COLOR": [
+                      1,
+                      [
+                        9,
+                        "#4798ee"
+                      ]
+                    ]
+                  },
+                  "next": {
+                    "fields": {},
+                    "inputs": {},
+                    "next": {
+                      "fields": {},
+                      "inputs": {
+                        "SUBSTACK": [
+                          2,
+                          {
+                            "block": {
+                              "fields": {},
+                              "inputs": {
+                                "X": [
+                                  1,
+                                  [
+                                    4,
+                                    "-230"
+                                  ]
+                                ]
+                              },
+                              "next": {
+                                "fields": {},
+                                "inputs": {},
+                                "next": {
+                                  "fields": {},
+                                  "inputs": {
+                                    "CONDITION": [
+                                      2,
+                                      {
+                                        "block": {
+                                          "fields": {},
+                                          "inputs": {
+                                            "OPERAND1": [
+                                              3,
+                                              {
+                                                "block": {
+                                                  "fields": {},
+                                                  "inputs": {},
+                                                  "next": null,
+                                                  "opcode": "motion_xposition",
+                                                  "shadow": false,
+                                                  "topLevel": false
+                                                }
+                                              },
+                                              [
+                                                10,
+                                                ""
+                                              ]
+                                            ],
+                                            "OPERAND2": [
+                                              1,
+                                              [
+                                                10,
+                                                "230"
+                                              ]
+                                            ]
+                                          },
+                                          "next": null,
+                                          "opcode": "operator_gt",
+                                          "shadow": false,
+                                          "topLevel": false
+                                        }
+                                      }
+                                    ],
+                                    "SUBSTACK": [
+                                      2,
+                                      {
+                                        "block": {
+                                          "fields": {},
+                                          "inputs": {
+                                            "DX": [
+                                              1,
+                                              [
+                                                4,
+                                                "0.01"
+                                              ]
+                                            ]
+                                          },
+                                          "next": null,
+                                          "opcode": "motion_changexby",
+                                          "shadow": false,
+                                          "topLevel": false
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "next": null,
+                                  "opcode": "control_repeat_until",
+                                  "shadow": false,
+                                  "topLevel": false
+                                },
+                                "opcode": "pen_clear",
+                                "shadow": false,
+                                "topLevel": false
+                              },
+                              "opcode": "motion_setx",
+                              "shadow": false,
+                              "topLevel": false
+                            }
+                          }
+                        ]
+                      },
+                      "next": null,
+                      "opcode": "control_forever",
+                      "shadow": false,
+                      "topLevel": false
+                    },
+                    "opcode": "pen_penDown",
+                    "shadow": false,
+                    "topLevel": false
+                  },
+                  "opcode": "pen_setPenColorToColor",
+                  "shadow": false,
+                  "topLevel": false
+                },
+                "opcode": "sensing_resettimer",
+                "shadow": false,
+                "topLevel": false
+              },
+              "opcode": "data_setvariableto",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "looks_say",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {
+            "STATE": [
+              "disconnected",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {
+              "VARIABLE": [
+                "変数",
+                "`jEk@4|i[#Fk?(8x)AV.-my variable"
+              ]
+            },
+            "inputs": {
+              "VALUE": [
+                3,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "sensing_timer",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                },
+                [
+                  10,
+                  "0"
+                ]
+              ]
+            },
+            "next": {
+              "fields": {},
+              "inputs": {
+                "SOUND_MENU": [
+                  1,
+                  {
+                    "block": {
+                      "fields": {
+                        "SOUND_MENU": [
+                          "ニャー",
+                          null
+                        ]
+                      },
+                      "inputs": {},
+                      "next": null,
+                      "opcode": "sound_sounds_menu",
+                      "shadow": true,
+                      "topLevel": false
+                    }
+                  }
+                ]
+              },
+              "next": {
+                "fields": {
+                  "STOP_OPTION": [
+                    "other scripts in sprite",
+                    null
+                  ]
+                },
+                "inputs": {},
+                "mutation": {
+                  "children": [],
+                  "hasnext": "true",
+                  "tagName": "mutation"
+                },
+                "next": {
+                  "fields": {},
+                  "inputs": {
+                    "MESSAGE": [
+                      3,
+                      {
+                        "block": {
+                          "fields": {},
+                          "inputs": {
+                            "NUM1": [
+                              3,
+                              [
+                                12,
+                                "変数",
+                                "`jEk@4|i[#Fk?(8x)AV.-my variable"
+                              ],
+                              [
+                                4,
+                                ""
+                              ]
+                            ],
+                            "NUM2": [
+                              1,
+                              [
+                                4,
+                                "60"
+                              ]
+                            ]
+                          },
+                          "next": null,
+                          "opcode": "operator_divide",
+                          "shadow": false,
+                          "topLevel": false
+                        }
+                      },
+                      [
+                        10,
+                        "こんにちは!"
+                      ]
+                    ]
+                  },
+                  "next": null,
+                  "opcode": "looks_say",
+                  "shadow": false,
+                  "topLevel": false
+                },
+                "opcode": "control_stop",
+                "shadow": false,
+                "topLevel": false
+              },
+              "opcode": "sound_playuntildone",
+              "shadow": false,
+              "topLevel": false
+            },
+            "opcode": "data_setvariableto",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenConnectionChanged",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}

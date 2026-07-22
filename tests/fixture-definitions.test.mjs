@@ -155,6 +155,18 @@ for (const { fileName, value: definition } of definitions) {
 
       const project = readProjectJsonFromSb3(sb3Path);
       assert.ok(project.extensions.includes(definition.extensionId));
+      const fixtureOpcodes = new Set(
+        (project.targets || []).flatMap((target) =>
+          Object.values(target.blocks || {}).map((block) => block.opcode)
+        )
+      );
+      for (const legacyOpcode of fixture.knownLegacyOpcodes || []) {
+        assert.ok(fixtureOpcodes.has(legacyOpcode), `${fixture.sb3Path} に ${legacyOpcode} がありません。`);
+        assert.ok(
+          !definition.blocks.some((block) => block.opcode === legacyOpcode),
+          `${legacyOpcode} は現行getInfo()のブロックとして登録できません。`
+        );
+      }
       const actualGraph = normalizeProjectGraph(project);
       const expectedGraph = JSON.parse(readFileSync(graphPath, "utf8"));
       assert.deepEqual(actualGraph, expectedGraph);
@@ -162,6 +174,16 @@ for (const { fileName, value: definition } of definitions) {
     }
 
     for (const blockDefinition of definition.blocks) {
+      if (blockDefinition.fixtureStatus !== "verified") {
+        assert.equal(
+          blockDefinition.fixture,
+          null,
+          `${blockDefinition.opcode}: verifiedでないブロックはfixtureを推測で関連付けません。`
+        );
+        continue;
+      }
+
+      assert.ok(blockDefinition.fixture, `${blockDefinition.opcode}: verifiedなのにfixtureがありません。`);
       const fixtureRecord = fixturesById.get(blockDefinition.fixture.fixtureId);
       assert.ok(fixtureRecord, `${blockDefinition.opcode}: fixtureIdが見つかりません。`);
       assert.equal(blockDefinition.fixture.selector.opcode, blockDefinition.opcode);
@@ -175,6 +197,16 @@ for (const { fileName, value: definition } of definitions) {
       assert.equal(Boolean(block.shadow), blockDefinition.shadow);
       assert.deepEqual(Object.keys(block.inputs || {}).sort(), Object.keys(blockDefinition.inputs).sort());
       assert.deepEqual(block.fields || {}, expectedFields(blockDefinition.fields));
+
+      for (const [fieldName, menu] of Object.entries(blockDefinition.menuValues)) {
+        if (!block.fields?.[fieldName]) continue;
+        const actualMenuValue = block.fields[fieldName][0];
+        assert.ok(menu.values.includes(actualMenuValue), `${blockDefinition.opcode}.${fieldName} が公式menu値にありません。`);
+        assert.ok(
+          menu.fixtureValues.includes(actualMenuValue),
+          `${blockDefinition.opcode}.${fieldName} がfixtureのmenu値にありません。`
+        );
+      }
 
       for (const [inputName, inputDefinition] of Object.entries(blockDefinition.inputs)) {
         const rawInput = block.inputs[inputName];
