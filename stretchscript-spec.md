@@ -229,16 +229,19 @@ types:
 
 ```yaml
 - { name: sprite, args: [string spriteName, closure spriteBody], returns: target, blockType: meta, example: "sprite(\"Aさん\", () => { setSpriteText(\"A\"); whenGreenFlagClicked(() => { say(\"A\", 1); }); });" }
-- { name: setSpritePosition, args: [number x, number y], returns: void, blockType: meta, scope: sprite_body_only, example: "setSpritePosition(-100, 0);" }
-- { name: setSpriteSize, args: [number size], returns: void, blockType: meta, scope: sprite_body_only, example: "setSpriteSize(100);" }
-- { name: setSpriteDirection, args: [number direction], returns: void, blockType: meta, scope: sprite_body_only, example: "setSpriteDirection(90);" }
+- { name: setSpritePosition, args: [number x, number y], returns: void, blockType: meta_or_command, scope: sprite_body_or_event, eventConversion: goToXY, example: "setSpritePosition(-100, 0);" }
+- { name: setSpriteSize, args: [number size], returns: void, blockType: meta_or_command, scope: sprite_body_or_event, eventConversion: setSize, example: "setSpriteSize(100);" }
+- { name: setSpriteDirection, args: [number direction], returns: void, blockType: meta_or_command, scope: sprite_body_or_event, eventConversion: pointInDirection, example: "setSpriteDirection(90);" }
 - { name: setSpriteText, args: [string text], returns: void, blockType: meta, scope: sprite_body_only, example: "setSpriteText(\"グー\");" }
-- { name: setSpriteColor, args: [color color], returns: void, blockType: meta, scope: sprite_body_only, example: "setSpriteColor(\"#ff0000\");" }
+- { name: setSpriteColor, args: [literalColor color], returns: void, blockType: meta_or_generated_costume_command, scope: generated_text_sprite_body_or_event, eventConversion: generatedSvgCostumeSwitch, example: "setSpriteColor(\"#ff0000\");" }
 ```
 
 ```yaml
 multi_sprite_rules:
   - sprite_bodyの中では、setSpritePositionなどのmeta命令とhatブロックを置ける
+  - event内のsetSpritePosition/setSpriteSize/setSpriteDirectionは同じ意味のScratch実行命令へ自動変換される
+  - 文字スプライトのevent内のsetSpriteColor("#RRGGBB")は色違いSVGコスチュームを生成して切り替える
+  - event内のsetSpriteColorには固定の6けたカラーコードだけを使い、変数やreporterで色を指定しない
   - 各spriteはproject.jsonのtargetsに個別のSprite targetとして出力される
   - spriteを使わない既存コードは従来通りSprite1に入る
   - 同名spriteは安全停止

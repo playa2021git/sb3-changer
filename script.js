@@ -1886,11 +1886,70 @@ StretchScriptの仕様に従ってください。`;
 
     /* 初期設定風の命令を実行中に使った場合、安全に同じ意味のScratch命令へ寄せます。 */
     resolveRuntimeCall(call) {
-      const resolved = resolveCallVariant(call);
+      let resolved;
+      if (call && call.name === "setSpriteColor") {
+        const costumeName = this.ensureRuntimeColorCostume(call);
+        resolved = {
+          ...call,
+          name: "switchCostume",
+          args: [{ ...call.args[0], value: costumeName }]
+        };
+      } else {
+        resolved = resolveCallVariant(call);
+      }
       if (resolved && call && resolved.name !== call.name && call.name.startsWith("setSprite")) {
         this.runtimeCorrections.push(`${call.name}(...) を実行時命令 ${resolved.name}(...) へ自動補正しました（${call.line}行目）。`);
       }
       return resolved;
+    }
+
+    /* 実行中の固定色変更用コスチュームを作り、その名前を返します。 */
+    ensureRuntimeColorCostume(call) {
+      const arg = call.args[0];
+      if (call.args.length !== 1 || !arg || arg.type !== "StringLiteral") {
+        throw new StretchScriptError({
+          message: "実行中の色は固定カラーコードで指定してください。",
+          line: (arg || call).line,
+          column: (arg || call).column,
+          cause: "setSpriteColorを自動変換するには、変換時に色が確定している必要があります。",
+          fix: "#ff0000 のような6けたの色を直接書いてください。",
+          example: "setSpriteColor(\"#ff0000\");"
+        });
+      }
+      const color = String(arg.value).toUpperCase();
+      if (!/^#[0-9A-F]{6}$/.test(color)) {
+        throw new StretchScriptError({
+          message: "色の書き方が違います。",
+          line: arg.line,
+          column: arg.column,
+          cause: "実行中の色も #ff0000 のような6けたのカラーコードで指定します。",
+          fix: "# から始まる6けたの英数字にしてください。",
+          example: "setSpriteColor(\"#ff0000\");"
+        });
+      }
+      const context = this.activeSprite;
+      if (context.useDefaultCostume) {
+        throw new StretchScriptError({
+          message: "既定スプライトの色画像は自動生成できません。",
+          line: call.line,
+          column: call.column,
+          cause: "元のScratchキャラクター画像を保ったまま、指定色へ正確に塗り替える保存形がありません。",
+          fix: "spriteとsetSpriteTextで文字スプライトを作るか、setEffect(\"COLOR\", 数値)を使ってください。",
+          example: "sprite(\"信号\", () => { setSpriteText(\"信号\"); setSpriteColor(\"#00ff00\"); });"
+        });
+      }
+
+      const initialColor = String(context.color || DEFAULT_SPRITE_COLOR).toUpperCase();
+      if (color === initialColor) return `${context.name} costume`;
+      if (context.runtimeColorCostumes.has(color)) return context.runtimeColorCostumes.get(color).name;
+
+      const costume = this.makeTextCostume(
+        `auto-color-${color.slice(1)}`,
+        context.text || context.name,
+        color
+      );
+      context.runtimeColorCostumes.set(color, costume);
+      return costume.name;
     }
 
     /* スプライトごとのblocksと初期値をまとめて管理します。 */
@@ -1906,7 +1965,8 @@ StretchScriptの仕様に従ってください。`;
         text: name,
         color: DEFAULT_SPRITE_COLOR,
         useDefaultCostume: Boolean(options.useDefaultCostume),
-        costume: null
+        costume: null,
+        runtimeColorCostumes: new Map()
       };
     }
 
@@ -1956,13 +2016,12 @@ StretchScriptの仕様に従ってください。`;
       const context = this.createSpriteContext(name);
       this.spriteContexts.push(context);
 
-      call.args[1].body.forEach((statement) => {
-        if (this.isSpriteMetaCall(statement)) {
-          this.applySpriteMeta(context, statement);
-          return;
-        }
-        this.buildTopLevelScript(statement, context);
-      });
+      const statements = call.args[1].body;
+      // 初期設定がイベントより後ろに書かれても、実行用コスチュームへ正しく反映します。
+      statements.filter((statement) => this.isSpriteMetaCall(statement))
+        .forEach((statement) => this.applySpriteMeta(context, statement));
+      statements.filter((statement) => !this.isSpriteMetaCall(statement))
+        .forEach((statement) => this.buildTopLevelScript(statement, context));
     }
 
     /* sprite内だけで使える初期設定命令を判定します。 */
@@ -2758,6 +2817,22 @@ StretchScriptの仕様に従ってください。`;
     }
 
     /* スプライトのcostumeを作り、ZIPへ入れる素材として登録します。 */
+    makeTextCostume(name, text, color) {
+      const svg = makeTextSpriteSvg(text, color);
+      const assetId = md5Hex(svg);
+      this.assetFiles.set(`${assetId}.svg`, svg);
+      return {
+        name,
+        bitmapResolution: 1,
+        dataFormat: "svg",
+        assetId,
+        md5ext: `${assetId}.svg`,
+        rotationCenterX: 80,
+        rotationCenterY: 70
+      };
+    }
+
+    /* スプライトの初期costumeを作り、ZIPへ入れる素材として登録します。 */
     makeSpriteCostume(context) {
       if (context.costume) return context.costume;
       if (context.useDefaultCostume) {
@@ -2774,24 +2849,18 @@ StretchScriptの仕様に従ってください。`;
         return context.costume;
       }
 
-      const svg = makeTextSpriteSvg(context.text || context.name, context.color);
-      const assetId = md5Hex(svg);
-      this.assetFiles.set(`${assetId}.svg`, svg);
-      context.costume = {
-        name: `${context.name} costume`,
-        bitmapResolution: 1,
-        dataFormat: "svg",
-        assetId,
-        md5ext: `${assetId}.svg`,
-        rotationCenterX: 80,
-        rotationCenterY: 70
-      };
+      context.costume = this.makeTextCostume(
+        `${context.name} costume`,
+        context.text || context.name,
+        context.color
+      );
       return context.costume;
     }
 
     /* スプライトtargetを作ります。 */
     makeSpriteTarget(context = this.defaultSprite, layerOrder = 1) {
       const costume = this.makeSpriteCostume(context);
+      const costumes = [costume, ...context.runtimeColorCostumes.values()];
       const useLocalData = !this.usesMultipleSprites && context === this.defaultSprite;
       return {
         isStage: false,
@@ -2802,7 +2871,7 @@ StretchScriptの仕様に従ってください。`;
         blocks: context.blocks,
         comments: {},
         currentCostume: 0,
-        costumes: [costume],
+        costumes,
         sounds: [],
         volume: 100,
         layerOrder,
