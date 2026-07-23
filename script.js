@@ -471,7 +471,7 @@ StretchScriptの仕様に従ってください。`;
       const ast = parseStretchScript(source);
       const knownNames = collectKnownNames(ast);
       const previewLines = buildPreview(ast, knownNames);
-      const builder = new ScratchProjectBuilder(knownNames);
+      const builder = new ScratchProjectBuilder(knownNames, [...ast.sourceCorrections, ...ast.semanticWarnings]);
       currentProject = builder.build(ast);
       currentWarnings = builder.makeWarnings();
 
@@ -1607,11 +1607,70 @@ StretchScriptの仕様に従ってください。`;
     }
   }
 
+  /* Geminiが混ぜたMarkdownコード枠を、行番号を保ったまま空行として扱います。 */
+  function sanitizeStretchScriptSource(source) {
+    const corrections = [];
+    let markdownFenceCount = 0;
+    const sanitizedSource = String(source || "")
+      .split(/\r\n|\r|\n/)
+      .map((line) => {
+        if (/^\s*```(?:js|javascript|ts|typescript|stretchscript)?\s*$/i.test(line)) {
+          markdownFenceCount += 1;
+          return "";
+        }
+        return line;
+      })
+      .join("\n");
+
+    if (markdownFenceCount > 0) {
+      corrections.push(`Markdownのコード枠（\`\`\`）${markdownFenceCount}行を自動で無視しました。`);
+    }
+    return { source: sanitizedSource, corrections };
+  }
+
   /* 文字列からASTを作る入口です。 */
   function parseStretchScript(source) {
-    const tokens = tokenize(source);
+    const sanitized = sanitizeStretchScriptSource(source);
+    const tokens = tokenize(sanitized.source);
     const parser = new Parser(tokens);
-    return parser.parseProgram(false);
+    const ast = parser.parseProgram(false);
+    ast.sourceCorrections = sanitized.corrections;
+    ast.semanticWarnings = collectSemanticWarnings(ast);
+    return ast;
+  }
+
+  /* 変換はできてもScratch上で意図と違いやすいAI生成パターンを警告します。 */
+  function collectSemanticWarnings(ast) {
+    const warnings = [];
+
+    const visitCloneBody = (statements, spriteName) => {
+      statements.forEach((call) => {
+        if (call.name === "setVariable" && isLiteralString(call.args[0])) {
+          warnings.push(`クローン内の変数「${call.args[0].value}」は現在すべてのクローンで共有されます。新しいクローンによる上書きに注意してください（${call.line}行目）。`);
+        }
+        if (call.name === "touchingObject" && isLiteralString(call.args[0]) && String(call.args[0].value) === spriteName) {
+          warnings.push(`スプライト「${spriteName}」が同名の touchingObject を使っています。同じスプライトのクローン同士も接触判定の対象になります（${call.line}行目）。`);
+        }
+        call.args.filter((arg) => arg.type === "Closure").forEach((closure) => visitCloneBody(closure.body, spriteName));
+        call.args.filter((arg) => arg.type === "Call").forEach((child) => visitCloneBody([child], spriteName));
+      });
+    };
+
+    ast.body.filter(isSpriteDefinitionCall).forEach((spriteCall) => {
+      const spriteName = spriteCall.args[0] && spriteCall.args[0].type === "StringLiteral"
+        ? String(spriteCall.args[0].value)
+        : "";
+      const spriteBody = spriteCall.args.find((arg) => arg.type === "Closure");
+      if (!spriteBody) return;
+      spriteBody.body
+        .filter((call) => ["whenIStartAsClone", "whenCloned"].includes(call.name))
+        .forEach((cloneHat) => {
+          const cloneBody = cloneHat.args.find((arg) => arg.type === "Closure");
+          if (cloneBody) visitCloneBody(cloneBody.body, spriteName);
+        });
+    });
+
+    return Array.from(new Set(warnings));
   }
 
   /* 変数名とリスト名を先に集め、引数順の自動判別に使います。 */
@@ -1726,6 +1785,15 @@ StretchScriptの仕様に従ってください。`;
     if (call.name === "goTo" && call.args.length === 2) {
       return { ...call, name: "goToXY" };
     }
+    if (call.name === "setSpritePosition" && call.args.length === 2) {
+      return { ...call, name: "goToXY" };
+    }
+    if (call.name === "setSpriteSize" && call.args.length === 1) {
+      return { ...call, name: "setSize" };
+    }
+    if (call.name === "setSpriteDirection" && call.args.length === 1) {
+      return { ...call, name: "pointInDirection" };
+    }
     return call;
   }
 
@@ -1793,7 +1861,7 @@ StretchScriptの仕様に従ってください。`;
 
   /* project.jsonを組み立てるクラスです。 */
   class ScratchProjectBuilder {
-    constructor(knownNames = null) {
+    constructor(knownNames = null, inputCorrections = []) {
       this.idCounter = 0;
       this.variables = new Map();
       this.lists = new Map();
@@ -1801,6 +1869,8 @@ StretchScriptの仕様に従ってください。`;
       this.usedExtensions = new Set();
       this.usedExtensionURLs = new Map();
       this.usedCategories = new Set();
+      this.inputCorrections = Array.isArray(inputCorrections) ? [...inputCorrections] : [];
+      this.runtimeCorrections = [];
       this.knownNames = knownNames || { variables: new Set(), lists: new Set() };
       this.scriptX = 40;
       this.scriptY = 40;
@@ -1812,6 +1882,15 @@ StretchScriptの仕様に従ってください。`;
       this.defaultSprite = this.createSpriteContext("Sprite1", { useDefaultCostume: true });
       this.activeSprite = this.defaultSprite;
       this.blocks = this.defaultSprite.blocks;
+    }
+
+    /* 初期設定風の命令を実行中に使った場合、安全に同じ意味のScratch命令へ寄せます。 */
+    resolveRuntimeCall(call) {
+      const resolved = resolveCallVariant(call);
+      if (resolved && call && resolved.name !== call.name && call.name.startsWith("setSprite")) {
+        this.runtimeCorrections.push(`${call.name}(...) を実行時命令 ${resolved.name}(...) へ自動補正しました（${call.line}行目）。`);
+      }
+      return resolved;
     }
 
     /* スプライトごとのblocksと初期値をまとめて管理します。 */
@@ -2099,7 +2178,7 @@ StretchScriptの仕様に従ってください。`;
 
     /* 1つの命令をScratchブロックにします。 */
     createStackBlock(call, parentId) {
-      const resolvedCall = resolveCallVariant(call);
+      const resolvedCall = this.resolveRuntimeCall(call);
       const def = this.requireDefinition(resolvedCall);
 
       if (def.blockType === "conditional") {
@@ -2172,7 +2251,7 @@ StretchScriptの仕様に従ってください。`;
 
     /* 値ブロックや真偽ブロックを作ります。 */
     createReporterBlock(call, parentId, expectedType) {
-      const resolvedCall = resolveCallVariant(call);
+      const resolvedCall = this.resolveRuntimeCall(call);
       const def = this.requireDefinition(resolvedCall);
       if (!["reporter", "boolean"].includes(def.blockType)) {
         throw new StretchScriptError({
@@ -2553,6 +2632,28 @@ StretchScriptの仕様に従ってください。`;
 
     /* 未登録の命令なら、追加先ファイルまで示して止めます。 */
     requireDefinition(call) {
+      if (isSpriteMetaCallName(call.name)) {
+        const help = {
+          setSpriteText: {
+            cause: "setSpriteText はスプライトの初期画像を作る設定で、イベントや繰り返しの中では実行できません。",
+            fix: "実行中に文字を表示する場合は sayNow(...) または say(..., 秒数) を使ってください。",
+            example: "sayNow(\"青信号\");"
+          },
+          setSpriteColor: {
+            cause: "setSpriteColor はスプライトの初期色を決める設定で、イベントや繰り返しの中では実行できません。",
+            fix: "状態ごとに色違いのスプライトを用意し、show() と hide() で切り替えてください。",
+            example: "ifBlock(equals(getVariable(\"信号\"), \"赤\"), () => { show(); });"
+          }
+        }[call.name];
+        throw new StretchScriptError({
+          message: `${call.name} はスプライト直下だけで使える初期設定です。`,
+          line: call.line,
+          column: call.column,
+          cause: help ? help.cause : `${call.name} はイベント内のScratchブロックには変換できません。`,
+          fix: help ? help.fix : "sprite(\"名前\", () => { ... }); の直下へ移動してください。",
+          example: help ? help.example : `${call.name}(...);`
+        });
+      }
       const unsupported = R.getUnsupported(call.name);
       if (unsupported) {
         throw new StretchScriptError({
@@ -2728,12 +2829,13 @@ StretchScriptの仕様に従ってください。`;
 
     /* 拡張機能を使ったときの注意を作ります。 */
     makeWarnings() {
-      const warnings = Array.from(this.usedExtensions).map((extensionId) => {
+      const warnings = [...this.inputCorrections, ...this.runtimeCorrections];
+      warnings.push(...Array.from(this.usedExtensions).map((extensionId) => {
         const info = R.extensionInfo().find((item) => item.extensionId === extensionId);
         const category = info ? info.category : extensionId;
         const note = info ? info.note : "Stretch3側で同じ拡張機能を追加してください。";
         return `この拡張ブロックを使うにはStretch3側で拡張機能を追加してください: ${category} (${extensionId})。${note}`;
-      });
+      }));
 
       this.spriteContexts.forEach((context) => {
         Object.values(context.blocks).forEach((block) => {
@@ -2896,13 +2998,15 @@ StretchScriptの仕様に従ってください。`;
     convertSourceForTest(source) {
       const ast = parseStretchScript(source);
       const knownNames = collectKnownNames(ast);
-      const builder = new ScratchProjectBuilder(knownNames);
+      const builder = new ScratchProjectBuilder(knownNames, [...ast.sourceCorrections, ...ast.semanticWarnings]);
       const project = builder.build(ast);
       return {
         ast,
         project,
         preview: buildPreview(ast, knownNames),
         warnings: builder.makeWarnings(),
+        sourceCorrections: [...ast.sourceCorrections],
+        semanticWarnings: [...ast.semanticWarnings],
         integrity: validateProjectIntegrity(project),
         categories: Array.from(builder.usedCategories),
         variables: Array.from(builder.variables.keys()),

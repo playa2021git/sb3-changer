@@ -105,6 +105,8 @@ Do not output .sb3 files or project.json directly.
 
 Use [stretchscript-spec.md](stretchscript-spec.md) as the compact prompt-oriented function reference.
 
+Standalone Markdown fences inserted by generated answers (such as ` ```js ` and ` ``` `) are ignored while preserving source line numbers. Inside event scripts, `setSpritePosition`, `setSpriteSize`, and `setSpriteDirection` are safely normalized to their equivalent Scratch runtime commands. Misplaced `setSpriteText` and `setSpriteColor` calls are not guessed; the converter reports a purpose-specific correction instead. The converter also warns about clone-shared variables and same-sprite touching checks that commonly produce surprising runtime behavior.
+
 ## Supported Function Areas
 
 ### Scratch Core Blocks

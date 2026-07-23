@@ -211,6 +211,80 @@ test("AIが出しやすい自分自身の別名を正しいクローン値へ補
   }
 });
 
+test("Gemが混ぜたMarkdownコード枠を行番号を保って自動除去する", () => {
+  const result = convert(`\`\`\`js
+whenGreenFlagClicked(() => {
+  \`\`\`
+  move(10);
+  \`\`\`
+});
+\`\`\``);
+
+  assert.ok(opcodes(result).includes("motion_movesteps"));
+  assert.equal(result.sourceCorrections.length, 1);
+  assert.match(result.sourceCorrections[0], /4行を自動で無視/);
+  assert.ok(result.warnings.some((warning) => /Markdownのコード枠/.test(warning)));
+});
+
+test("コード枠を除去しても後続エラーの元の行番号を保つ", () => {
+  const error = conversionError(`\`\`\`js
+whenGreenFlagClicked(() => {
+  move(10);
+  \`\`\`
+  unknownGemCommand();
+});
+\`\`\``);
+
+  assert.equal(error.line, 5);
+  assert.match(error.message, /unknownGemCommand は未対応関数/);
+});
+
+test("実行中の位置・大きさ・向き初期設定を安全なScratch命令へ補正する", () => {
+  const result = convert(`sprite("車", () => {
+  setSpriteText("車");
+  whenGreenFlagClicked(() => {
+    setSpritePosition(10, 20);
+    setSpriteSize(60);
+    setSpriteDirection(180);
+  });
+});`);
+  const codes = targetOpcodes(result, "車");
+
+  assert.ok(codes.includes("motion_gotoxy"));
+  assert.ok(codes.includes("looks_setsizeto"));
+  assert.ok(codes.includes("motion_pointindirection"));
+  assert.equal(result.warnings.filter((warning) => /自動補正しました/.test(warning)).length, 3);
+});
+
+test("実行中の文字・色初期設定には用途別の修正方法を示す", () => {
+  const textError = conversionError(`sprite("信号", () => {
+  whenGreenFlagClicked(() => { setSpriteText("青信号"); });
+});`);
+  assert.match(textError.message, /スプライト直下だけ/);
+  assert.match(textError.fix, /sayNow/);
+
+  const colorError = conversionError(`sprite("信号", () => {
+  whenGreenFlagClicked(() => { setSpriteColor("#ff0000"); });
+});`);
+  assert.match(colorError.message, /スプライト直下だけ/);
+  assert.match(colorError.fix, /show\(\).*hide\(\)/);
+});
+
+test("クローン共有変数と同名スプライト接触を動作警告する", () => {
+  const result = convert(`sprite("車", () => {
+  setSpriteText("車");
+  whenGreenFlagClicked(() => { createClone("_myself_"); });
+  whenIStartAsClone(() => {
+    setVariable("車速度", random(3, 6));
+    ifBlock(touchingObject("車"), () => { wait(0.1); });
+  });
+});`);
+
+  assert.ok(result.semanticWarnings.some((warning) => /車速度.*すべてのクローンで共有/.test(warning)));
+  assert.ok(result.semanticWarnings.some((warning) => /同じスプライトのクローン同士/.test(warning)));
+  assert.ok(result.warnings.some((warning) => /車速度/.test(warning)));
+});
+
 test("クローン対象として指定したスプライト名は書き換えない", () => {
   const result = convert(`whenGreenFlagClicked(() => {
   createClone("ボール");

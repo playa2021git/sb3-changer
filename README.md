@@ -104,6 +104,8 @@ JavaScriptの一般APIではなく、StretchScript仕様書にある関数だけ
 
 詳しいプロンプト用仕様は [stretchscript-spec.md](stretchscript-spec.md) にあります。
 
+Geminiが回答へ混ぜた単独行のMarkdownコード枠（` ```js `、` ``` `など）は、行番号を保ったまま自動で無視します。また、イベント内に書かれた`setSpritePosition`、`setSpriteSize`、`setSpriteDirection`は、同じ意味のScratch実行命令へ安全に補正します。意味を一つに決められない`setSpriteText`と`setSpriteColor`の誤用は勝手に変更せず、用途に合った修正方法をエラー欄へ表示します。クローン内の共有変数や同名スプライトへの接触判定など、変換後に意図と違う動きになりやすい書き方は警告します。
+
 ## 対応済み関数の概要
 
 ### Scratch標準ブロック
