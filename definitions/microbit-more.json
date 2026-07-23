@@ -550,13 +550,14 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "experimental",
-      "deviceVerificationStatus": "not-run",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
       "officialSource": {
         "repository": "microbit-more/mbit-more-v2",
         "commit": "28167dabf63de93809278e965e8e36507b0ee4db",
         "sourcePath": "src/vm/extensions/block/index.js"
-      }
+      },
+      "notes": "公式fixtureで保存形を確認済み。2026-07-23にmicro:bit V2でSb3-Changer変換、Stretch3読込、roll連続値表示の実機確認に合格。"
     },
     {
       "functionName": "microbitSoundLevel",
@@ -755,7 +756,7 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "unsupported",
+      "supportStatus": "experimental",
       "deviceVerificationStatus": "not-run",
       "officialSource": {
         "repository": "microbit-more/mbit-more-v2",
@@ -857,7 +858,8 @@
             "true"
           ],
           "fixtureValues": [
-            "false"
+            "false",
+            "true"
           ]
         }
       },
@@ -873,7 +875,7 @@
         }
       },
       "fixtureStatus": "verified",
-      "supportStatus": "unsupported",
+      "supportStatus": "experimental",
       "deviceVerificationStatus": "not-run",
       "officialSource": {
         "repository": "microbit-more/mbit-more-v2",

@@ -125,7 +125,7 @@ Use [stretchscript-spec.md](stretchscript-spec.md) as the compact prompt-oriente
 | Music | Registered in the converter; real `.sb3` fixture coverage is still pending | `playDrumForBeats`, `playNoteForBeats`, `setInstrument`, `setTempo`, `tempo` |
 | Translate | Registered in the converter; real `.sb3` fixture coverage is still pending | `translate`, `viewerLanguage` |
 | Text to Speech | Registered in the converter; real `.sb3` fixture coverage is still pending | `speak`, `setVoice`, `setSpeechLanguage` |
-| Microbit More | Fixture-backed subset; hardware-pending functions remain experimental | A/B buttons, LED matrix/text, shake, tone, light, roll, connection changes |
+| Microbit More | Fixture-backed subset; hardware-pending functions remain experimental | A/B buttons, LED matrix/text, shake, tone, light, roll, connection changes, limited pin output |
 | ML2Scratch | Experimental; only six blocks found in the official 1-or-2 fixture | `mlAddExample1/2/3`, `whenMlLabelReceived`, `mlSetVideo`, `mlSetInput` |
 | CameraSelector | Experimental; generated saved shape matches the official fixture, device behavior not yet verified | `selectCamera` |
 | Speech2Scratch | Experimental; generated saved shape matches the official fixture, browser speech recognition not yet verified | `startSpeechRecognition`, `speechText` |
@@ -180,23 +180,26 @@ Hardware verified:
 - `microbitPlayTone(440, 100)`
 - `microbitStopTone()`
 - `microbitDisplayMatrix("0101011111111110111000100")`
+- `microbitRoll()`
 
 Experimental (official fixture shape matches; hardware check pending):
 
 - `whenMicrobitConnectionChanged("connected", () => { ... })`
 - `whenMicrobitConnectionChanged("disconnected", () => { ... })`
 - `microbitLightLevel()`
-- `microbitRoll()`
+- `microbitSetPullMode("1", "NONE")`
+- `microbitSetDigitalOut("0", "false")`
+- `microbitSetDigitalOut("0", "true")`
 
 Unsupported until further fixture and hardware verification:
 
 - `TILT_LEFT` / `TILT_RIGHT`
 - Servo blocks
-- Pin I/O blocks
+- Pin I/O combinations other than the fixture-backed combinations above
 - Sensor reporters other than light and roll
 - Data, touch, and pin event blocks that depend on communication or runtime configuration
 
-See [Microbit More V2 hardware test batch 1](docs/microbit-more-v2-device-test-batch-1.md), the [Microbit More block matrix](docs/microbit-more-block-matrix.md), [fixture guide](docs/microbit-more-fixture-guide.md), and [implementation plan](docs/microbit-more-implementation-plan.md).
+See [Microbit More V2 hardware test batch 1](docs/microbit-more-v2-device-test-batch-1.md), the [V2 additional fixture request](docs/microbit-more-v2-fixture-request.md), [Microbit More block matrix](docs/microbit-more-block-matrix.md), [fixture guide](docs/microbit-more-fixture-guide.md), and [implementation plan](docs/microbit-more-implementation-plan.md).
 
 ## Developer Map
 

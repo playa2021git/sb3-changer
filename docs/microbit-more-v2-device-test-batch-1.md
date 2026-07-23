@@ -2,7 +2,7 @@
 
 対象は `microbitDisplayMatrix`、`microbitLightLevel`、`microbitRoll`、`whenMicrobitConnectionChanged` の4ブロックです。
 
-これらは公式 `.sb3` fixtureとの保存形比較に合格しています。`microbitDisplayMatrix`以外の3ブロックは、授業利用へ昇格する前の実機確認段階です。
+これらは公式 `.sb3` fixtureとの保存形比較に合格しています。`microbitRoll`は2026-07-23にmicro:bit V2で変換・Stretch3読込・連続値表示の実機確認に合格しました。明るさと接続変化は引き続き実機確認待ちです。
 
 ## 試験前の準備
 

@@ -124,7 +124,7 @@ JavaScriptの一般APIではなく、StretchScript仕様書にある関数だけ
 | Music | 変換器に登録済み。実物 `.sb3` fixtureの追加は今後の課題 | `playDrumForBeats`, `playNoteForBeats`, `setInstrument`, `setTempo`, `tempo` |
 | Translate | 変換器に登録済み。実物 `.sb3` fixtureの追加は今後の課題 | `translate`, `viewerLanguage` |
 | Text to Speech | 変換器に登録済み。実物 `.sb3` fixtureの追加は今後の課題 | `speak`, `setVoice`, `setSpeechLanguage` |
-| Microbit More | 保存形確認済み範囲を変換。実機未確認分はexperimental | A/Bボタン、LED模様/文字、シェイク、音、明るさ、roll、接続変化 |
+| Microbit More | 保存形確認済み範囲を変換。実機未確認分はexperimental | A/Bボタン、LED模様/文字、シェイク、音、明るさ、roll、接続変化、限定pin出力 |
 | ML2Scratch | experimental。公式1or2 fixtureで確認できた6ブロックのみ対応 | `mlAddExample1/2/3`, `whenMlLabelReceived`, `mlSetVideo`, `mlSetInput` |
 | CameraSelector | experimental。公式fixtureと保存形を比較、実機未確認 | `selectCamera` |
 | Speech2Scratch | experimental。公式fixtureと保存形を比較、ブラウザの音声認識動作は未確認 | `startSpeechRecognition`, `speechText` |
@@ -180,23 +180,26 @@ Microbit Moreは、授業で安全に使えることを優先し、実物fixture
 - `microbitStopTone()`
 
 - `microbitDisplayMatrix("0101011111111110111000100")`
+- `microbitRoll()`
 
 experimental（公式fixtureとの構造比較は合格、実機確認待ち）:
 
 - `whenMicrobitConnectionChanged("connected", () => { ... })`
 - `whenMicrobitConnectionChanged("disconnected", () => { ... })`
 - `microbitLightLevel()`
-- `microbitRoll()`
+- `microbitSetPullMode("1", "NONE")`
+- `microbitSetDigitalOut("0", "false")`
+- `microbitSetDigitalOut("0", "true")`
 
 未対応:
 
 - `TILT_LEFT` / `TILT_RIGHT`
 - サーボ
-- ピン入出力
+- 上記のfixture確認済み組合せ以外のピン入出力
 - 明るさ・roll以外のセンサー値取得
 - データ送受信、touch、pin eventなど通信・設定依存のブロック
 
-詳細は [Microbit More V2実機試験 第1便](docs/microbit-more-v2-device-test-batch-1.md)、[Microbit More対応表](docs/microbit-more-block-matrix.md)、[fixture採取手順](docs/microbit-more-fixture-guide.md)、[実装計画](docs/microbit-more-implementation-plan.md) を参照してください。
+詳細は [Microbit More V2実機試験 第1便](docs/microbit-more-v2-device-test-batch-1.md)、[V2追加fixture採取依頼](docs/microbit-more-v2-fixture-request.md)、[Microbit More対応表](docs/microbit-more-block-matrix.md)、[fixture採取手順](docs/microbit-more-fixture-guide.md)、[実装計画](docs/microbit-more-implementation-plan.md) を参照してください。
 
 ## 開発者向け構成
 

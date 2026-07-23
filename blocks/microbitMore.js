@@ -34,6 +34,17 @@
     ...extra
   });
 
+  const MI = (name, scratchName, defaultValue, menuOpcode, menuField, extra = {}) => ({
+    name,
+    scratchName,
+    type: "menuInput",
+    defaultValue,
+    role: "input",
+    menuOpcode,
+    menuField,
+    ...extra
+  });
+
   const MATRIX = (name, scratchName, defaultValue) => ({
     name,
     scratchName,
@@ -142,7 +153,42 @@
       blockType: "reporter",
       arguments: [],
       sample: "sayNow(microbitRoll());",
-      description: "micro:bitの左右方向の傾きを返す。公式fixture確認済み、実機値の確認待ち。",
+      description: "micro:bitの左右方向の傾きを返す。micro:bit V2で連続値の実機確認済み。",
+      source
+    },
+    {
+      functionName: "microbitSetPullMode",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_setPullMode",
+      category: "Microbit More",
+      blockType: "stack",
+      arguments: [
+        F("pin", "PIN", "1", { allowedValues: ["1"] }),
+        F("mode", "MODE", "NONE", { allowedValues: ["NONE"] })
+      ],
+      sample: 'microbitSetPullMode("1", "NONE");',
+      description: "P1のプルモードをNONEにする。公式HC-SR04 fixtureで確認した組合せだけを許可。",
+      source
+    },
+    {
+      functionName: "microbitSetDigitalOut",
+      extensionId: "microbitMore",
+      opcode: "microbitMore_setDigitalOut",
+      category: "Microbit More",
+      blockType: "stack",
+      arguments: [
+        F("pin", "PIN", "0", { allowedValues: ["0"] }),
+        MI(
+          "level",
+          "LEVEL",
+          "false",
+          "microbitMore_menu_digitalValueMenu",
+          "digitalValueMenu",
+          { allowedValues: ["false", "true"] }
+        )
+      ],
+      sample: 'microbitSetDigitalOut("0", "true");',
+      description: "P0をデジタルHIGH/LOWにする。公式HC-SR04 fixtureで確認した値だけを許可。",
       source
     },
     {
@@ -260,19 +306,9 @@
       reason: "analog input reporterのpin menu保存形と実機値が未確認です。"
     },
     {
-      functionName: "microbitSetPullMode",
-      opcode: "microbitMore_setPullMode",
-      reason: "公式fixtureでPIN 1 / NONEの保存形は確認済みですが、生成処理と他のmenu値が未確認です。"
-    },
-    {
       functionName: "microbitPinHigh",
       opcode: "microbitMore_isPinHigh",
       reason: "digital input booleanの保存形とpin許可値が未確認です。"
-    },
-    {
-      functionName: "microbitSetDigitalOut",
-      opcode: "microbitMore_setDigitalOut",
-      reason: "公式fixtureでPIN 0とLEVEL menu shadowの保存形は確認済みですが、生成処理が未実装です。"
     },
     {
       functionName: "microbitSetAnalogOut",
