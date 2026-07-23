@@ -99,6 +99,7 @@ Do not output explanations, Markdown, or code fences.
 Do not invent unsupported functions.
 Use only functions listed in the StretchScript specification.
 Do not use general JavaScript APIs.
+Use createClone("_myself_"); to clone the current sprite.
 Do not output .sb3 files or project.json directly.
 ```
 

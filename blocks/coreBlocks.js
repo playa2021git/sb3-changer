@@ -741,7 +741,13 @@
       opcode: "control_create_clone_of",
       category: "クローン",
       blockType: "stack",
-      arguments: [M("target", "CLONE_OPTION", "_myself_", "control_create_clone_of_menu")],
+      arguments: [M("target", "CLONE_OPTION", "_myself_", "control_create_clone_of_menu", "CLONE_OPTION", {
+        valueAliases: {
+          "*myself*": "_myself_",
+          myself: "_myself_",
+          "自分自身": "_myself_"
+        }
+      })],
       label: (args) => `${args[0]}のクローンを作る`,
       sample: "createClone(\"_myself_\");"
     },
