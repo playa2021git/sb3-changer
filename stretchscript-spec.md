@@ -313,11 +313,14 @@ custom_extensions:
       - { name: microbitStopTone, args: [], returns: void, blockType: command, status: stable, example: "microbitStopTone();" }
       - { name: whenMicrobitConnectionChanged, args: [string state, closure body], allowedStates: ["connected", "disconnected"], returns: void, blockType: hat, status: experimental }
       - { name: microbitLightLevel, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitLightLevel());" }
-      - { name: microbitRoll, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitRoll());" }
+      - { name: microbitRoll, args: [], returns: number, blockType: reporter, status: stable, example: "sayNow(microbitRoll());" }
+      - { name: microbitSetPullMode, args: [string pin, string mode], allowedPins: ["1"], allowedModes: ["NONE"], returns: void, blockType: command, status: experimental, example: "microbitSetPullMode(\"1\", \"NONE\");" }
+      - { name: microbitSetDigitalOut, args: [string pin, string level], allowedPins: ["0"], allowedLevels: ["false", "true"], returns: void, blockType: command, status: experimental, example: "microbitSetDigitalOut(\"0\", \"true\");" }
     notes:
       - microbitDisplayMatrixのpatternは0と1だけを25個並べる
       - 5文字を1行として上から5行分をつなげる。1は点灯、0は消灯
       - experimentalは公式fixtureとの構造比較済みだが実機確認待ち
+      - pinとmenu値はfixtureで確認できた組合せだけを許可する
 ```
 
 ## 禁止事項
