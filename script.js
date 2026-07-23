@@ -2504,7 +2504,8 @@ StretchScriptの仕様に従ってください。`;
             example: "say(\"こんにちは\", 2);"
           });
         }
-        const value = String(arg.value);
+        const rawValue = String(arg.value);
+        const value = defArg.valueAliases?.[rawValue] ?? rawValue;
         if (defArg.type === "menu" && Array.isArray(defArg.allowedValues) && !defArg.allowedValues.includes(value)) {
           throw new StretchScriptError({
             message: "未確認のメニュー値です。",

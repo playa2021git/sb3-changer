@@ -197,6 +197,31 @@ whenCloned(() => {
   assert.notEqual(stopOther.next, null);
 });
 
+test("AIが出しやすい自分自身の別名を正しいクローン値へ補正する", () => {
+  for (const alias of ["*myself*", "myself", "自分自身"]) {
+    const result = convert(`whenGreenFlagClicked(() => {
+  createClone("${alias}");
+});`);
+    const blocks = spriteBlocks(result);
+    const cloneBlock = Object.values(blocks).find((block) => block.opcode === "control_create_clone_of");
+    const menuBlock = blocks[cloneBlock.inputs.CLONE_OPTION[1]];
+
+    assert.equal(menuBlock.opcode, "control_create_clone_of_menu");
+    assert.equal(menuBlock.fields.CLONE_OPTION[0], "_myself_");
+  }
+});
+
+test("クローン対象として指定したスプライト名は書き換えない", () => {
+  const result = convert(`whenGreenFlagClicked(() => {
+  createClone("ボール");
+});`);
+  const blocks = spriteBlocks(result);
+  const cloneBlock = Object.values(blocks).find((block) => block.opcode === "control_create_clone_of");
+  const menuBlock = blocks[cloneBlock.inputs.CLONE_OPTION[1]];
+
+  assert.equal(menuBlock.fields.CLONE_OPTION[0], "ボール");
+});
+
 test("優先B: costume/backdrop/size/layer/touching/current系を生成する", () => {
   const result = convert(`whenGreenFlagClicked(() => {
   goToXY(10, 20);

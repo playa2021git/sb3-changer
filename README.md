@@ -98,6 +98,7 @@ StretchScriptだけを出力してください。
 説明文、Markdown、コードブロック記号は出さないでください。
 対応していない関数を作らないでください。
 JavaScriptの一般APIではなく、StretchScript仕様書にある関数だけを使ってください。
+自分自身のクローンは createClone("_myself_"); と書いてください。
 .sb3やproject.jsonを直接出力しないでください。
 ```
 
