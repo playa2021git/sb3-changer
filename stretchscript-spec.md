@@ -303,24 +303,69 @@ custom_extensions:
     notes:
       - 実行時にブラウザのマイク権限が必要
   microbitMore:
-    status: confirmed_and_experimental
-    reference: docs/microbit-more-block-matrix.md
+    status: all_blocks_registered
+    fixture: fixtures/microbit-more/all-blocks.sb3
+    note: 公式31ブロックすべての保存形をfixtureで確認済み。実機確認は一部のみ。
+    menus:
+      button: ["A", "B"]
+      buttonEvent: ["DOWN", "UP", "CLICK", "HOLD", "LONG_CLICK", "DOUBLE_CLICK"]
+      touchId: ["LOGO", "P0", "P1", "P2"]
+      gesture: ["TILT_UP", "TILT_DOWN", "TILT_LEFT", "TILT_RIGHT", "FACE_UP", "FACE_DOWN", "FREEFALL", "G3", "G6", "G8", "SHAKE"]
+      axis: ["x", "y", "z", "absolute"]
+      analogPin: ["0", "1", "2"]
+      gpioPin: ["0", "1", "2", "8", "12", "13", "14", "15", "16"]
+      pullMode: ["NONE", "DOWN", "UP"]
+      pinEventType: ["NONE", "ON_PULSE", "ON_EDGE"]
+      pinEvent: ["PULSE_LOW", "PULSE_HIGH", "FALL", "RISE"]
+      digitalLevel: ["true", "false"]
+      connectionState: ["connected", "disconnected"]
     functions:
-      - { name: whenMicrobitButtonPressed, args: [string button, closure body], allowedButtons: ["A", "B"], returns: void, blockType: hat, status: stable, example: "whenMicrobitButtonPressed(\"A\", () => { sayNow(\"A\"); });" }
-      - { name: ifMicrobitButtonPressed, args: [string button, closure body], allowedButtons: ["A", "B"], returns: void, blockType: hat, status: stable, note: "互換エイリアス。whenMicrobitButtonPressedを推奨" }
-      - { name: microbitDisplayMatrix, args: [string pattern], returns: void, blockType: command, status: stable, example: "microbitDisplayMatrix(\"0101011111111110111000100\");" }
-      - { name: microbitDisplayText, args: [stringOrReporter text, number delay], returns: void, blockType: command, status: stable, example: "microbitDisplayText(\"Hello\", 120);" }
-      - { name: whenMicrobitShaken, args: [closure body], returns: void, blockType: hat, status: stable, example: "whenMicrobitShaken(() => { sayNow(\"SHAKE\"); });" }
-      - { name: whenMicrobitGesture, args: [string gesture, closure body], allowedGestures: ["SHAKE"], returns: void, blockType: hat, status: stable }
-      - { name: microbitPlayTone, args: [number frequency, optional number volume], returns: void, blockType: command, status: stable, example: "microbitPlayTone(440, 100);" }
-      - { name: microbitStopTone, args: [], returns: void, blockType: command, status: stable, example: "microbitStopTone();" }
-      - { name: whenMicrobitConnectionChanged, args: [string state, closure body], allowedStates: ["connected", "disconnected"], returns: void, blockType: hat, status: experimental }
-      - { name: microbitLightLevel, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitLightLevel());" }
-      - { name: microbitRoll, args: [], returns: number, blockType: reporter, status: experimental, example: "sayNow(microbitRoll());" }
+      - { name: whenMicrobitConnectionChanged, args: [menu state, closure body], blockType: hat }
+      - { name: whenMicrobitButtonPressed, args: [menu button, closure body], blockType: hat }
+      - { name: ifMicrobitButtonPressed, args: [menu button, closure body], blockType: hat, note: "別名" }
+      - { name: whenMicrobitButtonEvent, args: [menu button, menu buttonEvent, closure body], blockType: hat }
+      - { name: microbitButtonPressed, args: [menu button], returns: boolean, blockType: boolean }
+      - { name: whenMicrobitTouchEvent, args: [menu touchId, menu buttonEvent, closure body], blockType: hat }
+      - { name: microbitPinTouched, args: [menu touchId], returns: boolean, blockType: boolean }
+      - { name: whenMicrobitShaken, args: [closure body], blockType: hat, note: "gesture SHAKE の別名" }
+      - { name: whenMicrobitGesture, args: [menu gesture, closure body], blockType: hat }
+      - { name: microbitDisplayMatrix, args: [string pattern25], blockType: command }
+      - { name: microbitDisplayText, args: [stringOrReporter text, number delay], blockType: command }
+      - { name: microbitClearDisplay, args: [], blockType: command }
+      - { name: microbitLightLevel, args: [], returns: number, blockType: reporter }
+      - { name: microbitTemperature, args: [], returns: number, blockType: reporter }
+      - { name: microbitCompassHeading, args: [], returns: number, blockType: reporter }
+      - { name: microbitPitch, args: [], returns: number, blockType: reporter }
+      - { name: microbitRoll, args: [], returns: number, blockType: reporter }
+      - { name: microbitSoundLevel, args: [], returns: number, blockType: reporter }
+      - { name: microbitMagneticForce, args: [menu axis], returns: number, blockType: reporter }
+      - { name: microbitAcceleration, args: [menu axis], returns: number, blockType: reporter }
+      - { name: microbitAccelerationX, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitAccelerationY, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitAccelerationZ, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitAccelerationAbsolute, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitMagneticForceX, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitMagneticForceY, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitMagneticForceZ, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitMagneticForceAbsolute, args: [], returns: number, blockType: reporter, note: "別名" }
+      - { name: microbitAnalogValue, args: [menu analogPin], returns: number, blockType: reporter }
+      - { name: microbitSetPullMode, args: [menu gpioPin, menu pullMode], blockType: command }
+      - { name: microbitPinHigh, args: [menu gpioPin], returns: boolean, blockType: boolean }
+      - { name: microbitSetDigitalOut, args: [menu gpioPin, menu digitalLevel], blockType: command }
+      - { name: microbitSetAnalogOut, args: [menu gpioPin, number level], blockType: command }
+      - { name: microbitSetServo, args: [menu gpioPin, number angle], blockType: command }
+      - { name: microbitPlayTone, args: [number freq, optional number volume], blockType: command }
+      - { name: microbitStopTone, args: [], blockType: command }
+      - { name: microbitListenPinEventType, args: [menu gpioPin, menu pinEventType], blockType: command }
+      - { name: whenMicrobitPinEvent, args: [menu gpioPin, menu pinEvent, closure body], blockType: hat }
+      - { name: microbitPinEventValue, args: [menu gpioPin, menu pinEvent], returns: number, blockType: reporter }
+      - { name: whenMicrobitDataReceived, args: [string label, closure body], blockType: hat }
+      - { name: microbitDataLabeled, args: [string label], returns: string, blockType: reporter }
+      - { name: microbitSendData, args: [string label, stringOrReporter data], blockType: command }
     notes:
       - microbitDisplayMatrixのpatternは0と1だけを25個並べる
-      - 5文字を1行として上から5行分をつなげる。1は点灯、0は消灯
-      - experimentalは公式fixtureとの構造比較済みだが実機確認待ち
+      - メニュー値は大文字小文字を区別する。軸は小文字、ジェスチャーとイベントは大文字
+      - microbitTiltAngleは存在しない。前後はmicrobitPitch、左右はmicrobitRollを使う
 ```
 
 ## 禁止事項
@@ -363,7 +408,6 @@ unsupported:
     - speechContains
   partially_supported_extensions:
     - ML2Scratchは公式1or2 fixtureで確認した6ブロックだけ
-    - Microbit Moreの対応表にない関数
     - CameraSelectorはselectCamera以外
     - Speech2ScratchはstartSpeechRecognitionとspeechText以外
 ```

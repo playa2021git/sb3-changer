@@ -27,7 +27,7 @@ Gemini などの生成AIに Scratch 風のコードを書かせ、そのコー�
 - Music拡張
 - Translate拡張
 - Text to Speech拡張
-- Microbit Moreの保存形確認済み範囲（実機確認待ちを含む）
+- Microbit Moreの公式31ブロックすべて（保存形確認済み。実機確認は一部）
 - ML2Scratchの公式1or2サンプルで確認できた6ブロック
 - CameraSelectorの`selectCamera`
 - Speech2Scratchの音声認識開始・認識文字列取得
@@ -50,7 +50,6 @@ Gemini などの生成AIに Scratch 風のコードを書かせ、そのコー�
 - ImageClassifier2Scratch、Posenet2Scratch、TM2Scratch、TMPose2Scratch、AkaDakoの未確認ブロック
 - ML2Scratchのうち、公式1or2サンプルに保存形がない23ブロック
 - CameraSelector / Speech2Scratchで公式`getInfo()`に存在しない互換候補関数
-- Microbit Moreのうち、`TILT_LEFT` / `TILT_RIGHT`、サーボ、ピン入出力、温度・音量など未検証のブロック
 - Scratchの独自ブロック定義
 - JavaScript一般機能としての配列操作、`parseInt`、`Number`、`toString`、`includes`、`push` など
 
@@ -167,39 +166,20 @@ whenMlLabelReceived("2", () => { sayNow("2"); });
 
 ## Microbit Moreの現在の対応範囲
 
-Microbit Moreは、授業で安全に使えることを優先し、実物fixtureで保存形を確認できた範囲だけを変換対象にしています。
-実機確認済みのブロックと、保存形は確認済みだが実機確認待ちのexperimentalブロックを区別しています。
+公式 `mbit-more-v2` の `getInfo()` にある**31ブロックすべて**を変換できます。
+保存形は `fixtures/microbit-more/all-blocks.sb3`（Stretch3で全ブロックをワークスペースに並べて保存したもの）で確認済みです。
+`tests/microbit-more-all-blocks.test.mjs` が、生成した `project.json` の `inputs` / `fields` をこのfixtureと1ブロックずつ突き合わせます。
 
-実機確認済み:
+対応関数の一覧とメニュー値は [StretchScript仕様書](stretchscript-spec.md) を見てください。
 
-- `whenMicrobitButtonPressed("A", () => { ... })`
-- `whenMicrobitButtonPressed("B", () => { ... })`
-- `ifMicrobitButtonPressed("A", () => { ... })`
-- `ifMicrobitButtonPressed("B", () => { ... })`
-- `microbitDisplayText("Hello", 120)`
-- `whenMicrobitShaken(() => { ... })`
-- `whenMicrobitGesture("SHAKE", () => { ... })`
-- `microbitPlayTone(440, 100)`
-- `microbitStopTone()`
+実機確認の状態は `definitions/microbit-more.json` の `deviceVerificationStatus` で管理しています。
 
-- `microbitDisplayMatrix("0101011111111110111000100")`
+- `stable`: 保存形と実機動作の両方を確認済み（ボタン、ジェスチャー、LED表示、音）
+- `experimental`: 保存形は確認済み、実機動作の確認待ち（センサー、ピン入出力、サーボ、データ送受信）
 
-experimental（公式fixtureとの構造比較は合格、実機確認待ち）:
+変換は両方とも通ります。授業で生徒に使わせる範囲は、変換器ではなく `prompt/microbit-more.md` で管理してください。実機で確認できたブロックを、そのファイルに1つずつ足していく運用です。
 
-- `whenMicrobitConnectionChanged("connected", () => { ... })`
-- `whenMicrobitConnectionChanged("disconnected", () => { ... })`
-- `microbitLightLevel()`
-- `microbitRoll()`
-
-未対応:
-
-- `TILT_LEFT` / `TILT_RIGHT`
-- サーボ
-- ピン入出力
-- 明るさ・roll以外のセンサー値取得
-- データ送受信、touch、pin eventなど通信・設定依存のブロック
-
-詳細は [Microbit More V2実機試験 第1便](docs/microbit-more-v2-device-test-batch-1.md)、[Microbit More対応表](docs/microbit-more-block-matrix.md)、[fixture採取手順](docs/microbit-more-fixture-guide.md)、[実装計画](docs/microbit-more-implementation-plan.md) を参照してください。
+サーボ、ピン入出力、データ送受信は、micro:bit本体以外の部品や2台目が必要です。
 
 ## 開発者向け構成
 

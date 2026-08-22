@@ -847,11 +847,12 @@ test("Microbit More: buttonが未確認値(C)なら安全停止する", () => {
   assert.match(error.message, /未確認または未対応|引数|未確認のメニュー値/);
 });
 
-test("Microbit More: gestureは未対応として安全停止する", () => {
-  const error = conversionError(`whenMicrobitGesture("TILT_LEFT", () => {
+test("Microbit More: gesture TILT_LEFT を変換できる", () => {
+  const result = convert(`whenMicrobitGesture("TILT_LEFT", () => {
   microbitDisplayText("L", 120);
 });`);
-  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+  const hat = Object.values(spriteBlocks(result)).find((block) => block.opcode === "microbitMore_whenGesture");
+  assert.deepEqual(hat.fields.GESTURE, ["TILT_LEFT", null]);
 });
 
 
@@ -953,18 +954,12 @@ test("Microbit More: 未確認の接続状態と不正なLED模様は安全停�
   assert.match(invalidMatrixError.message, /LEDパターンの形/);
 });
 
-test("Microbit More: TILT_LEFT は安全停止する", () => {
-  const error = conversionError(`whenMicrobitGesture("TILT_LEFT", () => {
+test("Microbit More: TILT_RIGHT を変換できる", () => {
+  const result = convert(`whenMicrobitGesture("TILT_RIGHT", () => {
   microbitPlayTone(440, 100);
 });`);
-  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
-});
-
-test("Microbit More: TILT_RIGHT は安全停止する", () => {
-  const error = conversionError(`whenMicrobitGesture("TILT_RIGHT", () => {
-  microbitPlayTone(440, 100);
-});`);
-  assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
+  const hat = Object.values(spriteBlocks(result)).find((block) => block.opcode === "microbitMore_whenGesture");
+  assert.deepEqual(hat.fields.GESTURE, ["TILT_RIGHT", null]);
 });
 
 test("Microbit More: 未確認gesture値(JUMP)は安全停止する", () => {
@@ -974,8 +969,9 @@ test("Microbit More: 未確認gesture値(JUMP)は安全停止する", () => {
   assert.match(error.message, /未確認または未対応|未確認のメニュー値/);
 });
 
-test("Microbit More: 公式getInfo上の未検証ブロックは個別に安全停止登録する", () => {
-  const unsupportedNames = [
+test("Microbit More: 公式31ブロックがすべて登録されている", () => {
+  const registeredNames = [
+    "whenMicrobitConnectionChanged",
     "whenMicrobitButtonEvent",
     "microbitButtonPressed",
     "whenMicrobitTouchEvent",
@@ -998,25 +994,36 @@ test("Microbit More: 公式getInfo上の未検証ブロックは個別に安全�
     "microbitPinEventValue",
     "whenMicrobitDataReceived",
     "microbitDataLabeled",
-    "microbitSendData",
-    "microbitTiltAngle"
+    "microbitSendData"
   ];
 
-  unsupportedNames.forEach((functionName) => {
-    const unsupported = globalThis.StretchScriptBlocks.getUnsupported(functionName);
-    assert.ok(unsupported, `${functionName} should be registered as unsupported`);
-    assert.equal(unsupported.category, "Microbit More");
+  registeredNames.forEach((functionName) => {
+    assert.ok(
+      globalThis.StretchScriptBlocks.get(functionName),
+      `${functionName} should be registered`
+    );
+    assert.equal(
+      globalThis.StretchScriptBlocks.getUnsupported(functionName),
+      undefined,
+      `${functionName} should no longer be unsupported`
+    );
   });
+
+  const legacy = globalThis.StretchScriptBlocks.getUnsupported("microbitTiltAngle");
+  assert.ok(legacy);
+  assert.equal(legacy.category, "Microbit More");
 });
 
-test("Microbit More: 未検証ブロック名を使うとMicrobit More理由で安全停止する", () => {
-  const error = conversionError("microbitSendData();");
-  assert.match(error.message, /未確認または未対応/);
-  assert.match(error.cause, /Microbit More/);
-  assert.match(error.cause, /project.json保存形/);
+test("Microbit More: データ送信をfixture保存形で変換できる", () => {
+  const result = convert('whenGreenFlagClicked(() => { microbitSendData("label-01", "hello"); });');
+  const block = Object.values(spriteBlocks(result)).find((item) => item.opcode === "microbitMore_sendData");
+  assert.deepEqual(block.inputs.LABEL, [1, [10, "label-01"]]);
+  assert.deepEqual(block.inputs.DATA, [1, [10, "hello"]]);
 });
 
-test("Microbit More: servoは未対応として安全停止する", () => {
-  const error = conversionError('microbitSetServo("P0", 90);');
-  assert.match(error.message, /未確認または未対応/);
+test("Microbit More: servoをfixture保存形で変換できる", () => {
+  const result = convert('whenGreenFlagClicked(() => { microbitSetServo("0", 90); });');
+  const block = Object.values(spriteBlocks(result)).find((item) => item.opcode === "microbitMore_setServo");
+  assert.deepEqual(block.fields.PIN, ["0", null]);
+  assert.deepEqual(block.inputs.ANGLE, [1, [4, "90"]]);
 });
