@@ -171,11 +171,12 @@ StretchScriptの仕様に従ってください。`;
 
   /* 使いやすいエラー表示にするため、原因や直し方を一緒に持ちます。 */
   class StretchScriptError extends Error {
-    constructor({ message, line = 1, column = 1, cause, fix, example }) {
+    constructor({ message, line = 1, column = 1, cause, fix, example, suggestion = null }) {
       super(message);
       this.name = "StretchScriptError";
       this.line = line;
       this.column = column;
+      this.suggestion = suggestion;
       this.cause = cause || message;
       this.fix = fix || "入力を見直してください。";
       this.example = example || "whenGreenFlagClicked(() => { move(10); });";
@@ -572,6 +573,9 @@ StretchScriptの仕様に従ってください。`;
       errorBox.appendChild(snippet);
     }
 
+    if (error.suggestion) {
+      appendErrorDetail(errorBox, "もしかして", error.suggestion);
+    }
     appendErrorDetail(errorBox, "原因", error.cause);
     appendErrorDetail(errorBox, "直し方", error.fix);
     appendErrorDetail(errorBox, "例", error.example);
@@ -1780,7 +1784,16 @@ StretchScriptの仕様に従ってください。`;
   }
 
   /* Geminiが自然に書きやすい互換構文を、確認済みのScratchブロックへ寄せます。 */
-  function resolveCallVariant(call) {
+  /* Gemが書きがちな別名を、正式なfunctionNameへ静かに寄せます。 */
+  function applyFunctionAlias(call) {
+    if (!call || !call.name) return call;
+    const target = R.aliasTarget(call.name);
+    if (!target) return call;
+    return { ...call, name: target, aliasFrom: call.name };
+  }
+
+  function resolveCallVariant(inputCall) {
+    const call = applyFunctionAlias(inputCall);
     if (!call) return call;
     if (call.name === "goTo" && call.args.length === 2) {
       return { ...call, name: "goToXY" };
@@ -1900,7 +1913,20 @@ StretchScriptの仕様に従ってください。`;
       if (resolved && call && resolved.name !== call.name && call.name.startsWith("setSprite")) {
         this.runtimeCorrections.push(`${call.name}(...) を実行時命令 ${resolved.name}(...) へ自動補正しました（${call.line}行目）。`);
       }
+      this.noteAliasUse(call, resolved);
       return resolved;
+    }
+
+    /*
+     * 別名で書かれていた場合、変換は通したうえで正式名を警告欄へ残します。
+     * 黙って通すだけにすると、生徒が別名を正しい名前だと覚えてしまうためです。
+     */
+    noteAliasUse(call, resolved) {
+      if (!call || !resolved || !resolved.aliasFrom) return;
+      const message = `${resolved.aliasFrom}(...) は ${resolved.name}(...) として変換しました。正しい名前は ${resolved.name} です（${call.line}行目）。`;
+      if (!this.runtimeCorrections.includes(message)) {
+        this.runtimeCorrections.push(message);
+      }
     }
 
     /* 実行中の固定色変更用コスチュームを作り、その名前を返します。 */
@@ -2167,6 +2193,9 @@ StretchScriptの仕様に従ってください。`;
     /* トップレベルはイベント系のhatブロックにします。 */
     buildTopLevelScript(call, context = this.defaultSprite) {
       this.useSpriteContext(context);
+      const aliased = applyFunctionAlias(call);
+      this.noteAliasUse(call, aliased);
+      call = aliased;
       const def = this.requireDefinition(call);
       if (def.blockType !== "hat") {
         throw new StretchScriptError({
@@ -2728,13 +2757,24 @@ StretchScriptの仕様に従ってください。`;
       if (!def) {
         const file = R.guessDefinitionFile(call.name);
         const help = unknownFunctionHelp(call.name);
+        const near = R.suggestFunctionNames(call.name);
+        const nearest = near[0] ? R.get(near[0]) : null;
         throw new StretchScriptError({
           message: `${call.name} は未対応関数です。`,
           line: call.line,
           column: call.column,
-          cause: help ? help.cause : `${call.name} はまだ登録されていません。`,
-          fix: help ? help.fix : `${file} にブロック定義を追加してください。`,
-          example: help ? help.example : "move(10);"
+          suggestion: near.length ? near.map((name) => `${name}()`).join(" / ") : null,
+          cause: help ? help.cause : `${call.name} という名前の命令はありません。`,
+          fix: help
+            ? help.fix
+            : near.length
+              ? `名前の書き間違いかもしれません。${near[0]} に直してみてください。`
+              : "「使える命令一覧」から近い働きの命令をさがして書き直してください。",
+          example: help
+            ? help.example
+            : nearest && nearest.sample
+              ? nearest.sample
+              : `この命令が本当に必要な場合は先生に伝えてください。（開発者向け: ${file} に定義を追加）`
         });
       }
       if (def.verified === false) {

@@ -546,6 +546,18 @@
     axisReporter("microbitMagneticForceAbsolute", "microbitMore_getMagneticForce", "absolute", "磁力の大きさ")
   ]);
 
+  /*
+   * Gemは「Scratchのブロック表示がサーボだから microbitServo だろう」と推測しがちです。
+   * Set が付くかどうかは表示名から予測できないため、よく外れる4つを別名として受けます。
+   * 変換は成功させたうえで、警告欄に正式名を出して生徒が正しい名前を覚えられるようにします。
+   */
+  R.registerAliases({
+    microbitServo: "microbitSetServo",
+    microbitDigitalOut: "microbitSetDigitalOut",
+    microbitAnalogOut: "microbitSetAnalogOut",
+    microbitPullMode: "microbitSetPullMode"
+  });
+
   const unsupportedBlocks = [
     {
       functionName: "microbitTiltAngle",

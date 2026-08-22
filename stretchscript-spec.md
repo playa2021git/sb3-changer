@@ -366,6 +366,7 @@ custom_extensions:
       - microbitDisplayMatrixのpatternは0と1だけを25個並べる
       - メニュー値は大文字小文字を区別する。軸は小文字、ジェスチャーとイベントは大文字
       - microbitTiltAngleは存在しない。前後はmicrobitPitch、左右はmicrobitRollを使う
+      - 出力設定の4関数はSetが付く。microbitServo / microbitDigitalOut / microbitAnalogOut / microbitPullMode で書いた場合も変換できるが、警告を出して正式名へ寄せる
 ```
 
 ## 禁止事項

@@ -96,6 +96,19 @@ Sb3-Changerは公式Microbit Moreの31ブロックすべてを変換できます
 
 - microbitSendData("label-01", "こんにちは");
 
+## 出力を設定する4つは Set が付きます
+
+ブロックの表示名は「サーボ」「デジタル出力」ですが、関数名には Set が入ります。省略しないでください。
+
+| 書いてはいけない名前 | 正しい名前 |
+| --- | --- |
+| microbitServo | microbitSetServo |
+| microbitDigitalOut | microbitSetDigitalOut |
+| microbitAnalogOut | microbitSetAnalogOut |
+| microbitPullMode | microbitSetPullMode |
+
+Sb3-Changerは左の名前でも変換できますが、警告が出ます。最初から右の名前で書いてください。
+
 ## よくある書き間違い
 
 - microbitTiltAngle は存在しません。前後は microbitPitch()、左右は microbitRoll()

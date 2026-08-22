@@ -4,6 +4,7 @@
 
   const registry = {
     definitions: new Map(),
+    aliases: new Map(),
     unsupported: new Map(),
     categories: new Map(),
     extensionInfo: new Map()
@@ -58,6 +59,95 @@
   /* 複数ファイルから安全にまとめて登録するための関数です。 */
   function registerMany(definitions) {
     definitions.forEach(registerBlock);
+  }
+
+  /*
+   * Gemが書きがちな別名を、正式なfunctionNameへ寄せるための登録です。
+   * 別名は入口だけの仕組みで、opcodeやproject.jsonの中身は正式名の定義をそのまま使います。
+   */
+  function registerAlias(aliasName, functionName) {
+    if (!aliasName || !functionName) {
+      throw new Error("別名の登録には別名と正式名の両方が必要です。");
+    }
+    if (aliasName === functionName) {
+      throw new Error(`別名と正式名が同じです: ${aliasName}`);
+    }
+    const existing = registry.aliases.get(aliasName);
+    if (existing && existing !== functionName) {
+      throw new Error(`別名 ${aliasName} は ${existing} として既に登録されています。`);
+    }
+    registry.aliases.set(aliasName, functionName);
+  }
+
+  /* まとめて別名を登録します。{ 別名: 正式名 } の形で渡します。 */
+  function registerAliases(map) {
+    Object.entries(map || {}).forEach(([aliasName, functionName]) => registerAlias(aliasName, functionName));
+  }
+
+  /*
+   * 別名の解決先を返します。
+   * 正式名として登録済みの名前は、別名表より常に優先します（別名が本物を上書きしない）。
+   */
+  function aliasTarget(name) {
+    if (!name || registry.definitions.has(name)) return null;
+    const target = registry.aliases.get(name);
+    return target && registry.definitions.has(target) ? target : null;
+  }
+
+  /* 別名なら正式名へ、そうでなければそのままの名前を返します。 */
+  function resolveFunctionName(name) {
+    return aliasTarget(name) || name;
+  }
+
+  /* 2つの文字列の違いの大きさ（レーベンシュタイン距離）を数えます。 */
+  function editDistance(a, b) {
+    const source = String(a);
+    const target = String(b);
+    if (source === target) return 0;
+    if (!source.length) return target.length;
+    if (!target.length) return source.length;
+
+    let previous = Array.from({ length: target.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= source.length; i += 1) {
+      const current = [i];
+      for (let j = 1; j <= target.length; j += 1) {
+        const cost = source[i - 1] === target[j - 1] ? 0 : 1;
+        current[j] = Math.min(current[j - 1] + 1, previous[j] + 1, previous[j - 1] + cost);
+      }
+      previous = current;
+    }
+    return previous[target.length];
+  }
+
+  /*
+   * 未登録の名前に対して、近い正式名を最大limit件返します。
+   * 大文字小文字は区別せず、短い名前ほど厳しく判定します。
+   */
+  function suggestFunctionNames(name, limit = 3) {
+    const input = String(name || "").toLowerCase();
+    if (!input) return [];
+
+    const allowed = Math.min(3, Math.max(1, Math.floor(input.length / 3)));
+    const best = new Map();
+
+    const consider = (candidate) => {
+      const canonical = resolveFunctionName(candidate);
+      if (!registry.definitions.has(canonical)) return;
+      const distance = editDistance(input, String(candidate).toLowerCase());
+      if (distance > allowed) return;
+      const known = best.get(canonical);
+      if (known === undefined || distance < known) {
+        best.set(canonical, distance);
+      }
+    };
+
+    registry.definitions.forEach((definition, functionName) => consider(functionName));
+    registry.aliases.forEach((functionName, aliasName) => consider(aliasName));
+
+    return Array.from(best.entries())
+      .sort((a, b) => (a[1] - b[1]) || a[0].localeCompare(b[0]))
+      .slice(0, limit)
+      .map(([functionName]) => functionName);
   }
 
   /* 未確認の外部拡張は、偽opcodeを持つブロックとして登録せず、変換前に止めます。 */
@@ -150,7 +240,15 @@
   window.StretchScriptBlocks = {
     registerBlock,
     registerMany,
+    registerAlias,
+    registerAliases,
     registerUnsupported,
+    aliasTarget,
+    resolveFunctionName,
+    suggestFunctionNames,
+    aliases() {
+      return Array.from(registry.aliases.entries());
+    },
     get(functionName) {
       return registry.definitions.get(functionName);
     },
