@@ -3047,7 +3047,7 @@ StretchScriptの仕様に従ってください。`;
 
     const displayCall = normalizeCallForDefinition(def, resolvedCall, knownNames);
     const argLabels = displayCall.args.filter((arg) => arg.type !== "Closure").map((arg) => previewArgument(arg, knownNames));
-    const text = def.label ? def.label(argLabels) : call.name;
+    const text = def.label ? def.label(argLabels) : resolvedCall.name;
     const lines = [{ depth, category: def.category, text }];
 
     displayCall.args.filter((arg) => arg.type === "Closure").forEach((closure) => {
@@ -3068,7 +3068,7 @@ StretchScriptの仕様に従ってください。`;
       const def = R.get(resolvedCall.name);
       const displayCall = def ? normalizeCallForDefinition(def, resolvedCall, knownNames) : resolvedCall;
       const labels = displayCall.args.filter((child) => child.type !== "Closure").map((child) => previewArgument(child, knownNames));
-      return def && def.label ? def.label(labels) : `${arg.name}(...)`;
+      return def && def.label ? def.label(labels) : `${resolvedCall.name}(...)`;
     }
     return "";
   }
