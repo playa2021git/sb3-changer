@@ -179,3 +179,43 @@ test("既存の個別ヘルプは候補表示より優先する", () => {
     }
   );
 });
+
+test("プレビューには別名ではなく正式名を表示する", () => {
+  const result = convert(`whenGreenFlagClicked(() => {
+  microbitServo("1", 90);
+});`);
+
+  const texts = result.preview.map((line) => line.text).join("\n");
+  assert.match(texts, /microbitSetServo/);
+  assert.doesNotMatch(texts, /(^|[^S])microbitServo/);
+});
+
+test("実際にGemが書いた microbitServoTurn も変換できる", () => {
+  const result = convert(`whenGreenFlagClicked(() => {
+  forever(() => {
+    ifElse(greaterThan(microbitTemperature(), 29), () => {
+      microbitServoTurn("1", 90);
+    }, () => {
+      microbitServoTurn("1", 0);
+    });
+  });
+});`);
+
+  const opcodes = Object.values(blocksOf(result)).map((block) => block.opcode);
+  assert.equal(opcodes.filter((opcode) => opcode === "microbitMore_setServo").length, 2);
+  assert.ok(result.warnings.some((warning) => /正しい名前は microbitSetServo/.test(warning)));
+});
+
+test("単語の並べ替えや語尾違いも候補として拾う", () => {
+  assert.ok(R.suggestFunctionNames("microbitTurnServo").includes("microbitSetServo"));
+  assert.ok(R.suggestFunctionNames("microbitServoAngle").includes("microbitSetServo"));
+  assert.ok(R.suggestFunctionNames("microbitPlay").includes("microbitPlayTone"));
+  assert.ok(R.suggestFunctionNames("microbitShowText").includes("microbitDisplayText"));
+});
+
+test("単語がほとんど重ならない名前は候補にしない", () => {
+  const suggestions = R.suggestFunctionNames("microbitServoTurn");
+  assert.equal(suggestions.includes("microbitTemperature"), false);
+  assert.equal(suggestions.includes("microbitPlayTone"), false);
+  assert.deepEqual(R.suggestFunctionNames("zzzzzzzzz"), []);
+});
