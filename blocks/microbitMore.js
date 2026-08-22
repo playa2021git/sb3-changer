@@ -553,6 +553,7 @@
    */
   R.registerAliases({
     microbitServo: "microbitSetServo",
+    microbitServoTurn: "microbitSetServo",
     microbitDigitalOut: "microbitSetDigitalOut",
     microbitAnalogOut: "microbitSetAnalogOut",
     microbitPullMode: "microbitSetPullMode"

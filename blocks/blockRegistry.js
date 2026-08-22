@@ -119,9 +119,34 @@
     return previous[target.length];
   }
 
+  /* microbitSetServo を [microbit, set, servo] のように、単語へ分けます。 */
+  function nameTokens(name) {
+    return String(name || "")
+      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+      .replace(/[_\-]+/g, " ")
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  /* 単語の重なり具合を0〜1で返します（共通の単語数 ÷ 全体の単語数）。 */
+  function tokenSimilarity(a, b) {
+    const left = new Set(nameTokens(a));
+    const right = new Set(nameTokens(b));
+    if (!left.size || !right.size) return 0;
+    let shared = 0;
+    left.forEach((token) => {
+      if (right.has(token)) shared += 1;
+    });
+    const union = left.size + right.size - shared;
+    return union ? shared / union : 0;
+  }
+
   /*
    * 未登録の名前に対して、近い正式名を最大limit件返します。
-   * 大文字小文字は区別せず、短い名前ほど厳しく判定します。
+   * 2つの見方を併用します。
+   *   1. 文字の違いの数 … microbitSetSrevo のような打ち間違いを拾う
+   *   2. 単語の重なり   … microbitServoTurn のような言い換えを拾う
    */
   function suggestFunctionNames(name, limit = 3) {
     const input = String(name || "").toLowerCase();
@@ -134,10 +159,12 @@
       const canonical = resolveFunctionName(candidate);
       if (!registry.definitions.has(canonical)) return;
       const distance = editDistance(input, String(candidate).toLowerCase());
-      if (distance > allowed) return;
+      const similarity = tokenSimilarity(name, candidate);
+      if (distance > allowed && similarity < 0.5) return;
+      const score = [1 - similarity, distance];
       const known = best.get(canonical);
-      if (known === undefined || distance < known) {
-        best.set(canonical, distance);
+      if (!known || score[0] < known[0] || (score[0] === known[0] && score[1] < known[1])) {
+        best.set(canonical, score);
       }
     };
 
@@ -145,7 +172,7 @@
     registry.aliases.forEach((functionName, aliasName) => consider(aliasName));
 
     return Array.from(best.entries())
-      .sort((a, b) => (a[1] - b[1]) || a[0].localeCompare(b[0]))
+      .sort((a, b) => (a[1][0] - b[1][0]) || (a[1][1] - b[1][1]) || a[0].localeCompare(b[0]))
       .slice(0, limit)
       .map(([functionName]) => functionName);
   }
