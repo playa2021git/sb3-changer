@@ -8,6 +8,7 @@
 - 見出しが関数の書き方です。引数の名前は説明用なので、そのまま書くのではなく値を入れます。
 - 「えらぶ」と書いてある引数は、並んでいる値のどれかを ""で囲んで書きます。それ以外の値は使えません。
 - 「いちばん外側に置く」ものは、他の関数の中に入れてはいけません。
+- 引数名のうしろに ? が付いているものは省略できます。省略すると既定値が使われます。
 
 関数の数: 202
 
@@ -84,7 +85,7 @@
   - 例: `clearGraphicEffects();`
 - `goBackwardLayers(layers)` … layers: 数値
   - 例: `goBackwardLayers(1);`
-- `goForwardLayers(forwardBackward, layers)` … forwardBackward: えらぶ、layers: 数値
+- `goForwardLayers(forwardBackward?, layers)` … forwardBackward: えらぶ（省略可・既定値 "forward"）、layers: 数値
   - 例: `goForwardLayers(1);
 goForwardLayers("forward", 1);`
 - `goToBackLayer()`
@@ -95,7 +96,7 @@ goForwardLayers("forward", 1);`
   - 例: `goToFrontLayer();`
 - `hide()`
   - 例: `hide();`
-- `say(message, seconds)` … message: 文字列、seconds: 数値
+- `say(message, seconds?)` … message: 文字列、seconds: 数値（省略可・既定値 2）
   - 例: `say("こんにちは", 2);`
 - `sayNow(message)` … message: 文字列
   - 例: `sayNow("こんにちは");`
@@ -107,14 +108,14 @@ goForwardLayers("forward", 1);`
   - 例: `show();`
 - `size()` … 値を返す
   - 例: `say(size(), 1);`
-- `think(message, seconds)` … message: 文字列、seconds: 数値
+- `think(message, seconds?)` … message: 文字列、seconds: 数値（省略可・既定値 2）
   - 例: `think("うーん", 2);`
 - `thinkNow(message)` … message: 文字列
   - 例: `thinkNow("うーん");`
 
 ## コスチューム
 
-- `costumeNumber(numberName)` … 値を返す / numberName: えらぶ
+- `costumeNumber(numberName?)` … 値を返す / numberName: えらぶ（省略可・既定値 "number"）
   - 例: `say(costumeNumber(), 1);`
 - `nextCostume()`
   - 例: `nextCostume();`
@@ -123,7 +124,7 @@ goForwardLayers("forward", 1);`
 
 ## 背景
 
-- `backdropNumber(numberName)` … 値を返す / numberName: えらぶ
+- `backdropNumber(numberName?)` … 値を返す / numberName: えらぶ（省略可・既定値 "number"）
   - 例: `say(backdropNumber(), 1);`
 - `nextBackdrop()`
   - 例: `nextBackdrop();`
@@ -352,7 +353,7 @@ goForwardLayers("forward", 1);`
   - 例: `sayNow(microbitDataLabeled("label-01"));`
 - `microbitDisplayMatrix(pattern)` … pattern: 5行5列の0と1
   - 例: `microbitDisplayMatrix("0101011111111110111000100");`
-- `microbitDisplayText(text, delay)` … text: 文字列、delay: 数値
+- `microbitDisplayText(text, delay?)` … text: 文字列、delay: 数値（省略可・既定値 120）
   - 例: `microbitDisplayText("Hello!", 120);`
 - `microbitLightLevel()` … 値を返す
   - 例: `sayNow(microbitLightLevel());`
@@ -376,7 +377,7 @@ goForwardLayers("forward", 1);`
   - 例: `ifBlock(microbitPinTouched("LOGO"), () => { say("タッチ中", 1); });`
 - `microbitPitch()` … 値を返す
   - 例: `sayNow(microbitPitch());`
-- `microbitPlayTone(freq, volume)` … freq: 数値、volume: 数値
+- `microbitPlayTone(freq, volume?)` … freq: 数値、volume: 数値（省略可・既定値 100）
   - 例: `microbitPlayTone(440, 100);`
 - `microbitRoll()` … 値を返す
   - 例: `sayNow(microbitRoll());`

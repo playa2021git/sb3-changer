@@ -35,6 +35,15 @@
 7. function-dictionary.md に無い関数名（例: setDirection、tellSprite、parseInt、push、microbitAnalogWritePin）
 8. 仕様書と違う数の引数を渡すこと（例: setSpriteText("青", 20) は引数が多い）
 
+【変数に true / false を入れない】
+Scratchの変数は「はい/いいえ」を持てません。条件の場所に変数だけを置くこともできません。
+押しっぱなし対策などで状態を覚えるときは、0と1で持ちます。
+
+・setVariable("prevAB", false); → setVariable("prevAB", 0);
+・setVariable("prevAB", true);  → setVariable("prevAB", 1);
+・not(getVariable("prevAB"))    → equals(getVariable("prevAB"), 0)
+・getVariable("prevAB")を条件に  → equals(getVariable("prevAB"), 1)
+
 【JavaScriptの書き方を直す表】
 書きたいこと → StretchScriptでの書き方
 
