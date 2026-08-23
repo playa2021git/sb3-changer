@@ -227,7 +227,7 @@
       blockType: "stack",
       arguments: [
         S("text", "TEXT", "Hello!"),
-        N("delay", "DELAY", 120)
+        N("delay", "DELAY", 120, { optional: true })
       ],
       sample: 'microbitDisplayText("Hello!", 120);',
       description: "micro:bitに文字を表示する。delay省略時の既定値は120。",
