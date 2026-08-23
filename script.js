@@ -2352,13 +2352,20 @@ StretchScriptの仕様に従ってください。`;
         });
       }
       if (expectedType === "boolean" && def.blockType !== "boolean") {
+        const isVariable = resolvedCall.name === "getVariable";
         throw new StretchScriptError({
           message: "条件を入れる場所に値ブロックがあります。",
           line: resolvedCall.line,
           column: resolvedCall.column,
-          cause: `${resolvedCall.name} は「はい/いいえ」を返す条件ブロックではありません。`,
-          fix: "keyPressed(\"space\") や mouseDown() のような条件ブロックを入れてください。",
-          example: "ifThen(keyPressed(\"space\"), () => { move(10); });"
+          cause: isVariable
+            ? "Scratchの変数は「はい/いいえ」を持てません。条件の場所に変数だけを置くことはできません。"
+            : `${resolvedCall.name} は「はい/いいえ」を返す条件ブロックではありません。`,
+          fix: isVariable
+            ? "変数は0か1で持ち、equals(getVariable(\"名前\"), 1) のように比べてください。"
+            : "keyPressed(\"space\") や mouseDown() のような条件ブロックを入れてください。",
+          example: isVariable
+            ? "ifBlock(equals(getVariable(\"おした\"), 1), () => { move(10); });"
+            : "ifThen(keyPressed(\"space\"), () => { move(10); });"
         });
       }
 
