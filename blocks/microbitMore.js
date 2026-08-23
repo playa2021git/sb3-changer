@@ -554,6 +554,10 @@
   R.registerAliases({
     microbitServo: "microbitSetServo",
     microbitServoTurn: "microbitSetServo",
+    microbitSetPinAnalog: "microbitSetAnalogOut",
+    microbitAnalogWritePin: "microbitSetAnalogOut",
+    microbitWhenButtonPressed: "whenMicrobitButtonPressed",
+    microbitDisplayClear: "microbitClearDisplay",
     microbitDigitalOut: "microbitSetDigitalOut",
     microbitAnalogOut: "microbitSetAnalogOut",
     microbitPullMode: "microbitSetPullMode"
