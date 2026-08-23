@@ -9,10 +9,23 @@
 
 ## 添付する4ファイル
 
-1. `../stretchscript-spec.md` （対応関数の一次資料）
-2. `classroom-rules.md` （スプライトの大きさ、画面配置、実機テストの決まり）
-3. `examples.md` （動作確認済みの出力例）
-4. `microbit-more.md` （micro:bitの関数一覧とメニュー値）
+1. `function-dictionary.md` （使える関数名とメニュー値の辞書。関数名の唯一の出どころ）
+2. `../stretchscript-spec.md` （書き方の決まりと禁止事項）
+3. `classroom-rules.md` （スプライトの大きさ、画面配置、実機テストの決まり）
+4. `examples.md` （動作確認済みの出力例）
+
+`microbit-more.md` は、内容が `function-dictionary.md` と重なるため添付枠から外しました。
+書き間違いの注意書きとして残してあります。枠が空いたときに戻してください。
+
+### function-dictionary.md は手で書き直さない
+
+このファイルはブロック定義から自動で作ります。ブロックを追加・変更したら次を実行してください。
+
+```
+node scripts/build-function-dictionary.mjs
+```
+
+作り直しを忘れると `npm test` が失敗して気づけるようにしてあります。
 
 ## 添付してはいけないもの
 
