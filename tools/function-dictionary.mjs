@@ -79,6 +79,53 @@ function argumentNotes(definition) {
     .join("、");
 }
 
+/*
+ * カスタム指示欄に貼る、名前だけの一覧を作ります。
+ * 添付ファイルは読まれない場合があるため、名前だけは指示文へ直接埋め込みます。
+ */
+export function buildFunctionNameList(rootDir) {
+  const R = loadRegistry(rootDir);
+  const definitions = R.all();
+  const byCategory = new Map();
+  definitions.forEach((definition) => {
+    if (!byCategory.has(definition.category)) byCategory.set(definition.category, []);
+    byCategory.get(definition.category).push(definition);
+  });
+
+  const lines = [];
+  lines.push("【使える関数名の全一覧】");
+  lines.push("この一覧に無い名前は、絶対に書いてはいけません。");
+  lines.push("似た名前を作る、単語を足す、単語の順番を変える、いずれも禁止です。");
+  lines.push("引数の書き方とメニューの値は function-dictionary.md で確認します。");
+  lines.push("");
+
+  Array.from(byCategory.entries()).forEach(([category, group]) => {
+    const names = group
+      .map((definition) => definition.functionName)
+      .sort((a, b) => a.localeCompare(b));
+    lines.push(`■${category}`);
+    lines.push(names.join("、"));
+    lines.push("");
+  });
+
+  const menuNotes = definitions
+    .filter((definition) => definition.extensionId === "microbitMore")
+    .flatMap((definition) =>
+      definition.arguments
+        .filter((argument) => Array.isArray(argument.allowedValues) && argument.allowedValues.length)
+        .map((argument) => `${definition.functionName} の ${argument.name}: ${argument.allowedValues.map((value) => `"${value}"`).join(" / ")}`)
+    );
+
+  if (menuNotes.length) {
+    lines.push("【micro:bitのメニューで使える値】");
+    lines.push("ここに無い値を書いてはいけません。無い値を頼まれたら、無いと伝えます。");
+    lines.push(...menuNotes);
+    lines.push("");
+  }
+
+  return `${lines.join("\n")}`;
+}
+
 export function buildFunctionDictionary(rootDir) {
   const R = loadRegistry(rootDir);
   const definitions = R.all();

@@ -5,7 +5,11 @@
 
 ## カスタム指示欄に貼るもの
 
-- `gem-instruction.txt`
+- `gem-instruction-with-names.txt` （指示文＋関数名の全一覧。**こちらを貼る**）
+
+`gem-instruction.txt` は指示文の本体で、編集用です。貼るのは自動生成した
+`gem-instruction-with-names.txt` のほうです。
+添付ファイルは読まれないことがあるため、関数名だけは指示欄へ直接入れています。
 
 ## 添付する4ファイル
 

@@ -558,6 +558,7 @@
     microbitAnalogWritePin: "microbitSetAnalogOut",
     microbitWhenButtonPressed: "whenMicrobitButtonPressed",
     microbitDisplayClear: "microbitClearDisplay",
+    microbitMorePinAnalogWrite: "microbitSetAnalogOut",
     microbitDigitalOut: "microbitSetDigitalOut",
     microbitAnalogOut: "microbitSetAnalogOut",
     microbitPullMode: "microbitSetPullMode"

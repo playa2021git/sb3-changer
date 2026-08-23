@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildFunctionDictionary } from "../tools/function-dictionary.mjs";
+import { buildFunctionDictionary, buildFunctionNameList } from "../tools/function-dictionary.mjs";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dictionaryPath = path.join(rootDir, "prompt", "function-dictionary.md");
@@ -45,4 +45,32 @@ test("辞書には別名を載せない", () => {
 test("メニューの選択肢が辞書に書き出されている", () => {
   assert.match(generated, /whenMicrobitButtonPressed\(button, \(\) => \{ \}\)` … いちばん外側に置く \/ button: "A" \/ "B"/);
   assert.match(generated, /microbitSetAnalogOut\(pin, level\)` … pin: "0" \/ "1" \/ "2" \/ "8"/);
+});
+
+test("カスタム指示欄用の全文も最新である", () => {
+  const committed = readFileSync(path.join(rootDir, "prompt", "gem-instruction-with-names.txt"), "utf8");
+  const instruction = readFileSync(path.join(rootDir, "prompt", "gem-instruction.txt"), "utf8");
+  const expected = `${instruction.trimEnd()}\n\n${buildFunctionNameList(rootDir)}`;
+  assert.equal(
+    committed,
+    expected,
+    "指示文かブロックを変えたら node scripts/build-function-dictionary.mjs で作り直してください。"
+  );
+});
+
+test("名前一覧には実在する関数名だけが並ぶ", () => {
+  const R = globalThis.StretchScriptBlocks;
+  const nameList = buildFunctionNameList(rootDir);
+  const section = nameList.split("【micro:bitのメニューで使える値】")[0];
+  const names = section
+    .split("\n")
+    .filter((line) => line.includes("、") && !line.startsWith("■") && !line.includes("。"))
+    .flatMap((line) => line.split("、"))
+    .map((name) => name.trim())
+    .filter(Boolean);
+
+  assert.ok(names.length > 100);
+  names.forEach((functionName) => {
+    assert.equal(R.has(functionName), true, `${functionName} は登録されていません。`);
+  });
 });

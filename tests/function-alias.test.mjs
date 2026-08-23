@@ -219,3 +219,14 @@ test("単語がほとんど重ならない名前は候補にしない", () => {
   assert.equal(suggestions.includes("microbitPlayTone"), false);
   assert.deepEqual(R.suggestFunctionNames("zzzzzzzzz"), []);
 });
+
+test("余計な単語を足された名前も候補に出す", () => {
+  assert.ok(R.suggestFunctionNames("microbitDisplayShowNumber").includes("microbitDisplayText"));
+  assert.ok(R.suggestFunctionNames("microbitMorePinAnalogWrite").includes("microbitSetAnalogOut"));
+});
+
+test("microbit や set しか合っていない名前は候補にしない", () => {
+  assert.deepEqual(R.suggestFunctionNames("microbitSetServo"), ["microbitSetServo"]);
+  assert.deepEqual(R.suggestFunctionNames("microbitLED"), []);
+  assert.equal(R.suggestFunctionNames("microbitSetThing").includes("microbitSetServo"), false);
+});

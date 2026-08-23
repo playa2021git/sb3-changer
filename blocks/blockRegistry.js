@@ -129,17 +129,30 @@
       .filter(Boolean);
   }
 
-  /* 単語の重なり具合を0〜1で返します（共通の単語数 ÷ 全体の単語数）。 */
+  /* どの名前にも出てくる単語は、近さの判断材料になりません。 */
+  const WEAK_TOKENS = new Set(["microbit", "more", "set", "get", "is", "when", "if", "do"]);
+
+  /*
+   * 単語の重なり具合を0〜1で返します。
+   * 少ないほうの単語数で割ります（包含率）。こうすると
+   * microbitDisplayShowNumber のように余計な単語が足された名前でも、
+   * microbitDisplayText との近さを見失いません。
+   * ただし microbit や set のような弱い単語しか合っていない場合は、近いと見なしません。
+   */
   function tokenSimilarity(a, b) {
     const left = new Set(nameTokens(a));
     const right = new Set(nameTokens(b));
     if (!left.size || !right.size) return 0;
     let shared = 0;
+    let strongShared = 0;
     left.forEach((token) => {
-      if (right.has(token)) shared += 1;
+      if (!right.has(token)) return;
+      shared += 1;
+      if (!WEAK_TOKENS.has(token)) strongShared += 1;
     });
-    const union = left.size + right.size - shared;
-    return union ? shared / union : 0;
+    if (!strongShared) return 0;
+    if (shared < 2 && Math.max(left.size, right.size) > 2) return 0;
+    return shared / Math.min(left.size, right.size);
   }
 
   /*
@@ -160,7 +173,7 @@
       if (!registry.definitions.has(canonical)) return;
       const distance = editDistance(input, String(candidate).toLowerCase());
       const similarity = tokenSimilarity(name, candidate);
-      if (distance > allowed && similarity < 0.5) return;
+      if (distance > allowed && similarity < 0.6) return;
       const score = [1 - similarity, distance];
       const known = best.get(canonical);
       if (!known || score[0] < known[0] || (score[0] === known[0] && score[1] < known[1])) {
