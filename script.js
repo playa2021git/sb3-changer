@@ -653,9 +653,9 @@ StretchScriptの仕様に従ってください。`;
     if (!window.JSZip) {
       throw new StretchScriptError({
         message: "JSZipを読み込めませんでした。",
-        cause: "インターネット接続、またはCDNの読み込みに問題があります。",
-        fix: "ネットワークにつながっているか確認して、ページを読み込み直してください。",
-        example: "JSZipは .sb3 を作るために必要です。"
+        cause: "ページの一部が読み込めていません。",
+        fix: "ページを読み込み直してください（Ctrl+F5）。それでも直らないときは先生に伝えてください。",
+        example: "JSZipは .sb3 を作るために必要な部品です。"
       });
     }
 
