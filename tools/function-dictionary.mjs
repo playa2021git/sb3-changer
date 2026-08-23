@@ -61,7 +61,7 @@ function loadRegistry(rootDir) {
 function signature(definition) {
   const parts = definition.arguments.map((argument) => {
     if (argument.type === "substack") return "() => { }";
-    return argument.name;
+    return argument.optional ? `${argument.name}?` : argument.name;
   });
   return `${definition.functionName}(${parts.join(", ")})`;
 }
@@ -71,10 +71,11 @@ function argumentNotes(definition) {
   return definition.arguments
     .filter((argument) => argument.type !== "substack")
     .map((argument) => {
+      const suffix = argument.optional ? `（省略可・既定値 ${JSON.stringify(argument.defaultValue)}）` : "";
       if (Array.isArray(argument.allowedValues) && argument.allowedValues.length) {
-        return `${argument.name}: ${argument.allowedValues.map((value) => `"${value}"`).join(" / ")}`;
+        return `${argument.name}: ${argument.allowedValues.map((value) => `"${value}"`).join(" / ")}${suffix}`;
       }
-      return `${argument.name}: ${TYPE_LABELS[argument.type] || argument.type}`;
+      return `${argument.name}: ${TYPE_LABELS[argument.type] || argument.type}${suffix}`;
     })
     .join("、");
 }
@@ -146,6 +147,7 @@ export function buildFunctionDictionary(rootDir) {
   lines.push("- 見出しが関数の書き方です。引数の名前は説明用なので、そのまま書くのではなく値を入れます。");
   lines.push('- 「えらぶ」と書いてある引数は、並んでいる値のどれかを ""で囲んで書きます。それ以外の値は使えません。');
   lines.push("- 「いちばん外側に置く」ものは、他の関数の中に入れてはいけません。");
+  lines.push("- 引数名のうしろに ? が付いているものは省略できます。省略すると既定値が使われます。");
   lines.push("");
   lines.push(`関数の数: ${definitions.length}`);
   lines.push("");
