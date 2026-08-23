@@ -230,3 +230,28 @@ test("microbit や set しか合っていない名前は候補にしない", () 
   assert.deepEqual(R.suggestFunctionNames("microbitLED"), []);
   assert.equal(R.suggestFunctionNames("microbitSetThing").includes("microbitSetServo"), false);
 });
+
+test("microbitDisplayText の delay は省略できる", () => {
+  const short = convert(`whenMicrobitButtonPressed("A", () => {
+  microbitDisplayText(microbitTemperature());
+});`);
+  const full = convert(`whenMicrobitButtonPressed("A", () => {
+  microbitDisplayText(microbitTemperature(), 120);
+});`);
+
+  const opcodesOf = (result) => Object.values(blocksOf(result)).map((block) => block.opcode).sort();
+  assert.deepEqual(opcodesOf(short), opcodesOf(full));
+});
+
+test("条件の場所に変数だけを置いたら、0と1で比べる直し方を示す", () => {
+  assert.throws(
+    () => app.convertSourceForTest(`whenGreenFlagClicked(() => {
+  ifBlock(not(getVariable("おした")), () => { move(10); });
+});`),
+    (error) => {
+      assert.match(error.cause, /変数は「はい\/いいえ」を持てません/);
+      assert.match(error.fix, /equals\(getVariable/);
+      return true;
+    }
+  );
+});
