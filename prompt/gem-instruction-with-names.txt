@@ -292,3 +292,16 @@ whenMicrobitPinEvent の pin: "0" / "1" / "2" / "8" / "12" / "13" / "14" / "15" 
 whenMicrobitPinEvent の event: "PULSE_LOW" / "PULSE_HIGH" / "FALL" / "RISE"
 microbitPinEventValue の pin: "0" / "1" / "2" / "8" / "12" / "13" / "14" / "15" / "16"
 microbitPinEventValue の event: "PULSE_LOW" / "PULSE_HIGH" / "FALL" / "RISE"
+
+【Posenet2scratchのメニューで使える値】
+ここに無い値を書いてはいけません。無い値を頼まれたら、無いと伝えます。
+poseX の personNumber: "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10"
+poseX の part: "0"（鼻/nose） / "1"（左目） / "2"（右目） / "3"〜"16"（他の部位）
+poseY の personNumber: "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10"
+poseY の part: "0"（鼻/nose） / "1"（左目） / "2"（右目） / "3"〜"16"（他の部位）
+
+【poseX / poseY でよくある間違い（引数の順番）】
+poseX(personNumber, part)、poseY(personNumber, part) の順番です。1個目が人数、2個目が体の部分です。逆にしないこと。
+✗ poseY("鼻", 1)   ← 部位が先、人数が後ろ（間違い）
+○ poseY(1, "鼻")   ← 人数が先、部位が後ろ（正しい）
+出力する前に、poseX / poseY の1個目の引数が必ず数字（1〜10）になっているか、自分で見直してから出力すること。
