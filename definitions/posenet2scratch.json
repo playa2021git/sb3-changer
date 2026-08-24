@@ -1,0 +1,972 @@
+{
+  "schemaVersion": 1,
+  "slug": "posenet2scratch",
+  "extensionName": "Posenet2Scratch",
+  "extensionId": "posenet2scratch",
+  "extensionURL": "https://champierre.github.io/posenet2scratch/posenet2scratch.mjs",
+  "officialSource": {
+    "repository": "champierre/posenet2scratch",
+    "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+    "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+  },
+  "fixtures": [
+    {
+      "id": "people-count-on-microbit",
+      "sb3Path": "fixtures/posenet2scratch/people-count-on-microbit.sb3",
+      "graphPath": "fixtures/posenet2scratch/people-count-on-microbit.graph.json",
+      "sha256": "6a9a2712376c7d4898004587c4bf416b96d393ce397f714cf963e1e9d2e98631",
+      "source": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "path": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js getInfo()",
+        "blobSha": null
+      },
+      "producer": "Stretch3で「1人目の鼻のx座標／y座標」「人数」とMicrobit Moreの表示ブロックを並べて保存した自作fixture。micro:bit実機でAボタン→人数表示まで確認済み。",
+      "extensionURLStatus": "legacy-missing"
+    }
+  ],
+  "blocks": [
+    {
+      "functionName": "poseX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getX",
+      "blockType": "reporter",
+      "inputs": {
+        "PERSON_NUMBER": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "posenet2scratch_menu_personNumbers",
+          "shadowField": "personNumbers",
+          "defaultValue": "1"
+        },
+        "PART": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "posenet2scratch_menu_parts",
+          "shadowField": "parts",
+          "defaultValue": "0"
+        }
+      },
+      "fields": {},
+      "menuValues": {
+        "PERSON_NUMBER": {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        },
+        "PART": {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "0"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "people-count-on-microbit",
+        "selector": {
+          "opcode": "posenet2scratch_getX",
+          "fields": {},
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "自作fixtureで「1人目の鼻のx座標」の保存形を確認。PERSON_NUMBERとPARTはfieldではなくmenu shadowブロック。fixtureに実在する値は PERSON_NUMBER=\"1\" と PART=\"0\" のみ。"
+    },
+    {
+      "functionName": "poseY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getY",
+      "blockType": "reporter",
+      "inputs": {
+        "PERSON_NUMBER": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "posenet2scratch_menu_personNumbers",
+          "shadowField": "personNumbers",
+          "defaultValue": "1"
+        },
+        "PART": {
+          "argumentType": "string",
+          "inputMode": 1,
+          "valueKind": "shadow-block",
+          "shadowOpcode": "posenet2scratch_menu_parts",
+          "shadowField": "parts",
+          "defaultValue": "0"
+        }
+      },
+      "fields": {},
+      "menuValues": {
+        "PERSON_NUMBER": {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "fixtureValues": [
+            "1"
+          ]
+        },
+        "PART": {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "fixtureValues": [
+            "0"
+          ]
+        }
+      },
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "people-count-on-microbit",
+        "selector": {
+          "opcode": "posenet2scratch_getY",
+          "fields": {},
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "自作fixtureで「1人目の鼻のy座標」の保存形を確認。PERSON_NUMBERとPARTはfieldではなくmenu shadowブロック。fixtureに実在する値は PERSON_NUMBER=\"1\" と PART=\"0\" のみ。"
+    },
+    {
+      "functionName": "posePeopleCount",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getPeopleCount",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": {
+        "fixtureId": "people-count-on-microbit",
+        "selector": {
+          "opcode": "posenet2scratch_getPeopleCount",
+          "fields": {},
+          "occurrence": 0
+        }
+      },
+      "fixtureStatus": "verified",
+      "supportStatus": "stable",
+      "deviceVerificationStatus": "passed",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "自作fixtureで保存形を確認。micro:bit実機でAボタン→人数のLED表示まで確認済み。"
+    },
+    {
+      "functionName": "poseNoseX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getNoseX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"鼻\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseNoseY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getNoseY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"鼻\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftEyeX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftEyeX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左目\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftEyeY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftEyeY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左目\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightEyeX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightEyeX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右目\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightEyeY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightEyeY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右目\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftEarX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftEarX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左耳\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftEarY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftEarY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左耳\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightEarX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightEarX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右耳\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightEarY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightEarY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右耳\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftShoulderX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftShoulderX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左肩\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftShoulderY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftShoulderY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左肩\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightShoulderX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightShoulderX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右肩\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightShoulderY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightShoulderY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右肩\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftElbowX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftElbowX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左ひじ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftElbowY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftElbowY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左ひじ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightElbowX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightElbowX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右ひじ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightElbowY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightElbowY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右ひじ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftWristX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftWristX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左手首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftWristY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftWristY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左手首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightWristX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightWristX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右手首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightWristY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightWristY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右手首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftHipX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftHipX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左腰\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftHipY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftHipY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左腰\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightHipX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightHipX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右腰\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightHipY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightHipY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右腰\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftKneeX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftKneeX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左ひざ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftKneeY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftKneeY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左ひざ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightKneeX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightKneeX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右ひざ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightKneeY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightKneeY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右ひざ\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftAnkleX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftAnkleX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"左足首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseLeftAnkleY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getLeftAnkleY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"左足首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightAnkleX",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightAnkleX",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseX(1, \"右足首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseRightAnkleY",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_getRightAnkleY",
+      "blockType": "reporter",
+      "inputs": {},
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "部分ごとの専用ブロック。収録fixtureに保存形がない。poseY(1, \"右足首\") を入口にする方針のため安全停止。"
+    },
+    {
+      "functionName": "poseSetVideo",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_videoToggle",
+      "blockType": "command",
+      "inputs": {},
+      "fields": {
+        "VIDEO_STATE": {
+          "value": "off",
+          "id": null
+        }
+      },
+      "menuValues": {
+        "VIDEO_STATE": {
+          "values": [
+            "off",
+            "on",
+            "on-flipped"
+          ],
+          "fixtureValues": []
+        }
+      },
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "公式getInfo()のvideoMenuはacceptReporters:falseなのでfield保存と推測できるが、収録fixtureに実物がない。"
+    },
+    {
+      "functionName": "poseSetVideoTransparency",
+      "extensionId": "posenet2scratch",
+      "opcode": "posenet2scratch_setVideoTransparency",
+      "blockType": "command",
+      "inputs": {
+        "TRANSPARENCY": {
+          "argumentType": "number",
+          "inputMode": 1,
+          "valueKind": "primitive",
+          "shadowOpcode": null,
+          "shadowField": null,
+          "defaultValue": "50"
+        }
+      },
+      "fields": {},
+      "menuValues": {},
+      "shadow": false,
+      "fixture": null,
+      "fixtureStatus": "missing",
+      "supportStatus": "unsupported",
+      "deviceVerificationStatus": "not-run",
+      "officialSource": {
+        "repository": "champierre/posenet2scratch",
+        "commit": "94f396d749010353bc7254af0be92a2e0ef52559",
+        "sourcePath": "scratch-vm/src/extensions/scratch3_posenet2scratch/index.js"
+      },
+      "notes": "収録fixtureに保存形がない。"
+    }
+  ]
+}
