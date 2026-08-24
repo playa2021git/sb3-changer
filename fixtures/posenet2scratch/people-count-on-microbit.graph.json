@@ -1,0 +1,167 @@
+{
+  "extensionURLs": [],
+  "extensions": [
+    "microbitMore",
+    "posenet2scratch"
+  ],
+  "targets": [
+    {
+      "isStage": false,
+      "orphans": [],
+      "stacks": [
+        {
+          "fields": {
+            "EVENT": [
+              "DOWN",
+              null
+            ],
+            "NAME": [
+              "A",
+              null
+            ]
+          },
+          "inputs": {},
+          "next": {
+            "fields": {},
+            "inputs": {
+              "DELAY": [
+                1,
+                [
+                  4,
+                  "120"
+                ]
+              ],
+              "TEXT": [
+                3,
+                {
+                  "block": {
+                    "fields": {},
+                    "inputs": {},
+                    "next": null,
+                    "opcode": "posenet2scratch_getPeopleCount",
+                    "shadow": false,
+                    "topLevel": false
+                  }
+                },
+                [
+                  10,
+                  "Hello!"
+                ]
+              ]
+            },
+            "next": null,
+            "opcode": "microbitMore_displayText",
+            "shadow": false,
+            "topLevel": false
+          },
+          "opcode": "microbitMore_whenButtonEvent",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {},
+          "inputs": {},
+          "next": null,
+          "opcode": "posenet2scratch_getPeopleCount",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {},
+          "inputs": {
+            "PART": [
+              1,
+              {
+                "block": {
+                  "fields": {
+                    "parts": [
+                      "0",
+                      null
+                    ]
+                  },
+                  "inputs": {},
+                  "next": null,
+                  "opcode": "posenet2scratch_menu_parts",
+                  "shadow": true,
+                  "topLevel": false
+                }
+              }
+            ],
+            "PERSON_NUMBER": [
+              1,
+              {
+                "block": {
+                  "fields": {
+                    "personNumbers": [
+                      "1",
+                      null
+                    ]
+                  },
+                  "inputs": {},
+                  "next": null,
+                  "opcode": "posenet2scratch_menu_personNumbers",
+                  "shadow": true,
+                  "topLevel": false
+                }
+              }
+            ]
+          },
+          "next": null,
+          "opcode": "posenet2scratch_getX",
+          "shadow": false,
+          "topLevel": true
+        },
+        {
+          "fields": {},
+          "inputs": {
+            "PART": [
+              1,
+              {
+                "block": {
+                  "fields": {
+                    "parts": [
+                      "0",
+                      null
+                    ]
+                  },
+                  "inputs": {},
+                  "next": null,
+                  "opcode": "posenet2scratch_menu_parts",
+                  "shadow": true,
+                  "topLevel": false
+                }
+              }
+            ],
+            "PERSON_NUMBER": [
+              1,
+              {
+                "block": {
+                  "fields": {
+                    "personNumbers": [
+                      "1",
+                      null
+                    ]
+                  },
+                  "inputs": {},
+                  "next": null,
+                  "opcode": "posenet2scratch_menu_personNumbers",
+                  "shadow": true,
+                  "topLevel": false
+                }
+              }
+            ]
+          },
+          "next": null,
+          "opcode": "posenet2scratch_getY",
+          "shadow": false,
+          "topLevel": true
+        }
+      ]
+    },
+    {
+      "isStage": true,
+      "orphans": [],
+      "stacks": []
+    }
+  ]
+}
