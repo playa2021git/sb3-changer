@@ -16,6 +16,7 @@
     "translate",
     "text2speech",
     "microbitMore",
+    "posenet2scratch",
     "ml2scratch",
     "cameraselector",
     "speech2scratch"
