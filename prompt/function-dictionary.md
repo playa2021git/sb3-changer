@@ -10,7 +10,7 @@
 - 「いちばん外側に置く」ものは、他の関数の中に入れてはいけません。
 - 引数名のうしろに ? が付いているものは省略できます。省略すると既定値が使われます。
 
-関数の数: 202
+関数の数: 205
 
 ## イベント
 
@@ -327,6 +327,15 @@ goForwardLayers("forward", 1);`
 - `whenMlLabelReceived(label, () => { })` … いちばん外側に置く / label: "1" / "2"
   - 例: `whenMlLabelReceived("1", () => { sayNow("1"); });`
 
+## Posenet2Scratch
+
+- `posePeopleCount()` … 値を返す
+  - 例: `posePeopleCount()`
+- `poseX(personNumber, part)` … 値を返す / personNumber: "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10"、part: "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10" / "11" / "12" / "13" / "14" / "15" / "16"
+  - 例: `poseX(1, "鼻")`
+- `poseY(personNumber, part)` … 値を返す / personNumber: "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10"、part: "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "10" / "11" / "12" / "13" / "14" / "15" / "16"
+  - 例: `poseY(1, "鼻")`
+
 ## Microbit More
 
 - `ifMicrobitButtonPressed(button, () => { })` … いちばん外側に置く / button: "A" / "B"
@@ -517,9 +526,43 @@ goForwardLayers("forward", 1);`
 - `mlTrain` … ML2Scratch
 - `mlTrainLabel` … ML2Scratch
 - `mlUploadLearningData` … ML2Scratch
+- `poseLeftAnkleX` … Posenet2Scratch
+- `poseLeftAnkleY` … Posenet2Scratch
+- `poseLeftEarX` … Posenet2Scratch
+- `poseLeftEarY` … Posenet2Scratch
+- `poseLeftElbowX` … Posenet2Scratch
+- `poseLeftElbowY` … Posenet2Scratch
+- `poseLeftEyeX` … Posenet2Scratch
+- `poseLeftEyeY` … Posenet2Scratch
+- `poseLeftHipX` … Posenet2Scratch
+- `poseLeftHipY` … Posenet2Scratch
+- `poseLeftKneeX` … Posenet2Scratch
+- `poseLeftKneeY` … Posenet2Scratch
+- `poseLeftShoulderX` … Posenet2Scratch
+- `poseLeftShoulderY` … Posenet2Scratch
+- `poseLeftWristX` … Posenet2Scratch
+- `poseLeftWristY` … Posenet2Scratch
+- `poseNoseX` … Posenet2Scratch
+- `poseNoseY` … Posenet2Scratch
+- `poseRightAnkleX` … Posenet2Scratch
+- `poseRightAnkleY` … Posenet2Scratch
+- `poseRightEarX` … Posenet2Scratch
+- `poseRightEarY` … Posenet2Scratch
+- `poseRightElbowX` … Posenet2Scratch
+- `poseRightElbowY` … Posenet2Scratch
+- `poseRightEyeX` … Posenet2Scratch
+- `poseRightEyeY` … Posenet2Scratch
+- `poseRightHipX` … Posenet2Scratch
+- `poseRightHipY` … Posenet2Scratch
+- `poseRightKneeX` … Posenet2Scratch
+- `poseRightKneeY` … Posenet2Scratch
+- `poseRightShoulderX` … Posenet2Scratch
+- `poseRightShoulderY` … Posenet2Scratch
+- `poseRightWristX` … Posenet2Scratch
+- `poseRightWristY` … Posenet2Scratch
 - `poseScore` … Posenet2Scratch
-- `poseX` … Posenet2Scratch
-- `poseY` … Posenet2Scratch
+- `poseSetVideo` … Posenet2Scratch
+- `poseSetVideoTransparency` … Posenet2Scratch
 - `showVariableSlider` … 変数モニター
 - `speechContains` … Speech2Scratch
 - `tmClassifiedAs` … TM2Scratch
